@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 3, 2016 8:40:52 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.unsa.etf.si.app.SkladisteTim3.Class.Skladiste" table="SKLADISTE">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="adresa" type="java.lang.String">
+            <column name="ADRESA" />
+        </property>
+        <property name="kontaktTelefon" type="java.lang.String">
+            <column name="KONTAKTTELEFON" />
+        </property>
+        <property name="naziv" type="java.lang.String">
+            <column name="NAZIV" />
+        </property>
+        <many-to-one name="radnoVrijeme" class="ba.unsa.etf.si.app.SkladisteTim3.Class.RadnoVrijeme" fetch="join">
+            <column name="RADNOVRIJEME" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
