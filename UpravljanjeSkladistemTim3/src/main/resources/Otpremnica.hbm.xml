@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 7, 2016 2:05:30 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <subclass name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpremnica" extends="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument"
+    discriminator-value="Otpremnica" lazy="false">
+        <many-to-one name="_kupac" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner" fetch="join">
+            <column name="_KUPAC" />
+        </many-to-one>
+    </subclass>
+</hibernate-mapping>

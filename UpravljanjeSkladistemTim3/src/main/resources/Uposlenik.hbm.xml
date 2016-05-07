@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 7, 2016 2:05:30 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" table="UPOSLENIK">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="ime" type="java.lang.String">
+            <column name="IME" />
+        </property>
+        <property name="prezime" type="java.lang.String">
+            <column name="PREZIME" />
+        </property>
+        <property name="JMBG" type="java.lang.String">
+            <column name="JMBG" />
+        </property>
+        <property name="datumRodjenja" type="java.util.Date">
+            <column name="DATUMRODJENJA" />
+        </property>
+        <property name="mjestoRodjenja" type="java.lang.String">
+            <column name="MJESTORODJENJA" />
+        </property>
+        <property name="adresaStanovanja" type="java.lang.String">
+            <column name="ADRESASTANOVANJA" />
+        </property>
+        <property name="brojTelefona" type="java.lang.String">
+            <column name="BROJTELEFONA" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        <property name="strucnaSprema">
+            <column name="STRUCNASPREMA" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="type">12</param>
+                <param name="enumClass">ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StrucnaSprema</param>
+            </type>
+        </property>
+        <property name="datumZaposlenja" type="java.util.Date">
+            <column name="DATUMZAPOSLENJA" />
+        </property>
+        <property name="user" type="java.lang.String">
+            <column name="USER" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="tipUposlenika">
+            <column name="TIPUPOSLENIKA" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="type">12</param>
+                <param name="enumClass">ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.TipUposlenika</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>
