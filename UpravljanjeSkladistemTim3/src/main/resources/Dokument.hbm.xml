@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated May 7, 2016 2:05:30 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated May 8, 2016 9:01:00 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument" table="DOKUMENT" abstract="true">
+    <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument" table="DOKUMENT">
         <id name="id" type="long">
             <column name="ID" />
             <generator class="native" />
         </id>
-        <discriminator type="string">
-            <column name="DISCR_COL" />
-        </discriminator>
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>
         <property name="vrijednost" type="double">
             <column name="VRIJEDNOST" />
         </property>
-        <list name="_stavke" inverse="false" table="STAVKADOKUMENTA" lazy="true">
+        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+            <column name="KREIRAO" />
+        </many-to-one>
+        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
             <key>
                 <column name="ID" />
             </key>
@@ -25,4 +25,82 @@
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
         </list>
     </class>
+    <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka">
+    <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="datum" type="java.util.Date">
+            <column name="DATUM" />
+        </property>
+        <property name="vrijednost" type="double">
+            <column name="VRIJEDNOST" />
+        </property>
+        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+            <column name="KREIRAO" />
+        </many-to-one>
+        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
+        </list>
+         <property name="barKod" type="java.lang.String">
+            <column name="BARKOD" />
+        </property>
+        <many-to-one name="_dobavaljc" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner" fetch="join">
+            <column name="DOBAVALJC" />
+        </many-to-one>
+    </class>
+    <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpisnica">
+    <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="datum" type="java.util.Date">
+            <column name="DATUM" />
+        </property>
+        <property name="vrijednost" type="double">
+            <column name="VRIJEDNOST" />
+        </property>
+        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+            <column name="KREIRAO" />
+        </many-to-one>
+        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
+        </list>
+        <property name="razlogOtpisa" type="java.lang.String">
+            <column name="RAZLOG_OTPISA" />
+        </property>
+    </class>
+    <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpremnica">
+    <id name="id" type="long">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="datum" type="java.util.Date">
+            <column name="DATUM" />
+        </property>
+        <property name="vrijednost" type="double">
+            <column name="VRIJEDNOST" />
+        </property>
+        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+            <column name="KREIRAO" />
+        </many-to-one>
+        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
+        </list>
+         <many-to-one name="_kupac" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner" fetch="join">
+            <column name="KUPAC" />
+        </many-to-one>
+     </class>
 </hibernate-mapping>

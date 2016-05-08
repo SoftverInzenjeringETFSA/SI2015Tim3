@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated May 7, 2016 2:05:30 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated May 8, 2016 9:01:00 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal" table="ARTIKAL">
         <id name="id" type="long">
@@ -15,10 +15,10 @@
             <column name="NAZIV" />
         </property>
         <property name="jedinicnaKolicina" type="double">
-            <column name="JEDINICNAKOLICINA" />
+            <column name="JEDINICNA_KOLICINA" />
         </property>
         <property name="mjernaJedinica">
-            <column name="MJERNAJEDINICA" />
+            <column name="MJERNA_JEDINICA" />
             <type name="org.hibernate.type.EnumType">
                 <param name="type">12</param>
                 <param name="enumClass">ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica</param>
@@ -28,7 +28,7 @@
             <column name="KOLICINA" />
         </property>
         <property name="prodajnaCijena" type="double">
-            <column name="PRODAJNACIJENA" />
+            <column name="PRODAJNA_CIJENA" />
         </property>
     </class>
 </hibernate-mapping>

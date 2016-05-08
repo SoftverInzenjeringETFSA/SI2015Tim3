@@ -11,9 +11,6 @@
   <property name="hibernate.hbm2ddl.auto">update</property>
   <mapping resource="Artikal.hbm.xml"/>
   <mapping resource="Dokument.hbm.xml"/>
-  <mapping resource="Nabavka.hbm.xml"/>
-  <mapping resource="Otpisnica.hbm.xml"/>
-  <mapping resource="Otpremnica.hbm.xml"/>
   <mapping resource="PoslovniPartner.hbm.xml"/>
   <mapping resource="Skladiste.hbm.xml"/>
   <mapping resource="SkladisteArtikal.hbm.xml"/>
