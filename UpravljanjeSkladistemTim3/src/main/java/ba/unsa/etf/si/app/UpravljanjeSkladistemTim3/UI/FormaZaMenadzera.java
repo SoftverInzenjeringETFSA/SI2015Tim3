@@ -26,7 +26,7 @@ import javax.swing.AbstractListModel;
 
 public class FormaZaMenadzera {
 
-	private JFrame frmSistemUpravljanjaSkladistem;
+	public JFrame frmSistemUpravljanjaSkladistem;
 	private JTable table;
 	private JTable table_1;
 	private JTextField textField;
@@ -45,7 +45,7 @@ public class FormaZaMenadzera {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -71,9 +71,10 @@ public class FormaZaMenadzera {
 	 */
 	private void initialize() {
 		frmSistemUpravljanjaSkladistem = new JFrame();
+		frmSistemUpravljanjaSkladistem.setResizable(false);
 		frmSistemUpravljanjaSkladistem.setIconImage(Toolkit.getDefaultToolkit().getImage(FormaZaMenadzera.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
 		frmSistemUpravljanjaSkladistem.setTitle("Sistem upravljanja skladištem");
-		frmSistemUpravljanjaSkladistem.setBounds(100, 100, 711, 525);
+		frmSistemUpravljanjaSkladistem.setBounds(100, 100, 711, 526);
 		frmSistemUpravljanjaSkladistem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSistemUpravljanjaSkladistem.getContentPane().setLayout(null);
 		

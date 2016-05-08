@@ -27,10 +27,14 @@ import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 import javax.swing.border.MatteBorder;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
 
 public class FormaZaUposlenika {
 
-	private JFrame frame;
+	public JFrame frame;
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private JTable table_2;
 	private JTable table_1;
@@ -42,15 +46,15 @@ public class FormaZaUposlenika {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
+	public JTextField tbBarKod;
+	private JTextField tbKolicina;
+	private JTextField tbNabavnaCijena;
+	private JTextField tbNaziv;
+	private JTextField tbJedinicnaKolicina;
 
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -76,7 +80,8 @@ public class FormaZaUposlenika {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 783, 568);
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 783, 593);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		tabbedPane.setBounds(0, 28, 767, 508);
@@ -150,54 +155,55 @@ public class FormaZaUposlenika {
 		lblBarKod.setBounds(10, 48, 53, 14);
 		panel_4.add(lblBarKod);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(70, 45, 122, 20);
-		panel_4.add(textField_7);
-		textField_7.setColumns(10);
+		tbBarKod = new JTextField();
+		tbBarKod.setBounds(70, 45, 122, 20);
+		panel_4.add(tbBarKod);
+		tbBarKod.setColumns(10);
 		
 		JLabel lblKoliina_1 = new JLabel("Količina: ");
 		lblKoliina_1.setBounds(10, 93, 46, 14);
 		panel_4.add(lblKoliina_1);
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(70, 90, 122, 20);
-		panel_4.add(textField_8);
-		textField_8.setColumns(10);
+		tbKolicina = new JTextField();
+		tbKolicina.setBounds(70, 90, 122, 20);
+		panel_4.add(tbKolicina);
+		tbKolicina.setColumns(10);
 		
 		JLabel lblNabavnaCijena = new JLabel("Nabavna cijena: ");
 		lblNabavnaCijena.setBounds(10, 139, 88, 14);
 		panel_4.add(lblNabavnaCijena);
 		
-		textField_9 = new JTextField();
-		textField_9.setBounds(106, 136, 86, 20);
-		panel_4.add(textField_9);
-		textField_9.setColumns(10);
+		tbNabavnaCijena = new JTextField();
+		tbNabavnaCijena.setBounds(106, 136, 86, 20);
+		panel_4.add(tbNabavnaCijena);
+		tbNabavnaCijena.setColumns(10);
 		
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		lblNaziv.setBounds(216, 48, 39, 14);
 		panel_4.add(lblNaziv);
 		
-		textField_10 = new JTextField();
-		textField_10.setBounds(259, 45, 155, 20);
-		panel_4.add(textField_10);
-		textField_10.setColumns(10);
+		tbNaziv = new JTextField();
+		tbNaziv.setBounds(259, 45, 155, 20);
+		panel_4.add(tbNaziv);
+		tbNaziv.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Jedinična količina: ");
 		lblNewLabel_5.setBounds(209, 93, 94, 14);
 		panel_4.add(lblNewLabel_5);
 		
-		textField_11 = new JTextField();
-		textField_11.setBounds(299, 90, 115, 20);
-		panel_4.add(textField_11);
-		textField_11.setColumns(10);
+		tbJedinicnaKolicina = new JTextField();
+		tbJedinicnaKolicina.setBounds(299, 90, 115, 20);
+		panel_4.add(tbJedinicnaKolicina);
+		tbJedinicnaKolicina.setColumns(10);
 		
 		JLabel lblMjernaJedinica = new JLabel("Mjerna jedinica: ");
 		lblMjernaJedinica.setBounds(216, 139, 79, 14);
 		panel_4.add(lblMjernaJedinica);
 		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(299, 136, 115, 20);
-		panel_4.add(comboBox_5);
+		final JComboBox cbMjernaJedinica = new JComboBox();
+		cbMjernaJedinica.setModel(new DefaultComboBoxModel(MjernaJedinica.values()));
+		cbMjernaJedinica.setBounds(299, 136, 115, 20);
+		panel_4.add(cbMjernaJedinica);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(null);
@@ -205,6 +211,11 @@ public class FormaZaUposlenika {
 		panel_4.add(panel_5);
 		
 		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UposlenikUI.DodajNoviArtikal(tbBarKod.getText(), tbNaziv.getText(), tbJedinicnaKolicina.getText(), (MjernaJedinica)cbMjernaJedinica.getSelectedItem(), tbKolicina.getText());
+			}
+		});
 		btnDodaj.setBounds(9, 176, 89, 23);
 		panel_4.add(btnDodaj);
 		
@@ -373,8 +384,22 @@ public class FormaZaUposlenika {
 		
 		JLabel lblOdjava = new JLabel("Odjava");
 		lblOdjava.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblOdjava.setBounds(666, 11, 91, 23);
+		lblOdjava.setBounds(730, 7, 37, 23);
 		frame.getContentPane().add(lblOdjava);
+		
+		JLabel lblStatusmsg = new JLabel("StatusMSG");
+		lblStatusmsg.setBounds(10, 539, 46, 14);
+		frame.getContentPane().add(lblStatusmsg);
+		
+		JLabel lblDobrodosli = new JLabel("Dobrodošli:");
+		lblDobrodosli.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblDobrodosli.setBounds(10, 7, 61, 14);
+		frame.getContentPane().add(lblDobrodosli);
+		
+		JLabel lblUser = new JLabel("user");
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUser.setBounds(81, 7, 46, 14);
+		frame.getContentPane().add(lblUser);
 		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
 	}
 }

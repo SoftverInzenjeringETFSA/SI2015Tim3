@@ -14,16 +14,18 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.Window.Type;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Prijava {
 
-	private JFrame frmPrijava;
+	public JFrame frmPrijava;
 	private JTextField textField;
 	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -78,6 +80,12 @@ public class Prijava {
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Potvrdi");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmPrijava.setVisible(false);
+				RunForms.RunMenadzerForm();
+			}
+		});
 		btnNewButton.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 11));
 		btnNewButton.setBounds(212, 152, 84, 23);
 		frmPrijava.getContentPane().add(btnNewButton);
