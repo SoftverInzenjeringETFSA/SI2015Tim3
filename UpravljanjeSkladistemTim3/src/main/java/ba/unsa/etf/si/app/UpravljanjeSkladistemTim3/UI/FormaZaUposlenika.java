@@ -31,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 
 public class FormaZaUposlenika {
 
@@ -70,6 +71,7 @@ public class FormaZaUposlenika {
 
 	/**
 	 * Create the application.
+	 * @param _user 
 	 */
 	public FormaZaUposlenika() {
 		initialize();

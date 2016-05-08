@@ -14,6 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
+
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
@@ -42,7 +45,8 @@ public class FormaZaMenadzera {
 	private JTextField textField_9;
 	private JTextField textField_10;
 	private JTextField textField_11;
-
+	
+	public Uposlenik _user;
 	/**
 	 * Launch the application.
 	 *
