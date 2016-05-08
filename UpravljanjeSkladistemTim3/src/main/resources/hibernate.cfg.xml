@@ -9,15 +9,15 @@
   <property name="hibernate.connection.username">EtfSI2015</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Artikal.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Dokument.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Nabavka.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Otpisnica.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Otpremnica.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/PoslovniPartner.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/SkladisteArtikal.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/StavkaDokumenta.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Uposlenik.hbm.xml"/>
-  <mapping resource="/UpravljanjeSkladistemTim3/src/main/resources/Skladiste.hbm.xml"/>
+  <mapping resource="Artikal.hbm.xml"/>
+  <mapping resource="Dokument.hbm.xml"/>
+  <mapping resource="Nabavka.hbm.xml"/>
+  <mapping resource="Otpisnica.hbm.xml"/>
+  <mapping resource="Otpremnica.hbm.xml"/>
+  <mapping resource="PoslovniPartner.hbm.xml"/>
+  <mapping resource="Skladiste.hbm.xml"/>
+  <mapping resource="SkladisteArtikal.hbm.xml"/>
+  <mapping resource="StavkaDokumenta.hbm.xml"/>
+  <mapping resource="Uposlenik.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
