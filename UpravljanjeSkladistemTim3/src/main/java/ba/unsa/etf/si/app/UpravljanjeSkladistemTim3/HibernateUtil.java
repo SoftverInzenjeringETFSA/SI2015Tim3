@@ -1,7 +1,7 @@
 package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.*;
 
 public class HibernateUtil {
 

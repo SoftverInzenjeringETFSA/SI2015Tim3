@@ -37,7 +37,7 @@ import java.awt.event.MouseEvent;
 
 public class FormaZaUposlenika {
 
-	public JFrame frame;
+	public JFrame frmSistemUpravljanjaSkladitem;
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private JTable table_2;
 	private JTable table_1;
@@ -56,6 +56,8 @@ public class FormaZaUposlenika {
 	private JTextField tbJedinicnaKolicina;
 
 	private Uposlenik _user;
+	private JTextField textField_6;
+	private JTextField textField_7;
 	
 	
 	public Uposlenik get_user() {
@@ -67,7 +69,7 @@ public class FormaZaUposlenika {
 		JLabel lblUser = new JLabel(_user.getUser());
 		lblUser.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblUser.setBounds(92, 7, 46, 14);
-		frame.getContentPane().add(lblUser);
+		frmSistemUpravljanjaSkladitem.getContentPane().add(lblUser);
 	}
 
 	public FormaZaUposlenika() {
@@ -78,43 +80,40 @@ public class FormaZaUposlenika {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 783, 593);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmSistemUpravljanjaSkladitem = new JFrame();
+		frmSistemUpravljanjaSkladitem.setTitle("Sistem upravljanja skladištem - Radnik u skladištu");
+		frmSistemUpravljanjaSkladitem.setResizable(false);
+		frmSistemUpravljanjaSkladitem.setBounds(100, 100, 783, 593);
+		frmSistemUpravljanjaSkladitem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSistemUpravljanjaSkladitem.getContentPane().setLayout(null);
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
 		tabbedPane.setBounds(0, 28, 767, 508);
-		frame.getContentPane().add(tabbedPane);
-		frame.setLocationRelativeTo(null);
+		frmSistemUpravljanjaSkladitem.getContentPane().add(tabbedPane);
+		frmSistemUpravljanjaSkladitem.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Unos Robe", null, panel, null);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Skladište: ");
 		lblNewLabel.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNewLabel.setBounds(24, 32, 66, 14);
+		lblNewLabel.setBounds(61, 11, 54, 16);
 		panel.add(lblNewLabel);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(86, 27, 195, 24);
-		panel.add(comboBox);
 		
 		JLabel lblDobavlja = new JLabel("Dobavljač: ");
 		lblDobavlja.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblDobavlja.setBounds(24, 76, 54, 24);
+		lblDobavlja.setBounds(61, 38, 54, 24);
 		panel.add(lblDobavlja);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(86, 76, 195, 24);
+		comboBox_1.setBounds(125, 39, 183, 24);
 		panel.add(comboBox_1);
 		
 		JButton btnDodajNovogDobavljaa = new JButton("Dodaj novog dobavljača");
-		btnDodajNovogDobavljaa.setBounds(86, 127, 183, 23);
+		btnDodajNovogDobavljaa.setBounds(318, 39, 183, 25);
 		panel.add(btnDodajNovogDobavljaa);
 		
 		JButton btnNewButton = new JButton("Završi unos");
-		btnNewButton.setBounds(288, 445, 131, 23);
+		btnNewButton.setBounds(621, 444, 131, 23);
 		panel.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -124,102 +123,90 @@ public class FormaZaUposlenika {
 		table_2 = new JTable();
 		table_2.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, "", "", null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
 				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Prodajna cijena", "Nabavna cijena"
 			}
-		));
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, Double.class, Object.class, Integer.class, Object.class, Double.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		table_2.getColumnModel().getColumn(2).setPreferredWidth(93);
 		table_2.getColumnModel().getColumn(3).setPreferredWidth(110);
 		table_2.getColumnModel().getColumn(4).setPreferredWidth(97);
 		scrollPane.setViewportView(table_2);
 		
-		JLabel lblListaArtikala = new JLabel("Lista artikala: ");
-		lblListaArtikala.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblListaArtikala.setBounds(10, 196, 89, 24);
-		panel.add(lblListaArtikala);
-		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(306, 3, 435, 210);
+		panel_4.setToolTipText("");
+		panel_4.setBounds(125, 74, 627, 136);
 		panel_4.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JRadioButton rdbtnPostojeiArtikal = new JRadioButton("Postojeći artikal");
-		rdbtnPostojeiArtikal.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		rdbtnPostojeiArtikal.setBounds(70, 6, 109, 23);
-		panel_4.add(rdbtnPostojeiArtikal);
-		
-		JRadioButton rdbtnNoviArtikal = new JRadioButton("Novi artikal");
-		rdbtnNoviArtikal.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		rdbtnNoviArtikal.setBounds(259, 6, 109, 23);
-		panel_4.add(rdbtnNoviArtikal);
-		
 		JLabel lblBarKod = new JLabel("Bar kod: ");
 		lblBarKod.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblBarKod.setBounds(10, 48, 53, 14);
+		lblBarKod.setBounds(45, 13, 53, 14);
 		panel_4.add(lblBarKod);
 		
 		tbBarKod = new JTextField();
-		tbBarKod.setBounds(70, 45, 122, 20);
+		tbBarKod.setBounds(99, 11, 172, 20);
 		panel_4.add(tbBarKod);
 		tbBarKod.setColumns(10);
 		
 		JLabel lblKoliina_1 = new JLabel("Količina: ");
 		lblKoliina_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblKoliina_1.setBounds(10, 93, 46, 14);
+		lblKoliina_1.setBounds(44, 44, 46, 14);
 		panel_4.add(lblKoliina_1);
 		
 		tbKolicina = new JTextField();
-		tbKolicina.setBounds(70, 90, 122, 20);
+		tbKolicina.setBounds(100, 42, 100, 20);
 		panel_4.add(tbKolicina);
 		tbKolicina.setColumns(10);
 		
 		JLabel lblNabavnaCijena = new JLabel("Nabavna cijena: ");
 		lblNabavnaCijena.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNabavnaCijena.setBounds(10, 139, 88, 14);
+		lblNabavnaCijena.setBounds(10, 75, 88, 14);
 		panel_4.add(lblNabavnaCijena);
 		
 		tbNabavnaCijena = new JTextField();
-		tbNabavnaCijena.setBounds(106, 136, 86, 20);
+		tbNabavnaCijena.setBounds(100, 73, 100, 20);
 		panel_4.add(tbNabavnaCijena);
 		tbNabavnaCijena.setColumns(10);
 		
 		JLabel lblNaziv = new JLabel("Naziv: ");
 		lblNaziv.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNaziv.setBounds(216, 48, 39, 14);
+		lblNaziv.setBounds(373, 13, 39, 14);
 		panel_4.add(lblNaziv);
 		
 		tbNaziv = new JTextField();
-		tbNaziv.setBounds(259, 45, 155, 20);
+		tbNaziv.setBounds(422, 11, 172, 20);
 		panel_4.add(tbNaziv);
 		tbNaziv.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Jedinična količina: ");
 		lblNewLabel_5.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNewLabel_5.setBounds(209, 93, 94, 14);
+		lblNewLabel_5.setBounds(318, 44, 94, 14);
 		panel_4.add(lblNewLabel_5);
 		
 		tbJedinicnaKolicina = new JTextField();
-		tbJedinicnaKolicina.setBounds(299, 90, 115, 20);
+		tbJedinicnaKolicina.setBounds(422, 42, 100, 20);
 		panel_4.add(tbJedinicnaKolicina);
 		tbJedinicnaKolicina.setColumns(10);
 		
 		JLabel lblMjernaJedinica = new JLabel("Mjerna jedinica: ");
 		lblMjernaJedinica.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblMjernaJedinica.setBounds(216, 139, 79, 14);
+		lblMjernaJedinica.setBounds(333, 75, 79, 14);
 		panel_4.add(lblMjernaJedinica);
 		
 		final JComboBox cbMjernaJedinica = new JComboBox();
 		cbMjernaJedinica.setModel(new DefaultComboBoxModel(MjernaJedinica.values()));
-		cbMjernaJedinica.setBounds(299, 136, 115, 20);
+		cbMjernaJedinica.setBounds(422, 73, 100, 20);
 		panel_4.add(cbMjernaJedinica);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(null);
-		panel_5.setBounds(202, 36, 223, 143);
-		panel_4.add(panel_5);
 		
 		JButton btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
@@ -227,8 +214,29 @@ public class FormaZaUposlenika {
 				UposlenikUI.DodajNoviArtikal(tbBarKod.getText(), tbNaziv.getText(), tbJedinicnaKolicina.getText(), (MjernaJedinica)cbMjernaJedinica.getSelectedItem(), tbKolicina.getText());
 			}
 		});
-		btnDodaj.setBounds(9, 176, 89, 23);
+		btnDodaj.setBounds(99, 104, 89, 23);
 		panel_4.add(btnDodaj);
+		
+		textField_7 = new JTextField();
+		textField_7.setBounds(422, 105, 100, 20);
+		panel_4.add(textField_7);
+		textField_7.setColumns(10);
+		
+		JLabel lblProdajnaCijena_1 = new JLabel("Prodajna cijena:");
+		lblProdajnaCijena_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblProdajnaCijena_1.setBounds(333, 107, 79, 14);
+		panel_4.add(lblProdajnaCijena_1);
+		
+		textField_6 = new JTextField();
+		textField_6.setEditable(false);
+		textField_6.setBounds(125, 11, 183, 20);
+		panel.add(textField_6);
+		textField_6.setColumns(10);
+		
+		JLabel lblUnosArtikla = new JLabel("Unos artikla:");
+		lblUnosArtikla.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblUnosArtikla.setBounds(55, 65, 60, 24);
+		panel.add(lblUnosArtikla);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Otpremanje robe", null, panel_1, null);
@@ -409,24 +417,24 @@ public class FormaZaUposlenika {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				RunForms.RunPrijavaForm();
-				frame.dispose();
+				frmSistemUpravljanjaSkladitem.dispose();
 				
 			}
 		});
 		lblOdjava.setFont(new Font("Sitka Text", Font.BOLD, 11));
 		lblOdjava.setBounds(721, 7, 46, 23);
-		frame.getContentPane().add(lblOdjava);
+		frmSistemUpravljanjaSkladitem.getContentPane().add(lblOdjava);
 		
 		JLabel lblStatusmsg = new JLabel("StatusMSG");
 		lblStatusmsg.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblStatusmsg.setBounds(10, 539, 63, 14);
-		frame.getContentPane().add(lblStatusmsg);
+		frmSistemUpravljanjaSkladitem.getContentPane().add(lblStatusmsg);
 		
 		JLabel lblDobrodosli = new JLabel("Dobrodošli:");
 		lblDobrodosli.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lblDobrodosli.setBounds(10, 7, 84, 14);
-		frame.getContentPane().add(lblDobrodosli);
+		lblDobrodosli.setBounds(10, 7, 76, 14);
+		frmSistemUpravljanjaSkladitem.getContentPane().add(lblDobrodosli);
 		
-		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
+		frmSistemUpravljanjaSkladitem.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
 	}
 }

@@ -39,7 +39,7 @@ public class RunForms {
 				try {
 					FormaZaUposlenika window = new FormaZaUposlenika();
 					window.set_user(_user);
-					window.frame.setVisible(true);
+					window.frmSistemUpravljanjaSkladitem.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

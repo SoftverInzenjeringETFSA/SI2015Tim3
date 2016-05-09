@@ -11,19 +11,18 @@
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>
-        <property name="vrijednost" type="double">
-            <column name="VRIJEDNOST" />
-        </property>
-        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+         <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
             <column name="KREIRAO" />
         </many-to-one>
-        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="join">
+            <column name="SKLADISTE" />
+        </many-to-one>
+       <set name="_stavke" table="STAVKA_DOKUMENTA" inverse="false" lazy="true">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
-        </list>
+        </set>
     </class>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka">
     <id name="id" type="long">
@@ -33,19 +32,18 @@
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>
-        <property name="vrijednost" type="double">
-            <column name="VRIJEDNOST" />
-        </property>
-        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+         <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
             <column name="KREIRAO" />
         </many-to-one>
-        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+        <set name="_stavke" table="STAVKA_DOKUMENTA" inverse="false" lazy="true">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
-        </list>
+        </set>
+        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="join">
+            <column name="SKLADISTE" />
+        </many-to-one>
          <property name="barKod" type="java.lang.String">
             <column name="BARKOD" />
         </property>
@@ -61,19 +59,18 @@
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>
-        <property name="vrijednost" type="double">
-            <column name="VRIJEDNOST" />
-        </property>
-        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+          <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
             <column name="KREIRAO" />
         </many-to-one>
-        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+       <set name="_stavke" table="STAVKA_DOKUMENTA" inverse="false" lazy="true">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
-        </list>
+        </set>
+        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="join">
+            <column name="SKLADISTE" />
+        </many-to-one>
         <property name="razlogOtpisa" type="java.lang.String">
             <column name="RAZLOG_OTPISA" />
         </property>
@@ -86,19 +83,18 @@
         <property name="datum" type="java.util.Date">
             <column name="DATUM" />
         </property>
-        <property name="vrijednost" type="double">
-            <column name="VRIJEDNOST" />
-        </property>
-        <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
+         <many-to-one name="_kreirao" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" fetch="join">
             <column name="KREIRAO" />
         </many-to-one>
-        <list name="_stavke" inverse="false" table="STAVKA_DOKUMENTA" lazy="true">
+        <set name="_stavke" table="STAVKA_DOKUMENTA" inverse="false" lazy="true">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" />
-        </list>
+        </set>
+        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="join">
+            <column name="SKLADISTE" />
+        </many-to-one>
          <many-to-one name="_kupac" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner" fetch="join">
             <column name="KUPAC" />
         </many-to-one>
