@@ -20,7 +20,7 @@ public class PrijavaUI {
 		// Autorizacija
 		else {
 			Uposlenik _user = PrijavaBLL.Autorizacija(user, pass);
-			if(_user.equals(null)) {
+			if(_user == null || !_user.getPassword().equals(pass)) {
 				JOptionPane.showMessageDialog(null, "Unesena kombinacija user-pass ne postoji u bazi!", "Omaška", JOptionPane.ERROR_MESSAGE);
 				return;
 			}

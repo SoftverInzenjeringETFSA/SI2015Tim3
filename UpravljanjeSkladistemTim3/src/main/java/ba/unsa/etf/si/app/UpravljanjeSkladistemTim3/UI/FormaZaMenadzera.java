@@ -27,6 +27,8 @@ import javax.swing.JList;
 import java.awt.Font;
 import javax.swing.AbstractListModel;
 import javax.swing.border.TitledBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FormaZaMenadzera {
 
@@ -47,42 +49,33 @@ public class FormaZaMenadzera {
 	private JTextField textField_10;
 	private JTextField textField_11;
 	
-	public Uposlenik _user;
-	/**
-	 * Launch the application.
-	 *
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormaZaMenadzera window = new FormaZaMenadzera();
-					window.frmSistemUpravljanjaSkladistem.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	private Uposlenik _user;
+	
+	public Uposlenik get_user() {
+		return _user;
 	}
 
-	/**
-	 * Create the application.
-	 */
+	public void set_user(Uposlenik _user) {
+		this._user = _user;
+		JLabel userName = new JLabel(_user.getUser());
+		userName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		userName.setBounds(90, 14, 46, 14);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(userName);
+		}
+
 	public FormaZaMenadzera() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frmSistemUpravljanjaSkladistem = new JFrame();
 		frmSistemUpravljanjaSkladistem.setResizable(false);
 		frmSistemUpravljanjaSkladistem.setIconImage(Toolkit.getDefaultToolkit().getImage(FormaZaMenadzera.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
-		frmSistemUpravljanjaSkladistem.setTitle("Sistem upravljanja skladištem");
+		frmSistemUpravljanjaSkladistem.setTitle("Sistem upravljanja skladištem - Menadžer");
 		frmSistemUpravljanjaSkladistem.setBounds(100, 100, 711, 526);
 		frmSistemUpravljanjaSkladistem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSistemUpravljanjaSkladistem.getContentPane().setLayout(null);
-		
+		frmSistemUpravljanjaSkladistem.setLocationRelativeTo(null);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
 		tabbedPane.setBounds(0, 44, 695, 431);
@@ -531,6 +524,13 @@ public class FormaZaMenadzera {
 		panel_4.add(btnPretrai);
 		
 		JLabel label_7 = new JLabel("Odjava");
+		label_7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				RunForms.RunPrijavaForm();
+				frmSistemUpravljanjaSkladistem.dispose();
+			}
+		});
 		label_7.setFont(new Font("Sitka Text", Font.BOLD, 11));
 		label_7.setBounds(632, 11, 53, 24);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(label_7);
@@ -540,10 +540,7 @@ public class FormaZaMenadzera {
 		label_28.setBounds(10, 9, 73, 24);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(label_28);
 		
-		JLabel label_6 = new JLabel("user");
-		label_6.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_6.setBounds(90, 14, 46, 14);
-		frmSistemUpravljanjaSkladistem.getContentPane().add(label_6);
+		
 		
 		JLabel label_8 = new JLabel("StatusMSG");
 		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));

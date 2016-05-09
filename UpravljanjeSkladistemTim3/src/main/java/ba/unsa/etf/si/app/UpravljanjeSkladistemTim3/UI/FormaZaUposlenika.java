@@ -32,6 +32,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FormaZaUposlenika {
 
@@ -53,26 +55,21 @@ public class FormaZaUposlenika {
 	private JTextField tbNaziv;
 	private JTextField tbJedinicnaKolicina;
 
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FormaZaUposlenika window = new FormaZaUposlenika();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
+	private Uposlenik _user;
+	
+	
+	public Uposlenik get_user() {
+		return _user;
+	}
 
-	/**
-	 * Create the application.
-	 * @param _user 
-	 */
+	public void set_user(Uposlenik _user) {
+		this._user = _user;
+		JLabel lblUser = new JLabel(_user.getUser());
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUser.setBounds(92, 7, 46, 14);
+		frame.getContentPane().add(lblUser);
+	}
+
 	public FormaZaUposlenika() {
 		initialize();
 	}
@@ -89,7 +86,7 @@ public class FormaZaUposlenika {
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
 		tabbedPane.setBounds(0, 28, 767, 508);
 		frame.getContentPane().add(tabbedPane);
-		
+		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Unos Robe", null, panel, null);
 		panel.setLayout(null);
@@ -408,6 +405,14 @@ public class FormaZaUposlenika {
 		scrollPane_3.setViewportView(table);
 		
 		JLabel lblOdjava = new JLabel("Odjava");
+		lblOdjava.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				RunForms.RunPrijavaForm();
+				frame.dispose();
+				
+			}
+		});
 		lblOdjava.setFont(new Font("Sitka Text", Font.BOLD, 11));
 		lblOdjava.setBounds(721, 7, 46, 23);
 		frame.getContentPane().add(lblOdjava);
@@ -422,10 +427,6 @@ public class FormaZaUposlenika {
 		lblDobrodosli.setBounds(10, 7, 84, 14);
 		frame.getContentPane().add(lblDobrodosli);
 		
-		JLabel lblUser = new JLabel("user");
-		lblUser.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUser.setBounds(92, 7, 46, 14);
-		frame.getContentPane().add(lblUser);
 		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
 	}
 }
