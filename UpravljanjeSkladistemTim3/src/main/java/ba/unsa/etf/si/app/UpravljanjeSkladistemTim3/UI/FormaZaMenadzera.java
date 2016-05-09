@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import java.awt.Font;
 import javax.swing.AbstractListModel;
+import javax.swing.border.TitledBorder;
 
 public class FormaZaMenadzera {
 
@@ -127,6 +128,7 @@ public class FormaZaMenadzera {
 		panel_1.setLayout(null);
 		
 		JPanel panel_14 = new JPanel();
+		panel_14.setBorder(new TitledBorder(null, "Generisanje izvje\u0161taja", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_14.setBounds(151, 11, 372, 375);
 		panel_1.add(panel_14);
 		panel_14.setLayout(null);
@@ -160,7 +162,7 @@ public class FormaZaMenadzera {
 		
 		JCheckBox checkBox = new JCheckBox("Trenutno stanje skladi\u0161ta(zaklju\u010Dno sa dana\u0161njim danom)");
 		checkBox.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		checkBox.setBounds(0, 131, 360, 23);
+		checkBox.setBounds(18, 131, 342, 23);
 		panel_14.add(checkBox);
 		checkBox.setHorizontalAlignment(SwingConstants.RIGHT);
 		
@@ -188,23 +190,18 @@ public class FormaZaMenadzera {
 		panel_14.add(comboBox_3);
 		
 		JPanel panel_6 = new JPanel();
+		panel_6.setBorder(new TitledBorder(null, "Dodatne opcije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_6.setBounds(10, 235, 352, 72);
 		panel_14.add(panel_6);
 		panel_6.setLayout(null);
 		
-		JLabel label_6 = new JLabel("Dodatne opcije");
-		label_6.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_6.setHorizontalAlignment(SwingConstants.TRAILING);
-		label_6.setBounds(10, 11, 72, 14);
-		panel_6.add(label_6);
-		
 		JLabel lblUnesiteBarKod = new JLabel("Unesite bar kod artikla:");
 		lblUnesiteBarKod.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblUnesiteBarKod.setBounds(10, 42, 111, 14);
+		lblUnesiteBarKod.setBounds(10, 30, 111, 14);
 		panel_6.add(lblUnesiteBarKod);
 		
 		textField_11 = new JTextField();
-		textField_11.setBounds(131, 39, 211, 20);
+		textField_11.setBounds(131, 27, 211, 20);
 		panel_6.add(textField_11);
 		textField_11.setColumns(10);
 		
@@ -217,6 +214,7 @@ public class FormaZaMenadzera {
 		panel_2.setLayout(null);
 		
 		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new TitledBorder(null, "Dodavanje novog uposlenika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_7.setBounds(10, 11, 324, 373);
 		panel_2.add(panel_7);
 		panel_7.setLayout(null);
@@ -319,16 +317,12 @@ public class FormaZaMenadzera {
 		comboBox_6.setBounds(123, 266, 191, 20);
 		panel_7.add(comboBox_6);
 		
-		JLabel lblDodavanjeNovogUposlenika = new JLabel("Dodavanje novog uposlenika");
-		lblDodavanjeNovogUposlenika.setFont(new Font("SansSerif", Font.BOLD, 11));
-		lblDodavanjeNovogUposlenika.setBounds(10, 8, 165, 14);
-		panel_7.add(lblDodavanjeNovogUposlenika);
-		
 		JButton button_1 = new JButton("Dodaj novog uposlenika");
 		button_1.setBounds(123, 339, 191, 23);
 		panel_7.add(button_1);
 		
 		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new TitledBorder(null, "Lista uposlenika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_8.setBounds(344, 11, 336, 373);
 		panel_2.add(panel_8);
 		panel_8.setLayout(null);
@@ -358,16 +352,12 @@ public class FormaZaMenadzera {
 		});
 		scrollPane_1.setViewportView(table_1);
 		
-		JLabel label_8 = new JLabel("Lista uposlenika");
-		label_8.setFont(new Font("SansSerif", Font.BOLD, 11));
-		label_8.setBounds(10, 5, 165, 23);
-		panel_8.add(label_8);
-		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Skladišta", new ImageIcon(FormaZaMenadzera.class.getResource("/javax/swing/plaf/metal/icons/ocean/collapsed-rtl.gif")), panel_3, null);
 		panel_3.setLayout(null);
 		
 		JPanel panel_9 = new JPanel();
+		panel_9.setBorder(new TitledBorder(null, "Dodavanje novog skladi\u0161ta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_9.setBounds(10, 11, 328, 373);
 		panel_3.add(panel_9);
 		panel_9.setLayout(null);
@@ -407,6 +397,7 @@ public class FormaZaMenadzera {
 		panel_9.add(btnDodajSkladite);
 		
 		JPanel panel_11 = new JPanel();
+		panel_11.setBorder(new TitledBorder(null, "Radno vrijeme", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_11.setBounds(10, 94, 308, 82);
 		panel_9.add(panel_11);
 		panel_11.setLayout(null);
@@ -429,17 +420,8 @@ public class FormaZaMenadzera {
 		comboBox_7.setBounds(98, 26, 200, 20);
 		panel_11.add(comboBox_7);
 		
-		JLabel label_22 = new JLabel("Radno vrijeme");
-		label_22.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_22.setBounds(10, 4, 77, 14);
-		panel_11.add(label_22);
-		
-		JLabel lblDodavanjeNovogSkladita = new JLabel("Dodavanje novog skladišta");
-		lblDodavanjeNovogSkladita.setFont(new Font("SansSerif", Font.BOLD, 11));
-		lblDodavanjeNovogSkladita.setBounds(10, 11, 177, 14);
-		panel_9.add(lblDodavanjeNovogSkladita);
-		
 		JPanel panel_10 = new JPanel();
+		panel_10.setBorder(new TitledBorder(null, "Lista skladi\u0161ta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_10.setBounds(348, 11, 332, 373);
 		panel_3.add(panel_10);
 		panel_10.setLayout(null);
@@ -473,49 +455,36 @@ public class FormaZaMenadzera {
 		button_3.setBounds(187, 339, 135, 23);
 		panel_10.add(button_3);
 		
-		JLabel lblListaSkladita = new JLabel("Lista skladišta");
-		lblListaSkladita.setFont(new Font("SansSerif", Font.BOLD, 11));
-		lblListaSkladita.setBounds(10, 11, 114, 14);
-		panel_10.add(lblListaSkladita);
-		
 		JPanel panel_4 = new JPanel();
 		tabbedPane.addTab("Dokumenti", new ImageIcon(FormaZaMenadzera.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")), panel_4, null);
 		panel_4.setLayout(null);
 		
 		JPanel panel_12 = new JPanel();
-		panel_12.setBounds(10, 11, 224, 122);
+		panel_12.setBorder(new TitledBorder(null, "Tip dokumenta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_12.setBounds(10, 21, 224, 112);
 		panel_4.add(panel_12);
 		panel_12.setLayout(null);
 		
-		JLabel lblTipDokumenta = new JLabel("Tip dokumenta");
-		lblTipDokumenta.setFont(new Font("SansSerif", Font.BOLD, 11));
-		lblTipDokumenta.setBounds(10, 11, 164, 14);
-		panel_12.add(lblTipDokumenta);
-		
 		JCheckBox chckbxNabavka = new JCheckBox("Nabavka");
 		chckbxNabavka.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		chckbxNabavka.setBounds(47, 32, 97, 23);
+		chckbxNabavka.setBounds(64, 18, 97, 23);
 		panel_12.add(chckbxNabavka);
 		
 		JCheckBox chckbxOtpremnica = new JCheckBox("Otpremnica");
 		chckbxOtpremnica.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		chckbxOtpremnica.setBounds(47, 58, 97, 23);
+		chckbxOtpremnica.setBounds(64, 44, 97, 23);
 		panel_12.add(chckbxOtpremnica);
 		
 		JCheckBox chckbxOtpisnica = new JCheckBox("Otpisnica");
 		chckbxOtpisnica.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		chckbxOtpisnica.setBounds(47, 84, 97, 23);
+		chckbxOtpisnica.setBounds(64, 70, 97, 23);
 		panel_12.add(chckbxOtpisnica);
 		
 		JPanel panel_13 = new JPanel();
-		panel_13.setBounds(244, 11, 307, 122);
+		panel_13.setBorder(new TitledBorder(null, "Vremenski period", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_13.setBounds(244, 21, 307, 112);
 		panel_4.add(panel_13);
 		panel_13.setLayout(null);
-		
-		JLabel lblVremenskiPeriod = new JLabel("Vremenski period");
-		lblVremenskiPeriod.setFont(new Font("SansSerif", Font.BOLD, 11));
-		lblVremenskiPeriod.setBounds(10, 11, 164, 14);
-		panel_13.add(lblVremenskiPeriod);
 		
 		JLabel label_26 = new JLabel("od:");
 		label_26.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -570,5 +539,15 @@ public class FormaZaMenadzera {
 		label_28.setFont(new Font("Verdana", Font.PLAIN, 11));
 		label_28.setBounds(10, 9, 73, 24);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(label_28);
+		
+		JLabel label_6 = new JLabel("user");
+		label_6.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_6.setBounds(90, 14, 46, 14);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(label_6);
+		
+		JLabel label_8 = new JLabel("StatusMSG");
+		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		label_8.setBounds(10, 472, 63, 25);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(label_8);
 	}
 }
