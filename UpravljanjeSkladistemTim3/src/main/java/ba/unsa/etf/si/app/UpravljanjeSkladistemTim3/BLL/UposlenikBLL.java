@@ -5,6 +5,8 @@ import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.SkladisteArtikal;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta;
 
 import org.hibernate.Transaction;
 
@@ -16,7 +18,28 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 public class UposlenikBLL {
-	public static void DodajArtikal() {  }
+	public static List<Artikal> _noviArtikli = new ArrayList<Artikal>();
+	public static List<SkladisteArtikal> _stariArtikli = new ArrayList<SkladisteArtikal>();
+	public static List<StavkaDokumenta> _stavkeNabavke = new ArrayList<StavkaDokumenta>();
+	
+	public static boolean DodajArtikal(String ean, int kolicina, double nabavnaCijena) {
+		Transaction t = App.session.beginTransaction();
+		String hql = "from Artikal where barKod = :bar_kod";
+		Query query = App.session.createQuery(hql);
+		query.setParameter("bar_kod", ean);
+		try {
+		Artikal a = (Artikal)query.uniqueResult();
+		} catch (NullPointerException e) {
+			return false;
+		}
+		
+		StavkaDokumenta st = new StavkaDokumenta();
+		st.setCijena(nabavnaCijena);
+		st.setKolicina(kolicina);
+		_stavkeNabavke.add(st);
+		return true;
+	}
+	
 	public static void DodajNabavku() {}
 	public static void GenerisiNaljepnicu() {}
 	public static void DodajNoviArtikal(Artikal ar) {}
@@ -35,9 +58,10 @@ public class UposlenikBLL {
 		List<PoslovniPartner> partneri = new ArrayList<PoslovniPartner>();
 		
 		Transaction t = App.session.beginTransaction();
-		String hql = "from poslovni_partner";
+		String hql = "from PoslovniPartner";
 		Query querry = App.session.createQuery(hql);
 		partneri = querry.list();	
+		t.commit();
 		
 		return partneri;
 	}

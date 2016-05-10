@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import java.util.List;
@@ -47,12 +48,13 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.SpinnerNumberModel;
 
 public class FormaZaUposlenika {
 
 	public JFrame frmSistemUpravljanjaSkladitem;
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-	private JTable table_2;
+	private JTable tabelaArtikli;
 	private JTable table_1;
 	private JTable table_3;
 	private JTable table;
@@ -63,7 +65,6 @@ public class FormaZaUposlenika {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	public JTextField tbBarKod;
-	private JTextField tbKolicina;
 	private JTextField tbNabavnaCijena;
 	private JTextField tbNaziv;
 	private JTextField tbJedinicnaKolicina;
@@ -78,6 +79,9 @@ public class FormaZaUposlenika {
 	private ChangeListener changeListener;
 	private JPanel pnlNovi;
 	private JButton btnDodaj;
+	private JComboBox cbDobavljac;
+	private JLabel lblStatusmsg;
+	private JSpinner spinnerKolicina;
 	
 	private void groupButton() {
 		bg = new ButtonGroup();
@@ -94,6 +98,11 @@ public class FormaZaUposlenika {
 		bg.add(rdbtnNoviArtikal);
 		bg.add(rdbtnPostojeciArtikal);
 		rdbtnPostojeciArtikal.setSelected(true);
+		
+		spinnerKolicina = new JSpinner();
+		spinnerKolicina.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spinnerKolicina.setBounds(99, 66, 98, 20);
+		panel_4.add(spinnerKolicina);
 		
 		changeListener = new ChangeListener() {
 			public void stateChanged(ChangeEvent changEvent) {
@@ -132,7 +141,11 @@ public class FormaZaUposlenika {
 
 	private void initData() {
 		List<PoslovniPartner> _partneri = UposlenikBLL.DobaviSvePoslnovnePartnere();
-		
+		DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+		for(PoslovniPartner p : _partneri) {
+			cbm.addElement(p.getNaziv());
+		}
+		cbDobavljac.setModel(cbm);
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -162,9 +175,9 @@ public class FormaZaUposlenika {
 		lblDobavlja.setBounds(61, 38, 54, 24);
 		panel.add(lblDobavlja);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(125, 39, 183, 24);
-		panel.add(comboBox_1);
+		cbDobavljac = new JComboBox();
+		cbDobavljac.setBounds(125, 39, 183, 24);
+		panel.add(cbDobavljac);
 		
 		JButton btnDodajNovogDobavljaa = new JButton("Dodaj novog dobavljača");
 		btnDodajNovogDobavljaa.setBounds(318, 39, 183, 25);
@@ -178,8 +191,8 @@ public class FormaZaUposlenika {
 		scrollPane.setBounds(10, 247, 742, 192);
 		panel.add(scrollPane);
 		
-		table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(
+		tabelaArtikli = new JTable();
+		tabelaArtikli.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null},
 			},
@@ -187,15 +200,15 @@ public class FormaZaUposlenika {
 				"Bar kod", "Koli\u010Dina", "Nabavna cijena"
 			}
 		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, Double.class
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
 			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
 			}
 		});
-		table_2.getColumnModel().getColumn(1).setPreferredWidth(97);
-		scrollPane.setViewportView(table_2);
+		tabelaArtikli.getColumnModel().getColumn(1).setPreferredWidth(97);
+		scrollPane.setViewportView(tabelaArtikli);
 		
 		panel_4 = new JPanel();
 		panel_4.setToolTipText("");
@@ -219,11 +232,6 @@ public class FormaZaUposlenika {
 		lblKoliina_1.setBounds(44, 68, 46, 14);
 		panel_4.add(lblKoliina_1);
 		
-		tbKolicina = new JTextField();
-		tbKolicina.setBounds(100, 66, 100, 20);
-		panel_4.add(tbKolicina);
-		tbKolicina.setColumns(10);
-		
 		JLabel lblNabavnaCijena = new JLabel("Nabavna cijena: ");
 		lblNabavnaCijena.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblNabavnaCijena.setBounds(10, 99, 88, 14);
@@ -237,7 +245,7 @@ public class FormaZaUposlenika {
 		btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-		
+				UnosRobeUI.DodajArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText());
 			}
 		});
 		btnDodaj.setBounds(99, 128, 101, 23);
@@ -500,7 +508,7 @@ public class FormaZaUposlenika {
 		lblOdjava.setBounds(721, 7, 46, 23);
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblOdjava);
 		
-		JLabel lblStatusmsg = new JLabel("StatusMSG");
+		lblStatusmsg = new JLabel("StatusMSG");
 		lblStatusmsg.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblStatusmsg.setBounds(10, 539, 63, 14);
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblStatusmsg);
