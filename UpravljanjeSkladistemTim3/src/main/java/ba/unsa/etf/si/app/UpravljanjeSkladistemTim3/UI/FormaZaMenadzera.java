@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,12 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.hibernate.Query;
-
-import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
-import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
-import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StrucnaSprema;
-import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.TipUposlenika;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 
 import java.awt.GridLayout;
@@ -34,16 +27,6 @@ import javax.swing.JList;
 import java.awt.Font;
 import javax.swing.AbstractListModel;
 import javax.swing.border.TitledBorder;
-import java.awt.event.ActionListener;
-import java.io.Console;
-import java.sql.ResultSet;
-import java.util.Date;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import com.toedter.*;
-import com.toedter.calendar.JDateChooser;
-import java.awt.Point;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -52,26 +35,19 @@ public class FormaZaMenadzera {
 	public JFrame frmSistemUpravljanjaSkladistem;
 	private JTable table;
 	private JTable table_1;
-	private JTextField textIme;
-	private JTextField textPrezime;
-	private JTextField textJmbg;
-	private JTextField textMjestoRodjenja;
-	private JTextField textAdresa;
-	private JTextField textBrojTel;
-	private JTextField textEmail;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
 	private JTable table_2;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
 	private JTextField textField_11;
-	private JDateChooser dateRodjenja;
-	private JComboBox comboBoxStrucnaSprema;
-	private JComboBox comboBoxSkladiste;
-	private JLabel labelStatus;
-	private JComboBox comboBoxTipUposlenika;
-	
-	private JTextField textUser;
-	private JTextField textPass;
 	
 	private Uposlenik _user;
 	
@@ -232,53 +208,53 @@ public class FormaZaMenadzera {
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(null, "Dodavanje novog uposlenika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7.setBounds(10, 11, 324, 375);
+		panel_7.setBounds(10, 11, 324, 373);
 		panel_2.add(panel_7);
 		panel_7.setLayout(null);
 		
 		JLabel label_9 = new JLabel("Ime:");
 		label_9.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_9.setBounds(80, 23, 22, 14);
+		label_9.setBounds(79, 33, 22, 14);
 		panel_7.add(label_9);
 		
 		JLabel label_10 = new JLabel("Prezime:");
 		label_10.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_10.setBounds(61, 48, 41, 14);
+		label_10.setBounds(61, 61, 41, 14);
 		panel_7.add(label_10);
 		
 		JLabel label_11 = new JLabel("JMBG:");
 		label_11.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_11.setBounds(71, 73, 31, 14);
+		label_11.setBounds(73, 89, 40, 14);
 		panel_7.add(label_11);
 		
 		JLabel label_12 = new JLabel("Datum ro\u0111enja:");
 		label_12.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_12.setBounds(28, 98, 80, 14);
+		label_12.setBounds(28, 117, 80, 14);
 		panel_7.add(label_12);
 		
 		JLabel label_13 = new JLabel("Mjesto ro\u0111enja:");
 		label_13.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_13.setBounds(28, 125, 80, 14);
+		label_13.setBounds(28, 148, 80, 14);
 		panel_7.add(label_13);
 		
 		JLabel label_14 = new JLabel("Adresa stanovanja:");
 		label_14.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_14.setBounds(7, 152, 95, 14);
+		label_14.setBounds(10, 176, 95, 14);
 		panel_7.add(label_14);
 		
 		JLabel label_15 = new JLabel("Broj telefona:");
 		label_15.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_15.setBounds(38, 179, 66, 14);
+		label_15.setBounds(38, 207, 66, 14);
 		panel_7.add(label_15);
 		
 		JLabel label_16 = new JLabel("E-mail adresa:");
 		label_16.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_16.setBounds(34, 206, 68, 14);
+		label_16.setBounds(38, 238, 75, 14);
 		panel_7.add(label_16);
 		
 		JLabel label_17 = new JLabel("Stru\u010Dna sprema:");
 		label_17.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_17.setBounds(22, 233, 80, 14);
+		label_17.setBounds(28, 269, 85, 14);
 		panel_7.add(label_17);
 		
 		JLabel label_18 = new JLabel("Skladi\u0161te u kojem je zaposlen:");
@@ -286,108 +262,57 @@ public class FormaZaMenadzera {
 		label_18.setBounds(28, 312, 147, 14);
 		panel_7.add(label_18);
 		
-		textIme = new JTextField();
-		textIme.setBounds(123, 21, 191, 20);
-		panel_7.add(textIme);
-		textIme.setColumns(10);
+		textField = new JTextField();
+		textField.setBounds(123, 30, 191, 20);
+		panel_7.add(textField);
+		textField.setColumns(10);
 		
-		textPrezime = new JTextField();
-		textPrezime.setBounds(123, 46, 191, 20);
-		panel_7.add(textPrezime);
-		textPrezime.setColumns(10);
+		textField_1 = new JTextField();
+		textField_1.setBounds(123, 58, 191, 20);
+		panel_7.add(textField_1);
+		textField_1.setColumns(10);
 		
-		textJmbg = new JTextField();
-		textJmbg.setBounds(123, 71, 191, 20);
-		panel_7.add(textJmbg);
-		textJmbg.setColumns(10);
+		textField_2 = new JTextField();
+		textField_2.setBounds(123, 86, 191, 20);
+		panel_7.add(textField_2);
+		textField_2.setColumns(10);
 		
-		textMjestoRodjenja = new JTextField();
-		textMjestoRodjenja.setBounds(123, 123, 191, 20);
-		panel_7.add(textMjestoRodjenja);
-		textMjestoRodjenja.setColumns(10);
+		textField_3 = new JTextField();
+		textField_3.setBounds(123, 114, 191, 20);
+		panel_7.add(textField_3);
+		textField_3.setColumns(10);
 		
-		textAdresa = new JTextField();
-		textAdresa.setBounds(123, 150, 191, 20);
-		panel_7.add(textAdresa);
-		textAdresa.setColumns(10);
+		textField_4 = new JTextField();
+		textField_4.setBounds(123, 145, 191, 20);
+		panel_7.add(textField_4);
+		textField_4.setColumns(10);
 		
-		textBrojTel = new JTextField();
-		textBrojTel.setBounds(123, 177, 191, 20);
-		panel_7.add(textBrojTel);
-		textBrojTel.setColumns(10);
+		textField_5 = new JTextField();
+		textField_5.setBounds(123, 173, 191, 20);
+		panel_7.add(textField_5);
+		textField_5.setColumns(10);
 		
-		textEmail = new JTextField();
-		textEmail.setBounds(123, 204, 191, 20);
-		panel_7.add(textEmail);
-		textEmail.setColumns(10);
+		textField_6 = new JTextField();
+		textField_6.setBounds(123, 204, 191, 20);
+		panel_7.add(textField_6);
+		textField_6.setColumns(10);
 		
-		comboBoxSkladiste = new JComboBox();
-		comboBoxSkladiste.setBounds(185, 310, 129, 20);
-		panel_7.add(comboBoxSkladiste);
+		textField_7 = new JTextField();
+		textField_7.setBounds(123, 235, 191, 20);
+		panel_7.add(textField_7);
+		textField_7.setColumns(10);
 		
-		comboBoxStrucnaSprema = new JComboBox(StrucnaSprema.values());
-		comboBoxStrucnaSprema.setBounds(123, 231, 191, 20);
-		panel_7.add(comboBoxStrucnaSprema);
+		JComboBox comboBox_5 = new JComboBox();
+		comboBox_5.setBounds(185, 309, 129, 20);
+		panel_7.add(comboBox_5);
 		
-		JButton buttonDodajUposlenika = new JButton("Dodaj novog uposlenika");
-		buttonDodajUposlenika.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Poziv");
-				//if(dateRodjenja.getDate().equals(null))
-				//	System.out.println("Date nije oke");
-				
-				if(comboBoxStrucnaSprema.getSelectedIndex()<0)
-					labelStatus.setText("Nije odabrana strucna sprema!");
-					//JOptionPane.showMessageDialog(null, "Combobox null", "greska", JOptionPane.ERROR_MESSAGE);
-				else if(comboBoxTipUposlenika.getSelectedIndex()<0)
-					labelStatus.setText("Nije odabran tip uposlenika!");
-				else if(comboBoxSkladiste.getSelectedIndex()<0)
-					labelStatus.setText("Nije odabrano skladiste!");
-				
-				String poruka = MenadzerUI.dodajUposlenika(frmSistemUpravljanjaSkladistem,
-textIme.getText(),textPrezime.getText(),textJmbg.getText(), dateRodjenja.getDate(),
-textMjestoRodjenja.getText(),textAdresa.getText(),textBrojTel.getText(),textEmail.getText(),
-comboBoxStrucnaSprema.getSelectedIndex(),comboBoxTipUposlenika.getSelectedIndex(),
-textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
-				
-				labelStatus.setText(poruka);
-			}
-		});
-		buttonDodajUposlenika.setBounds(123, 341, 191, 23);
-		panel_7.add(buttonDodajUposlenika);
+		JComboBox comboBox_6 = new JComboBox();
+		comboBox_6.setBounds(123, 266, 191, 20);
+		panel_7.add(comboBox_6);
 		
-		dateRodjenja = new JDateChooser();
-		dateRodjenja.setBounds(123, 98, 191, 20);
-		panel_7.add(dateRodjenja);
-		
-		comboBoxTipUposlenika = new JComboBox(TipUposlenika.values());
-		comboBoxTipUposlenika.setBounds(123, 257, 191, 20);
-		panel_7.add(comboBoxTipUposlenika);
-		
-		JLabel lblTipUposlenika = new JLabel("Tip uposlenika:");
-		lblTipUposlenika.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblTipUposlenika.setBounds(28, 259, 74, 14);
-		panel_7.add(lblTipUposlenika);
-		
-		JLabel lblKorisnikoIme = new JLabel("Korisničko ime:");
-		lblKorisnikoIme.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblKorisnikoIme.setBounds(7, 284, 74, 14);
-		panel_7.add(lblKorisnikoIme);
-		
-		JLabel lblifra = new JLabel("Šifra:");
-		lblifra.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblifra.setBounds(185, 285, 33, 14);
-		panel_7.add(lblifra);
-		
-		textUser = new JTextField();
-		textUser.setBounds(89, 282, 86, 20);
-		panel_7.add(textUser);
-		textUser.setColumns(10);
-		
-		textPass = new JTextField();
-		textPass.setBounds(228, 282, 86, 20);
-		panel_7.add(textPass);
-		textPass.setColumns(10);
+		JButton button_1 = new JButton("Dodaj novog uposlenika");
+		button_1.setBounds(123, 339, 191, 23);
+		panel_7.add(button_1);
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Lista uposlenika", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -617,23 +542,9 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		
 		
 		
-		labelStatus = new JLabel("");
-		labelStatus.setForeground(Color.RED);
-		labelStatus.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		labelStatus.setBounds(10, 472, 367, 25);
-		frmSistemUpravljanjaSkladistem.getContentPane().add(labelStatus);
-		
-		//Dodavanje skladista u listu skladista(combobox)
-		dodavanjeSkladistaUComboBox();
-	}
-
-	//Metoda za dodavanje skladista u listu skladista(combobox)
-	private void dodavanjeSkladistaUComboBox() {
-		// TODO Auto-generated method stub
-		String query = "select naziv from Skladiste";
-		Query q = App.session.createQuery(query);
-		List<String> naziviSkladista = q.list();
-		for(String ime : naziviSkladista)
-			comboBoxSkladiste.addItem(ime);
+		JLabel label_8 = new JLabel("StatusMSG");
+		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		label_8.setBounds(10, 472, 63, 25);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(label_8);
 	}
 }

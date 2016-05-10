@@ -35,10 +35,10 @@ public class UposlenikBLL {
 		List<PoslovniPartner> partneri = new ArrayList<PoslovniPartner>();
 		
 		Transaction t = App.session.beginTransaction();
-		String hql = "from PoslovniPartner";
+		String hql = "from poslovni_partner";
 		Query querry = App.session.createQuery(hql);
 		partneri = querry.list();	
-		t.commit();
+		
 		return partneri;
 	}
 }

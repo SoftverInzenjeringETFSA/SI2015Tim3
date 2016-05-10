@@ -47,7 +47,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.JFormattedTextField;
 
 public class FormaZaUposlenika {
 
@@ -64,6 +63,7 @@ public class FormaZaUposlenika {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	public JTextField tbBarKod;
+	private JTextField tbKolicina;
 	private JTextField tbNabavnaCijena;
 	private JTextField tbNaziv;
 	private JTextField tbJedinicnaKolicina;
@@ -78,7 +78,6 @@ public class FormaZaUposlenika {
 	private ChangeListener changeListener;
 	private JPanel pnlNovi;
 	private JButton btnDodaj;
-	private JComboBox cbDobavljac;
 	
 	private void groupButton() {
 		bg = new ButtonGroup();
@@ -95,10 +94,6 @@ public class FormaZaUposlenika {
 		bg.add(rdbtnNoviArtikal);
 		bg.add(rdbtnPostojeciArtikal);
 		rdbtnPostojeciArtikal.setSelected(true);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(99, 66, 100, 20);
-		panel_4.add(spinner);
 		
 		changeListener = new ChangeListener() {
 			public void stateChanged(ChangeEvent changEvent) {
@@ -137,12 +132,7 @@ public class FormaZaUposlenika {
 
 	private void initData() {
 		List<PoslovniPartner> _partneri = UposlenikBLL.DobaviSvePoslnovnePartnere();
-		DefaultComboBoxModel noviModel = new DefaultComboBoxModel();
-		for(PoslovniPartner p : _partneri) {
-			noviModel.addElement(p.getNaziv());
-		}
 		
-		cbDobavljac.setModel(noviModel);
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -172,9 +162,9 @@ public class FormaZaUposlenika {
 		lblDobavlja.setBounds(61, 38, 54, 24);
 		panel.add(lblDobavlja);
 		
-		cbDobavljac = new JComboBox();
-		cbDobavljac.setBounds(125, 39, 183, 24);
-		panel.add(cbDobavljac);
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(125, 39, 183, 24);
+		panel.add(comboBox_1);
 		
 		JButton btnDodajNovogDobavljaa = new JButton("Dodaj novog dobavljača");
 		btnDodajNovogDobavljaa.setBounds(318, 39, 183, 25);
@@ -228,6 +218,11 @@ public class FormaZaUposlenika {
 		lblKoliina_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblKoliina_1.setBounds(44, 68, 46, 14);
 		panel_4.add(lblKoliina_1);
+		
+		tbKolicina = new JTextField();
+		tbKolicina.setBounds(100, 66, 100, 20);
+		panel_4.add(tbKolicina);
+		tbKolicina.setColumns(10);
 		
 		JLabel lblNabavnaCijena = new JLabel("Nabavna cijena: ");
 		lblNabavnaCijena.setFont(new Font("SansSerif", Font.PLAIN, 11));
