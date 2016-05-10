@@ -27,17 +27,15 @@
     	<version>5.1.6</version>
     </dependency>
     <dependency>
-<<<<<<< HEAD
 		<groupId>com.toedter</groupId>
 		<artifactId>jcalendar</artifactId>
 		<version>1.4</version>
 	</dependency>
-=======
+	<dependency>
     	<groupId>org.hibernate</groupId>
     	<artifactId>hibernate-core</artifactId>
     	<version>5.1.0.Final</version>
     </dependency>
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim3
   </dependencies>
   <build>
   	<plugins>

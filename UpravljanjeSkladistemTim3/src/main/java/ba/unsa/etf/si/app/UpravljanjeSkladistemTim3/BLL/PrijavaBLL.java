@@ -17,9 +17,8 @@ public class PrijavaBLL {
 		String hql = "from Uposlenik where user = :user_par";
 		Query querry = App.session.createQuery(hql);
 		querry.setParameter("user_par", user);
-		//querry.setParameter("pass_par", pass);
-		Uposlenik result = (Uposlenik) querry.uniqueResult();
 		
+		Uposlenik result = (Uposlenik) querry.uniqueResult();
 		return result;
 		}
 }
