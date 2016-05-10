@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated May 8, 2016 9:01:00 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated May 9, 2016 7:18:44 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" table="SKLADISTE">
         <id name="id" type="long">
@@ -17,32 +17,29 @@
         <property name="naziv" type="java.lang.String">
             <column name="NAZIV" />
         </property>
-        <property name="radnoVrijemeOd" type="java.util.Date">
+         <property name="radnoVrijemeOd" type="int">
             <column name="RADNO_VRIJEME_OD" />
         </property>
-        <property name="radnoVijemeDo" type="java.util.Date">
+        <property name="radnoVijemeDo" type="int">
             <column name="RADNO_VIJEME_DO" />
         </property>
-        <list name="_uposlenici" inverse="false" table="UPOSLENIK" lazy="true">
+        <set name="_uposlenici" table="UPOSLENIK" inverse="false" lazy="true">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" />
-        </list>
-        <list name="_skladisteArtikli" inverse="false" table="SKLADISTE_ARTIKAL" lazy="true">
+        </set>
+        <set name="_skladisteArtikli">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.SkladisteArtikal" />
-        </list>
-        <list name="_dokumenti" inverse="false" table="DOKUMENT" lazy="true">
+        </set>
+        <set name="_dokumenti" table="DOKUMENT" inverse="false" lazy="true">
             <key>
                 <column name="ID" />
             </key>
-            <list-index></list-index>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument" />
-        </list>
+        </set>
     </class>
 </hibernate-mapping>

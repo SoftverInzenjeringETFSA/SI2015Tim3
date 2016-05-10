@@ -3,7 +3,20 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="UPOSLENIK")
 public class Uposlenik implements Serializable {
+	@Id
+	@GeneratedValue
+	@Column(name = "uposlenik_id")
 	long id;
 	public long getId() {
 		return id;
@@ -117,19 +130,43 @@ public class Uposlenik implements Serializable {
 		this.tipUposlenika = tipUposlenika;
 	}
 
+
+	public Skladiste get_skladiste() {
+		return _skladiste;
+	}
+
+	public void set_skladiste(Skladiste _skladiste) {
+		this._skladiste = _skladiste;
+	}
+	@Column(name="ime")
 	String ime;
+	@Column(name="prezime")
 	String prezime;
+	@Column(name="jmbg")
 	String JMBG;
+	@Column(name="datum_rodjenja")
 	Date datumRodjenja;
+	@Column(name="mjesto_rodjenja")
 	String mjestoRodjenja;
+	@Column(name="adresa_stanovanja")
 	String adresaStanovanja;
+	@Column(name="broj_telefona")
 	String brojTelefona;
+	@Column(name="email")
 	String email;
+	@Column(name="strucna_sprema")
 	StrucnaSprema strucnaSprema;
+	@Column(name="datum_zaposlenja")
 	Date datumZaposlenja;
+	@Column(name="user")
 	String user;
+	@Column(name="password")
 	String password;
+	@Column(name="tip_uposlenika")
 	TipUposlenika tipUposlenika;
+	@ManyToOne
+	@JoinColumn(name="skladiste_id")
+	Skladiste _skladiste;
 	
 	public Uposlenik() {}
 }

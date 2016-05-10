@@ -3,8 +3,22 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+@Entity
+@Table(name="SKLADISTE")
 public class Skladiste implements Serializable {
+	@Id
+	@GeneratedValue
+	@Column(name="skladiste_id")
 	long id;
 	public long getId() {
 		return id;
@@ -38,54 +52,61 @@ public class Skladiste implements Serializable {
 		this.naziv = naziv;
 	}
 
-	public Date getRadnoVrijemeOd() {
+	public int getRadnoVrijemeOd() {
 		return radnoVrijemeOd;
 	}
 
-	public void setRadnoVrijemeOd(Date radnoVrijemeOd) {
+	public void setRadnoVrijemeOd(int radnoVrijemeOd) {
 		this.radnoVrijemeOd = radnoVrijemeOd;
 	}
 
-	public Date getRadnoVijemeDo() {
+	public int getRadnoVijemeDo() {
 		return radnoVijemeDo;
 	}
 
-	public void setRadnoVijemeDo(Date radnoVijemeDo) {
+	public void setRadnoVijemeDo(int radnoVijemeDo) {
 		this.radnoVijemeDo = radnoVijemeDo;
 	}
 
-	public List<Uposlenik> get_uposlenici() {
+	public Set<Uposlenik> get_uposlenici() {
 		return _uposlenici;
 	}
 
-	public void set_uposlenici(List<Uposlenik> _uposlenici) {
+	public void set_uposlenici(Set<Uposlenik> _uposlenici) {
 		this._uposlenici = _uposlenici;
 	}
 
-	public List<SkladisteArtikal> get_skladisteArtikli() {
+	public Set<SkladisteArtikal> get_skladisteArtikli() {
 		return _skladisteArtikli;
 	}
 
-	public void set_skladisteArtikli(List<SkladisteArtikal> _skladisteArtikli) {
+	public void set_skladisteArtikli(Set<SkladisteArtikal> _skladisteArtikli) {
 		this._skladisteArtikli = _skladisteArtikli;
 	}
 
-	public List<Dokument> get_dokumenti() {
+	public Set<Dokument> get_dokumenti() {
 		return _dokumenti;
 	}
 
-	public void set_dokumenti(List<Dokument> _dokumenti) {
+	public void set_dokumenti(Set<Dokument> _dokumenti) {
 		this._dokumenti = _dokumenti;
 	}
-
+	@Column(name="adresa")
 	String adresa;
+	@Column(name="kontakt_telefon")
 	String kontaktTelefon;
+	@Column(name="naziv")
 	String naziv;
-	Date radnoVrijemeOd;
-	Date radnoVijemeDo;
-	List<Uposlenik> _uposlenici;
-	List<SkladisteArtikal> _skladisteArtikli;
-	List<Dokument> _dokumenti;
+	@Column(name="radno_vrijeme_od")
+	int radnoVrijemeOd;
+	@Column(name="radno_vrijeme_do")
+	int radnoVijemeDo;
+	@OneToMany(mappedBy="_skladiste")
+	Set<Uposlenik> _uposlenici;
+	@OneToMany(mappedBy="_skladiste")
+	Set<SkladisteArtikal> _skladisteArtikli;
+	@OneToMany(mappedBy="_skladiste")
+	Set<Dokument> _dokumenti;
 	
 	public Skladiste() {}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated May 8, 2016 9:01:00 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated May 9, 2016 7:18:44 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal" table="ARTIKAL">
         <id name="id" type="long">
