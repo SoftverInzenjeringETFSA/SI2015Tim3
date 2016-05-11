@@ -60,12 +60,12 @@ public class Skladiste implements Serializable {
 		this.radnoVrijemeOd = radnoVrijemeOd;
 	}
 
-	public int getRadnoVijemeDo() {
-		return radnoVijemeDo;
+	public int getRadnoVrijemeDo() {
+		return radnoVrijemeDo;
 	}
 
-	public void setRadnoVijemeDo(int radnoVijemeDo) {
-		this.radnoVijemeDo = radnoVijemeDo;
+	public void setRadnoVrijemeDo(int radnoVijemeDo) {
+		this.radnoVrijemeDo = radnoVrijemeDo;
 	}
 
 	public Set<Uposlenik> get_uposlenici() {
@@ -100,7 +100,7 @@ public class Skladiste implements Serializable {
 	@Column(name="radno_vrijeme_od")
 	int radnoVrijemeOd;
 	@Column(name="radno_vrijeme_do")
-	int radnoVijemeDo;
+	int radnoVrijemeDo;
 	@OneToMany(mappedBy="_skladiste")
 	Set<Uposlenik> _uposlenici;
 	@OneToMany(mappedBy="_skladiste")

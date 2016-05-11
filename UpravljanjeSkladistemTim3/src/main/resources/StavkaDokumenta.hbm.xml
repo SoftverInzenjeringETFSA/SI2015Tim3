@@ -4,15 +4,14 @@
 <!-- Generated May 9, 2016 7:18:44 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta" table="STAVKA_DOKUMENTA">
-        <id name="id" type="long">
-            <column name="ID" />
+        <id name="id" type="long" column="STAVKA_DOKUMENTA_ID">
             <generator class="native" />
         </id>
-        <many-to-one name="_artikal" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal" fetch="join">
-            <column name="ARTIKAL" />
+        <many-to-one name="_artikal" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal" fetch="select">
+            <column name="ARTIKAL_ID" not-null="false" />
         </many-to-one>
-        <many-to-one name="_dokument" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument" fetch="join">
-            <column name="DOKUMENT" />
+        <many-to-one name="_dokument" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument" fetch="select">
+            <column name="DOKUMENT_ID" />
         </many-to-one>
         <property name="kolicina" type="int">
             <column name="KOLICINA" />

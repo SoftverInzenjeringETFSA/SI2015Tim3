@@ -36,7 +36,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import java.util.List;
-import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.UposlenikBLL;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.UposlenikUnosRobeBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
@@ -83,6 +83,7 @@ public class FormaZaUposlenika {
 	private JComboBox cbDobavljac;
 	private JLabel lblStatusmsg;
 	private JSpinner spinnerKolicina;
+	private UposlenikUnosRobeUI ui = new UposlenikUnosRobeUI();
 	
 	private void groupButton() {
 		bg = new ButtonGroup();
@@ -129,7 +130,7 @@ public class FormaZaUposlenika {
 	public void set_user(Uposlenik _user) {
 		this._user = _user;
 		JLabel lblUser = new JLabel(_user.getUser());
-		lblUser.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUser.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblUser.setBounds(92, 7, 46, 14);
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblUser);
 	}
@@ -141,16 +142,15 @@ public class FormaZaUposlenika {
 	}
 
 	private void initData() {
-		List<PoslovniPartner> _partneri = UposlenikBLL.DobaviSvePoslnovnePartnere();
+		UposlenikUnosRobeBLL getPartneri = new UposlenikUnosRobeBLL();
+		List<PoslovniPartner> _partneri = getPartneri.DobaviSvePoslnovnePartnere();
 		DefaultComboBoxModel cbm = new DefaultComboBoxModel();
 		for(PoslovniPartner p : _partneri) {
 			cbm.addElement(p.getNaziv());
 		}
 		cbDobavljac.setModel(cbm);
 	}
-	/**
-	 * Initialize the contents of the frame.
-	 */
+
 	private void initialize() {
 		frmSistemUpravljanjaSkladitem = new JFrame();
 		frmSistemUpravljanjaSkladitem.setTitle("Sistem upravljanja skladištem - Radnik u skladištu");
@@ -187,11 +187,12 @@ public class FormaZaUposlenika {
 		JButton btnNewButton = new JButton("Završi unos");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(UnosRobeUI.UnosNabavke(lblStatusmsg, _user, (String)cbDobavljac.getSelectedItem(), tbNabavkaBarKod.getText()))
+				if(ui == null) ui = new UposlenikUnosRobeUI();
+				if(ui.UnosNabavke(lblStatusmsg, _user, (String)cbDobavljac.getSelectedItem(), tbNabavkaBarKod.getText()))
 					cleanNabavka();
 			}
 		});
-		btnNewButton.setBounds(586, 444, 131, 23);
+		btnNewButton.setBounds(532, 444, 89, 23);
 		panel.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -247,7 +248,8 @@ public class FormaZaUposlenika {
 		btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(UnosRobeUI.DodajArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText()))
+				if(ui == null) ui = new UposlenikUnosRobeUI();
+				if(ui.DodajArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText()))
 					clearUnos();
 			}
 		});
@@ -317,13 +319,17 @@ public class FormaZaUposlenika {
 		JButton btnDodajNovi = new JButton("Dodaj novi");
 		btnDodajNovi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(UnosRobeUI.DodajNoviArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText(), tbNaziv.getText(), tbJedinicnaKolicina.getText(),(MjernaJedinica) cbMjernaJedinica.getSelectedItem(), tbProdajnaCijena.getText()) )
+				if(ui == null) ui = new UposlenikUnosRobeUI();
+				if(ui.DodajNoviArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText(), tbNaziv.getText(), tbJedinicnaKolicina.getText(),(MjernaJedinica) cbMjernaJedinica.getSelectedItem(), tbProdajnaCijena.getText()) )
 					clearUnos();
-			}
-			//lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText(), 
+			} 
 		});
 		btnDodajNovi.setBounds(117, 127, 100, 23);
 		pnlNovi.add(btnDodajNovi);
+		
+		JButton btnOdustani = new JButton("Odustani");
+		btnOdustani.setBounds(628, 444, 89, 23);
+		panel.add(btnOdustani);
 		pnlNovi.setVisible(false);
 		
 		JPanel panel_1 = new JPanel();

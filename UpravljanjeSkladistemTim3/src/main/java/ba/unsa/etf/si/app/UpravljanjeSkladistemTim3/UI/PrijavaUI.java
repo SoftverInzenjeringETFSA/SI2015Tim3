@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 
 
 public class PrijavaUI {
-	public static void Prijava(JFrame prijavaForma, String user, String pass){
+	public PrijavaUI(JFrame prijavaForma, String user, String pass) {
 		// Provjera da li su svi podaci uneseni
 		if(user.equals("") || pass.equals("")) {
 			JOptionPane.showMessageDialog(null, "Niste unijeli sve podatke!", "Omaška", JOptionPane.ERROR_MESSAGE);
@@ -19,7 +19,8 @@ public class PrijavaUI {
 		}
 		// Autorizacija
 		else {
-			Uposlenik _user = PrijavaBLL.Autorizacija(user, pass);
+			PrijavaBLL bll = new PrijavaBLL();
+			Uposlenik _user = bll.Autorizacija(user, pass);
 			if(_user == null || !_user.getPassword().equals(pass)) {
 				JOptionPane.showMessageDialog(null, "Unesena kombinacija user-pass ne postoji u bazi!", "Omaška", JOptionPane.ERROR_MESSAGE);
 				return;

@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated May 9, 2016 7:18:44 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated May 11, 2016 7:10:04 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" table="SKLADISTE">
-        <id name="id" type="long">
-            <column name="ID" />
+        <id name="id" type="long" column="SKLADISTE_ID">
             <generator class="native" />
         </id>
         <property name="adresa" type="java.lang.String">
@@ -17,27 +16,27 @@
         <property name="naziv" type="java.lang.String">
             <column name="NAZIV" />
         </property>
-         <property name="radnoVrijemeOd" type="int">
+        <property name="radnoVrijemeOd" type="int">
             <column name="RADNO_VRIJEME_OD" />
         </property>
-        <property name="radnoVijemeDo" type="int">
-            <column name="RADNO_VIJEME_DO" />
+        <property name="radnoVrijemeDo" type="int">
+            <column name="RADNO_VRIJEME_DO" />
         </property>
-        <set name="_uposlenici" table="UPOSLENIK" inverse="false" lazy="true">
+        <set name="_uposlenici" table="UPOSLENIK" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ID" />
+                <column name="SKLADISTE_ID" />
             </key>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" />
         </set>
-        <set name="_skladisteArtikli">
+        <set name="_skladisteArtikli" table="SKLADISTE_ARTIKAL" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ID" />
+                <column name="SKLADISTE_ID" />
             </key>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.SkladisteArtikal" />
         </set>
-        <set name="_dokumenti" table="DOKUMENT" inverse="false" lazy="true">
+        <set name="_dokumenti" table="DOKUMENT" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ID" />
+                <column name="SKLADISTE_ID" />
             </key>
             <one-to-many class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument" />
         </set>

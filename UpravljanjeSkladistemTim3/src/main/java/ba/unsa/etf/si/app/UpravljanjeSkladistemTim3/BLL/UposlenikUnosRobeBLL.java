@@ -14,11 +14,14 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-public class UposlenikBLL {
-	public static List<Artikal> _noviArtikli = new ArrayList<Artikal>();
-	public static List<StavkaDokumenta> _stavkeNabavke = new ArrayList<StavkaDokumenta>();
+public class UposlenikUnosRobeBLL {
 	
-	public static int DodajArtikal(String ean, int kolicina, double nabavnaCijena) {
+	public UposlenikUnosRobeBLL() {}
+	
+	private List<Artikal> _noviArtikli = new ArrayList<Artikal>();
+	private List<StavkaDokumenta> _stavkeNabavke = new ArrayList<StavkaDokumenta>();
+	
+	public int DodajArtikal(String ean, int kolicina, double nabavnaCijena) {
 		Transaction t = App.session.beginTransaction();
 		String hql = "from Artikal where barKod = :bar_kod";
 		Query query = App.session.createQuery(hql);
@@ -45,7 +48,7 @@ public class UposlenikBLL {
 		return 0;
 	}
 	
-	public static int DodajNoviArtikal(String ean, int kolicina, double nabavnaCijena, String naziv, MjernaJedinica mjernaJedinica, double jedinicnaKolicina, double prodajnaCijena) {
+	public int DodajNoviArtikal(String ean, int kolicina, double nabavnaCijena, String naziv, MjernaJedinica mjernaJedinica, double jedinicnaKolicina, double prodajnaCijena) {
 		Transaction t = App.session.beginTransaction();
 		String hql = "from Artikal where barKod = :bar_kod";
 		Query query = App.session.createQuery(hql);
@@ -84,7 +87,7 @@ public class UposlenikBLL {
 	}
 	
 	// Vraca poslovnog partnera na osnovu naziva
-	public static PoslovniPartner DajPoslovnogPartnera(String poslovniPartner) {
+	public PoslovniPartner DajPoslovnogPartnera(String poslovniPartner) {
 		Transaction t = App.session.beginTransaction();
 		String hql = "from PoslovniPartner where naziv = :naziv_pp";
 		Query query = App.session.createQuery(hql);
@@ -96,12 +99,12 @@ public class UposlenikBLL {
 		return pp;
 	}
 	
-	public static int DodajNabavku(String barKod, Uposlenik user, String poslovniPartner) {
+	public int DodajNabavku(String barKod, Uposlenik user, String poslovniPartner) {
 		if(_stavkeNabavke.isEmpty() && _noviArtikli.isEmpty())
 			return 1;
 		
-		Skladiste skladiste = UposlenikBLL.DobaviSkladiste(user);
-		PoslovniPartner dobavljac = UposlenikBLL.DajPoslovnogPartnera(poslovniPartner);
+		Skladiste skladiste = user.get_skladiste();
+		PoslovniPartner dobavljac = this.DajPoslovnogPartnera(poslovniPartner);
 		
 		Nabavka nabavka = new Nabavka();
 		nabavka.set_dobavaljc(dobavljac);
@@ -114,14 +117,15 @@ public class UposlenikBLL {
 		Transaction t = App.session.beginTransaction();
 		Long id = (Long) App.session.save(nabavka);
 		
+		for(Artikal a:_noviArtikli) {
+			App.session.save(a);
+		}
 		for(StavkaDokumenta st:_stavkeNabavke) {
 			st.set_dokument(nabavka);
 			App.session.save(st);
 		}
-		
-		for(Artikal a:_noviArtikli) {
-			App.session.save(a);
-		}
+			
+		/*
 		
 		for(StavkaDokumenta st: _stavkeNabavke) {
 		String hql = "UPDATE Artikal set kolicina = kolicina + :kol" +
@@ -131,8 +135,9 @@ public class UposlenikBLL {
 		query.setParameter("ar_id", st.get_artikal().getId());
 		
 		int result = query.executeUpdate();
+		
+		}*/
 		t.commit();
-		}
 
 		_stavkeNabavke = new ArrayList<StavkaDokumenta>();
 		_noviArtikli = new ArrayList<Artikal>();
@@ -141,11 +146,10 @@ public class UposlenikBLL {
 		GenerisiNaljepnicu();
 		return 0;
 	}
-	public static void GenerisiNaljepnicu() {}
-	public static void DodajNoviArtikal(Artikal ar) {}
+	public void GenerisiNaljepnicu() {}
 	
 	// Dobavljanje skladista u kojem je radnik zaposlen 
-	public static Skladiste DobaviSkladiste(Uposlenik _user) {
+	public Skladiste DobaviSkladiste(Uposlenik _user) {
 		Transaction t = App.session.beginTransaction();
 		Skladiste s = (Skladiste) App.session.get(Skladiste.class, (long)_user.get_skladiste().getId());
 		t.commit();
@@ -153,7 +157,7 @@ public class UposlenikBLL {
 	}
 	
 	// Dobavi sve poslnove partnere -> combobox dobavljac
-	public static List<PoslovniPartner> DobaviSvePoslnovnePartnere() {
+	public List<PoslovniPartner> DobaviSvePoslnovnePartnere() {
 		List<PoslovniPartner> partneri = new ArrayList<PoslovniPartner>();
 		
 		Transaction t = App.session.beginTransaction();

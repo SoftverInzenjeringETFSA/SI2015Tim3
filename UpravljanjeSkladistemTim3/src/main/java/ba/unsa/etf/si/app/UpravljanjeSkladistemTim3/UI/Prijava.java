@@ -62,7 +62,7 @@ public class Prijava {
 		JButton btnNewButton = new JButton("Potvrdi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PrijavaUI.Prijava(frmPrijava, tbUser.getText(), tbSifra.getText());
+				PrijavaUI prijava = new PrijavaUI(frmPrijava, tbUser.getText(), tbSifra.getText());
 			}
 		});
 		btnNewButton.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 11));

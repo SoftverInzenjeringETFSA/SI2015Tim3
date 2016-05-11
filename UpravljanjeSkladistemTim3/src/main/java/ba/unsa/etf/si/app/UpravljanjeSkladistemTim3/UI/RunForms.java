@@ -39,6 +39,7 @@ public class RunForms {
 				try {
 					FormaZaUposlenika window = new FormaZaUposlenika();
 					window.set_user(_user);
+					System.out.println("user: " + _user.getId() + " skladiste: " + _user.get_skladiste().getId());
 					window.frmSistemUpravljanjaSkladitem.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

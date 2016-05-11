@@ -4,15 +4,14 @@
 <!-- Generated May 9, 2016 7:18:44 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.SkladisteArtikal" table="SKLADISTE_ARTIKAL">
-        <id name="id" type="long">
-            <column name="ID" />
+        <id name="id" type="long" column="SKLADISTE_ARTIKAL_ID">
             <generator class="native" />
         </id>
-        <many-to-one name="_artikal" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal" fetch="join">
-            <column name="ARTIKAL" />
+        <many-to-one name="_artikal" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal" fetch="select">
+            <column name="ARTIKAL_ID" />
         </many-to-one>
-        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="join">
-            <column name="SKLADISTE" />
+        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="select">
+            <column name="SKLADISTE_ID" />
         </many-to-one>
         <property name="ponderiranaCijena" type="double">
             <column name="PONDERIRANA_CIJENA" />

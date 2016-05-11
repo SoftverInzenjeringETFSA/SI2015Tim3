@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated May 9, 2016 7:18:44 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated May 11, 2016 7:10:04 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik" table="UPOSLENIK">
-        <id name="id" type="long">
-            <column name="ID" />
+        <id name="id" type="long" column="UPOSLENIK_ID">
             <generator class="native" />
         </id>
         <property name="ime" type="java.lang.String">
@@ -55,8 +54,8 @@
                 <param name="enumClass">ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.TipUposlenika</param>
             </type>
         </property>
-        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="join">
-            <column name="SKLADISTE" />
+        <many-to-one name="_skladiste" class="ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste" fetch="select">
+            <column name="SKLADISTE_ID" />
         </many-to-one>
     </class>
 </hibernate-mapping>
