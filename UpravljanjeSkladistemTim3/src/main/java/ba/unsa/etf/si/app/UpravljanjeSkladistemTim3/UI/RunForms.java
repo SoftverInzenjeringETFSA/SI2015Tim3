@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.UI;
 import java.awt.EventQueue;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka;
 
 public class RunForms {
 	public static void RunMenadzerForm(final Uposlenik _user)
@@ -39,8 +40,21 @@ public class RunForms {
 				try {
 					FormaZaUposlenika window = new FormaZaUposlenika();
 					window.set_user(_user);
-					System.out.println("user: " + _user.getId() + " skladiste: " + _user.get_skladiste().getId());
 					window.frmSistemUpravljanjaSkladitem.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public static void RunWizardForm(final Nabavka _nabavka) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					NaljepniceWizard window = new NaljepniceWizard();
+					window.forma.setVisible(true);
+					window.PostaviNabavku(_nabavka);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

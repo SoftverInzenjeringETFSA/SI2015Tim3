@@ -185,6 +185,7 @@ public class FormaZaUposlenika {
 		panel.add(btnDodajNovogDobavljaa);
 		
 		JButton btnNewButton = new JButton("Završi unos");
+		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ui == null) ui = new UposlenikUnosRobeUI();
@@ -192,7 +193,7 @@ public class FormaZaUposlenika {
 					cleanNabavka();
 			}
 		});
-		btnNewButton.setBounds(532, 444, 89, 23);
+		btnNewButton.setBounds(516, 444, 105, 25);
 		panel.add(btnNewButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -202,7 +203,6 @@ public class FormaZaUposlenika {
 		tabelaArtikli = new JTable();
 		tabelaArtikli.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
 			},
 			new String[] {
 				"Bar kod", "Koli\u010Dina", "Nabavna cijena"
@@ -253,7 +253,7 @@ public class FormaZaUposlenika {
 					clearUnos();
 			}
 		});
-		btnDodaj.setBounds(99, 128, 109, 23);
+		btnDodaj.setBounds(99, 128, 109, 25);
 		panel_4.add(btnDodaj);
 		
 		
@@ -324,12 +324,29 @@ public class FormaZaUposlenika {
 					clearUnos();
 			} 
 		});
-		btnDodajNovi.setBounds(117, 127, 100, 23);
+		btnDodajNovi.setBounds(117, 127, 100, 25);
 		pnlNovi.add(btnDodajNovi);
 		
 		JButton btnOdustani = new JButton("Odustani");
-		btnOdustani.setBounds(628, 444, 89, 23);
+		btnOdustani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cleanNabavka();
+				clearUnos();
+			}
+		});
+		btnOdustani.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		btnOdustani.setBounds(628, 444, 89, 25);
 		panel.add(btnOdustani);
+		
+		JButton btnNewButton_1 = new JButton("Naljepnice");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RunForms.RunWizardForm(null);
+			}
+		});
+		btnNewButton_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		btnNewButton_1.setBounds(125, 445, 89, 25);
+		panel.add(btnNewButton_1);
 		pnlNovi.setVisible(false);
 		
 		JPanel panel_1 = new JPanel();
@@ -535,6 +552,7 @@ public class FormaZaUposlenika {
 		tbNabavkaBarKod.setText("");
 		DefaultTableModel dm = (DefaultTableModel)tabelaArtikli.getModel();
 		dm.setRowCount(0);
+		ui = null;
 		
 	}
 	protected void clearUnos() {

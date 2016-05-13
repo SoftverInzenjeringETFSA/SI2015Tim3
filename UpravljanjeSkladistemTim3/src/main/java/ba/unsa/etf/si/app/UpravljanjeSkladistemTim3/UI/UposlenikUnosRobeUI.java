@@ -172,15 +172,20 @@ public class UposlenikUnosRobeUI {
 			status.setForeground(Color.RED);
 			return false;
 		}
-		if(barKod.length() == 0) {
-			status.setText("Niste unijeli bar kod!");
+		if(!ValidateEan(barKod)) {
+			status.setText("Neispravan EAN bar kod!");
 			status.setForeground(Color.RED);
 			return false;
 		}
 		
 		int res = bll.DodajNabavku(barKod, user, poslovniPartner);
 		if(res == 1) {
-			status.setText("Niste unijeli niti jedan artikal");
+			status.setText("Niste unijeli niti jedan artikal!");
+			status.setForeground(Color.RED);
+			return false;
+		}
+		else if(res == 2) {
+			status.setText("Vec postoji nabaka sa unesenim bar kodom!");
 			status.setForeground(Color.RED);
 			return false;
 		}

@@ -2,6 +2,7 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.*;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.UI.RunForms;
 
 import org.hibernate.Transaction;
 
@@ -16,10 +17,15 @@ import org.hibernate.Session;
 
 public class UposlenikUnosRobeBLL {
 	
-	public UposlenikUnosRobeBLL() {}
+	public UposlenikUnosRobeBLL() {
+		_noviArtikli = new ArrayList<Artikal>();
+		_stavkeNabavke = new ArrayList<StavkaDokumenta>();
+		_skladisteArtikli = new ArrayList<SkladisteArtikal>();
+	}
 	
-	private List<Artikal> _noviArtikli = new ArrayList<Artikal>();
-	private List<StavkaDokumenta> _stavkeNabavke = new ArrayList<StavkaDokumenta>();
+	private List<Artikal> _noviArtikli;
+	private List<StavkaDokumenta> _stavkeNabavke;
+	private List<SkladisteArtikal> _skladisteArtikli;
 	
 	public int DodajArtikal(String ean, int kolicina, double nabavnaCijena) {
 		Transaction t = App.session.beginTransaction();
@@ -40,6 +46,7 @@ public class UposlenikUnosRobeBLL {
 			if (st.get_artikal().getBarKod().equals(ean))
 				return 2;
 		}
+		
 		StavkaDokumenta st = new StavkaDokumenta();
 		st.setCijena(nabavnaCijena);
 		st.setKolicina(kolicina);
@@ -78,11 +85,16 @@ public class UposlenikUnosRobeBLL {
 		_noviArtikli.add(ar);
 		
 		StavkaDokumenta st = new StavkaDokumenta();
-		// moze biti kriticno
 		st.set_artikal(ar);
 		st.setCijena(nabavnaCijena);
 		st.setKolicina(kolicina);
 		_stavkeNabavke.add(st);
+		
+		SkladisteArtikal sa = new SkladisteArtikal();
+		sa.set_artikal(ar);
+		sa.setPonderiranaCijena(0);
+		_skladisteArtikli.add(sa);
+		
 		return 0;
 	}
 	
@@ -103,6 +115,18 @@ public class UposlenikUnosRobeBLL {
 		if(_stavkeNabavke.isEmpty() && _noviArtikli.isEmpty())
 			return 1;
 		
+		Transaction t = App.session.beginTransaction();
+		String hql = "from Dokument where barKod = :bar_kod";
+		Query q = App.session.createQuery(hql);
+		q.setParameter("bar_kod", barKod);
+		Nabavka n = null;
+		try {
+		n = (Nabavka)q.uniqueResult();
+		} catch (NullPointerException e) {
+		}
+		t.commit();
+		if(n != null) return 2;
+		
 		Skladiste skladiste = user.get_skladiste();
 		PoslovniPartner dobavljac = this.DajPoslovnogPartnera(poslovniPartner);
 		
@@ -113,39 +137,60 @@ public class UposlenikUnosRobeBLL {
 		nabavka.setBarKod(barKod);
 		nabavka.setDatum(new Date());
 		nabavka.set_stavke(new HashSet<StavkaDokumenta>(_stavkeNabavke));
-		// Kriticno
-		Transaction t = App.session.beginTransaction();
+		
+		// Unos nove nabavke u bp
+		t = App.session.beginTransaction();
 		Long id = (Long) App.session.save(nabavka);
 		
+		// Unos svih novih artikala u bp
 		for(Artikal a:_noviArtikli) {
 			App.session.save(a);
 		}
+		
+		// Unos stavki nove nabavke u bp
 		for(StavkaDokumenta st:_stavkeNabavke) {
 			st.set_dokument(nabavka);
 			App.session.save(st);
 		}
-			
-		/*
 		
+		// Unos skladiste-artikal za nove artikle u bp
+		for(SkladisteArtikal sa:_skladisteArtikli) {
+			sa.set_skladiste(skladiste);
+			App.session.save(sa);
+		}	
+		
+		// Update ponderirane cijene za sve artikle sa nove nabavke
+		for(StavkaDokumenta st:_stavkeNabavke) {
+			String sql = "UPDATE skladiste_artikal " +
+						 "set ponderirana_cijena = (ponderirana_cijena * :stara_kolicina + :nova_nabavna * :nova_kolicina)/(:stara_kolicina + :nova_kolicina) " +
+						 "WHERE artikal_id = :ar_id";
+			SQLQuery query = App.session.createSQLQuery(sql);
+			query.setParameter("stara_kolicina", st.get_artikal().getKolicina());
+			query.setParameter("nova_nabavna", st.getCijena());
+			query.setParameter("nova_kolicina", st.getKolicina());
+			query.setParameter("ar_id", st.get_artikal().getId());
+			
+			int result = query.executeUpdate();
+		}
+		
+		// Update kolicine artikala, za sve artikle sa nove nabavke
 		for(StavkaDokumenta st: _stavkeNabavke) {
-		String hql = "UPDATE Artikal set kolicina = kolicina + :kol" +
-					  "WHERE id = :ar_id";
-		Query query = App.session.createQuery(hql);
+		String sql = "UPDATE Artikal set kolicina = kolicina + :kol" +
+					  " WHERE artikal_id = :ar_id";
+		SQLQuery query = App.session.createSQLQuery(sql);
 		query.setParameter("kol", st.getKolicina());
 		query.setParameter("ar_id", st.get_artikal().getId());
 		
 		int result = query.executeUpdate();
+		}
 		
-		}*/
+		
 		t.commit();
 
-		_stavkeNabavke = new ArrayList<StavkaDokumenta>();
-		_noviArtikli = new ArrayList<Artikal>();
-		
-		// to be implemented
-		GenerisiNaljepnicu();
+		RunForms.RunWizardForm(nabavka);
 		return 0;
 	}
+	
 	public void GenerisiNaljepnicu() {}
 	
 	// Dobavljanje skladista u kojem je radnik zaposlen 
