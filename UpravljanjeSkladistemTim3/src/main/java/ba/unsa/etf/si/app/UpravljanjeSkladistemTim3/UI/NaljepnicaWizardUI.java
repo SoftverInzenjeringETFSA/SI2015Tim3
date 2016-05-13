@@ -24,6 +24,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.NaljepnicaWizardBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta;
@@ -79,7 +80,7 @@ public class NaljepnicaWizardUI {
 		try {
 			provider.finish();
 		} catch (IOException e) {
-			e.printStackTrace();
+			App.logger.error("Omaska - IO operacija kod generisanja naljepnica.", e);
 		}
 		
 		slike[i] = provider.getBufferedImage();
@@ -123,7 +124,7 @@ public class NaljepnicaWizardUI {
 		}
 		catch(Exception e) 
 		{
-			
+			App.logger.error("Omaska -Generisanje naljepnica.", e);
 		}
 		
 	}

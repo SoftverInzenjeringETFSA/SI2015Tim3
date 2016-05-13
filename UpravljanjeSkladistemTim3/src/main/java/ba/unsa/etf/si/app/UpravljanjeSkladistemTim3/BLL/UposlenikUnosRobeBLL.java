@@ -36,6 +36,7 @@ public class UposlenikUnosRobeBLL {
 		try {
 		a = (Artikal)query.uniqueResult();
 		} catch (NullPointerException e) {
+			App.logger.error("Omaska - artikal ne postoji u bazi.", e);
 			return 1;
 		}
 		t.commit();
@@ -64,6 +65,7 @@ public class UposlenikUnosRobeBLL {
 		try {
 		a = (Artikal)query.uniqueResult();
 		} catch (NullPointerException e) {
+			App.logger.error("Omaska - artikal vec postoji u bazi.", e);
 		}
 		t.commit();
 		if(a != null) return 1;
@@ -123,6 +125,7 @@ public class UposlenikUnosRobeBLL {
 		try {
 		n = (Nabavka)q.uniqueResult();
 		} catch (NullPointerException e) {
+			App.logger.error("Dokument ne postoji u bazi.", e);
 		}
 		t.commit();
 		if(n != null) return 2;
