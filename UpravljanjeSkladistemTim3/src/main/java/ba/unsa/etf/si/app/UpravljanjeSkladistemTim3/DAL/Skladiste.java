@@ -64,7 +64,7 @@ public class Skladiste implements Serializable {
 		return radnoVrijemeDo;
 	}
 
-	public void setRadnoVrijemeDo(int radnoVijemeDo) {
+	public void setRadnoVrijemeDo(int radnoVrijemeDo) {
 		this.radnoVrijemeDo = radnoVrijemeDo;
 	}
 

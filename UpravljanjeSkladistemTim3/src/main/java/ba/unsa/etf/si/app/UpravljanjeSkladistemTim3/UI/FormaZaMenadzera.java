@@ -16,6 +16,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.MenadzerSkladisteBLL;
 
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
@@ -29,6 +31,10 @@ import javax.swing.AbstractListModel;
 import javax.swing.border.TitledBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class FormaZaMenadzera {
 
@@ -44,9 +50,9 @@ public class FormaZaMenadzera {
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTable table_2;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
+	private JTextField tbNaziv;
+	private JTextField tbAdresa;
+	private JTextField tbKontakt;
 	private JTextField textField_11;
 	
 	private Uposlenik _user;
@@ -302,11 +308,11 @@ public class FormaZaMenadzera {
 		panel_7.add(textField_7);
 		textField_7.setColumns(10);
 		
-		JComboBox comboBox_5 = new JComboBox();
+		final JComboBox comboBox_5 = new JComboBox();
 		comboBox_5.setBounds(185, 309, 129, 20);
 		panel_7.add(comboBox_5);
 		
-		JComboBox comboBox_6 = new JComboBox();
+		final JComboBox comboBox_6 = new JComboBox();
 		comboBox_6.setBounds(123, 266, 191, 20);
 		panel_7.add(comboBox_6);
 		
@@ -360,15 +366,15 @@ public class FormaZaMenadzera {
 		label_20.setBounds(55, 35, 30, 14);
 		panel_9.add(label_20);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(106, 32, 212, 20);
-		panel_9.add(textField_8);
+		tbNaziv = new JTextField();
+		tbNaziv.setColumns(10);
+		tbNaziv.setBounds(106, 32, 212, 20);
+		panel_9.add(tbNaziv);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(106, 63, 212, 20);
-		panel_9.add(textField_9);
+		tbAdresa = new JTextField();
+		tbAdresa.setColumns(10);
+		tbAdresa.setBounds(106, 63, 212, 20);
+		panel_9.add(tbAdresa);
 		
 		JLabel label_21 = new JLabel("Adresa:");
 		label_21.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -380,14 +386,10 @@ public class FormaZaMenadzera {
 		label_25.setBounds(10, 190, 78, 14);
 		panel_9.add(label_25);
 		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(106, 187, 212, 20);
-		panel_9.add(textField_10);
-		
-		JButton btnDodajSkladite = new JButton("Dodaj skladište");
-		btnDodajSkladite.setBounds(183, 339, 135, 23);
-		panel_9.add(btnDodajSkladite);
+		tbKontakt = new JTextField();
+		tbKontakt.setColumns(10);
+		tbKontakt.setBounds(106, 187, 212, 20);
+		panel_9.add(tbKontakt);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBorder(new TitledBorder(null, "Radno vrijeme", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -405,40 +407,56 @@ public class FormaZaMenadzera {
 		label_24.setBounds(58, 53, 17, 14);
 		panel_11.add(label_24);
 		
-		JComboBox comboBox_8 = new JComboBox();
-		comboBox_8.setBounds(98, 51, 200, 20);
-		panel_11.add(comboBox_8);
+		final JComboBox cbDo = new JComboBox();
+		cbDo.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
+		cbDo.setBounds(98, 51, 200, 20);
+		panel_11.add(cbDo);
 		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setBounds(98, 26, 200, 20);
-		panel_11.add(comboBox_7);
+		final JComboBox cbOd = new JComboBox();
+		cbOd.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
+		cbOd.setBounds(98, 26, 200, 20);
+		panel_11.add(cbOd);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBorder(new TitledBorder(null, "Lista skladi\u0161ta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_10.setBounds(348, 11, 332, 373);
 		panel_3.add(panel_10);
 		panel_10.setLayout(null);
+			
+		final JLabel label_8 = new JLabel("StatusMSG");
+		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		label_8.setBounds(10, 472, 63, 25);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(label_8);
+		
+		
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(10, 31, 312, 302);
 		panel_10.add(scrollPane_2);
 		
 		table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Naziv skladi\u0161ta", "Adresa skladi\u0161ta"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
+		
+		final DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Naziv skladi\u0161ta");
+		model.addColumn("Adresa skladi\u0161ta");
+		table_2.setModel(model);
+		scrollPane_2.setViewportView(table_2);
+		
+		List<Skladiste> lista = MenadzerSkladisteBLL.PopuniSkladista();
+		for(Skladiste s:lista)
+			model.addRow(new Object[] { s.getNaziv(), s.getAdresa() });
+		
+		JButton btnDodajSkladite = new JButton("Dodaj skladište");
+		btnDodajSkladite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(MenadzerSkladisteUI.DodajSkladiste(label_8, tbNaziv.getText(), tbAdresa.getText(), Integer.parseInt(cbOd.getSelectedItem().toString()), Integer.parseInt(cbDo.getSelectedItem().toString()), tbKontakt.getText())) {
+					MenadzerSkladisteBLL.DodajSkladiste(tbNaziv.getText(), tbAdresa.getText(), Integer.parseInt(cbOd.getSelectedItem().toString()), Integer.parseInt(cbDo.getSelectedItem().toString()), tbKontakt.getText());
+					model.addRow(new Object[] { tbNaziv.getText(), tbAdresa.getText()});
+				}
 			}
 		});
-		scrollPane_2.setViewportView(table_2);
+		btnDodajSkladite.setBounds(183, 339, 135, 23);
+		panel_9.add(btnDodajSkladite);
 		
 		JLabel label_19 = new JLabel("Lista skladi\u0161ta");
 		label_19.setBounds(-165, 6, 82, 14);
@@ -499,7 +517,7 @@ public class FormaZaMenadzera {
 		
 		JList list = new JList();
 		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Primjer1", "Primjer2"};
+			String[] values = new String[] {"Primjer1", "oko linije 517"};
 			public int getSize() {
 				return values.length;
 			}
@@ -540,11 +558,5 @@ public class FormaZaMenadzera {
 		label_28.setBounds(10, 9, 73, 24);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(label_28);
 		
-		
-		
-		JLabel label_8 = new JLabel("StatusMSG");
-		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_8.setBounds(10, 472, 63, 25);
-		frmSistemUpravljanjaSkladistem.getContentPane().add(label_8);
 	}
 }
