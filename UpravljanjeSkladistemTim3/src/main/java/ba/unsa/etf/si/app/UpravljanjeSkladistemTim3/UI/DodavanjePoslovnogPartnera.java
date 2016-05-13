@@ -9,13 +9,18 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class DodavanjePoslovnogPartnera {
 
-	private JFrame frmDodavanjePoslovnogPartnera;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	public JFrame frmDodavanjePoslovnogPartnera;
+	private JTextField textNaziv;
+	private JTextField textAdresa;
+	private JTextField textJib;
+	private JLabel lblStatus;
 
 	/**
 	 * Launch the application.
@@ -52,34 +57,54 @@ public class DodavanjePoslovnogPartnera {
 		frmDodavanjePoslovnogPartnera.getContentPane().setLayout(null);
 		
 		JLabel lblNaziv = new JLabel("Naziv:");
+		lblNaziv.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblNaziv.setBounds(54, 49, 30, 14);
 		frmDodavanjePoslovnogPartnera.getContentPane().add(lblNaziv);
 		
 		JLabel lblAdresa = new JLabel("Adresa:");
-		lblAdresa.setBounds(46, 80, 38, 14);
+		lblAdresa.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblAdresa.setBounds(45, 80, 39, 14);
 		frmDodavanjePoslovnogPartnera.getContentPane().add(lblAdresa);
 		
 		JLabel lblJib = new JLabel("JIB:");
+		lblJib.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblJib.setBounds(65, 111, 19, 14);
 		frmDodavanjePoslovnogPartnera.getContentPane().add(lblJib);
 		
-		textField = new JTextField();
-		textField.setBounds(94, 46, 188, 20);
-		frmDodavanjePoslovnogPartnera.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNaziv = new JTextField();
+		textNaziv.setBounds(94, 46, 188, 20);
+		frmDodavanjePoslovnogPartnera.getContentPane().add(textNaziv);
+		textNaziv.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(94, 77, 188, 20);
-		frmDodavanjePoslovnogPartnera.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		textAdresa = new JTextField();
+		textAdresa.setBounds(94, 77, 188, 20);
+		frmDodavanjePoslovnogPartnera.getContentPane().add(textAdresa);
+		textAdresa.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(97, 108, 185, 20);
-		frmDodavanjePoslovnogPartnera.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		textJib = new JTextField();
+		textJib.setBounds(94, 108, 188, 20);
+		frmDodavanjePoslovnogPartnera.getContentPane().add(textJib);
+		textJib.setColumns(10);
 		
 		JButton btnDodaj = new JButton("Unesi");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UposlenikUnosPartneraUI uposUnosPartneraUI = new UposlenikUnosPartneraUI();
+				String poruka = uposUnosPartneraUI.unosPartnera(textNaziv.getText(), textAdresa.getText(), textJib.getText());
+				
+				if(poruka.equals("  "))
+					frmDodavanjePoslovnogPartnera.dispose();
+				else
+					lblStatus.setText(poruka);
+			}
+		});
 		btnDodaj.setBounds(193, 154, 89, 23);
 		frmDodavanjePoslovnogPartnera.getContentPane().add(btnDodaj);
+		
+		lblStatus = new JLabel("");
+		lblStatus.setForeground(Color.RED);
+		lblStatus.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblStatus.setBounds(10, 190, 272, 14);
+		frmDodavanjePoslovnogPartnera.getContentPane().add(lblStatus);
 	}
 }

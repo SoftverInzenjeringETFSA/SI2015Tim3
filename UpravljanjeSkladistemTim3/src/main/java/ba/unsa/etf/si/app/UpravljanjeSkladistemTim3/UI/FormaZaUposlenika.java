@@ -181,6 +181,12 @@ public class FormaZaUposlenika {
 		panel.add(cbDobavljac);
 		
 		JButton btnDodajNovogDobavljaa = new JButton("Dodaj novog dobavljača");
+		btnDodajNovogDobavljaa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UposlenikUnosPartneraUI uposUnosPartneraUI = new UposlenikUnosPartneraUI();
+				RunForms.RunUnosPartneraForm();
+			}
+		});
 		btnDodajNovogDobavljaa.setBounds(318, 39, 183, 25);
 		panel.add(btnDodajNovogDobavljaa);
 		

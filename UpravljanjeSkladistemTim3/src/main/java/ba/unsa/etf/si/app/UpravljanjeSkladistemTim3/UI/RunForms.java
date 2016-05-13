@@ -2,6 +2,8 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.UI;
 
 import java.awt.EventQueue;
 
+import javax.swing.JComboBox;
+
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka;
@@ -59,6 +61,19 @@ public class RunForms {
 					window.PostaviNabavku(_nabavka);
 				} catch (Exception e) {
 					App.logger.error("Omaska - Otvaranje forme za naljepnice.", e);
+				}
+			}
+		});
+	}
+	
+	public static void RunUnosPartneraForm(){
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DodavanjePoslovnogPartnera window = new DodavanjePoslovnogPartnera();
+					window.frmDodavanjePoslovnogPartnera.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});
