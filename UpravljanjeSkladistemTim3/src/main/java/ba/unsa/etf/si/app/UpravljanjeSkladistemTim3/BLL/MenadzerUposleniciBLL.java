@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -32,13 +33,13 @@ public class MenadzerUposleniciBLL {
 			noviUposlenik.setAdresaStanovanja(adresa);
 			noviUposlenik.setBrojTelefona(telefon);
 			noviUposlenik.setEmail(email);
-			noviUposlenik.setStrucnaSprema(StrucnaSprema.V_VKV);//Treba ispraviti da prima parametar
-			noviUposlenik.setDatumZaposlenja(datumRodjenja);//Treba datum zaposlenja
+			noviUposlenik.setStrucnaSprema(StrucnaSprema.values()[strucnaSprema]);
+			noviUposlenik.setDatumZaposlenja(new Date());
 			noviUposlenik.setUser(user);
 			noviUposlenik.setPassword(pass);
-			noviUposlenik.setTipUposlenika(TipUposlenika.Menadzer);//Treba ispraviti da prima parametar
+			noviUposlenik.setTipUposlenika(TipUposlenika.values()[tipUposlenika]);
 		
-			Skladiste s = App.session.load(Skladiste.class, (long)1);//Treba promijeniti
+			Skladiste s = App.session.load(Skladiste.class, (long)skladiste);
 			System.out.println(s.getNaziv());
 			noviUposlenik.set_skladiste(s);
 

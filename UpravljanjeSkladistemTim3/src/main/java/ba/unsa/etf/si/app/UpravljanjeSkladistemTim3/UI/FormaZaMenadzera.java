@@ -404,12 +404,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		lblKorisnikoIme.setBounds(7, 284, 74, 14);
 		panel_7.add(lblKorisnikoIme);
 		
-		final JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(185, 309, 129, 20);
-		panel_7.add(comboBox_5);
-		
 		final JComboBox comboBox_6 = new JComboBox();
-		comboBox_5.setBounds(123, 266, 191, 20);
 		panel_7.add(comboBox_6);
 		
 		
@@ -575,10 +570,17 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_3.add(panel_10);
 		panel_10.setLayout(null);
 			
+
 		final JLabel lStatusDokument = new JLabel("StatusMSG");
 		lStatusDokument.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lStatusDokument.setBounds(10, 472, 63, 25);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(lStatusDokument);
+
+		final JLabel label_8 = new JLabel("");
+		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		label_8.setBounds(10, 472, 685, 25);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(label_8);
+
 		
 		
 		
