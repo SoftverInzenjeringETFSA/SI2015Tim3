@@ -41,6 +41,7 @@ import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.UI.TrenutnoStanjeSkladistaUI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -158,6 +159,14 @@ public class FormaZaUposlenika {
 		frmSistemUpravljanjaSkladitem.setBounds(100, 100, 783, 593);
 		frmSistemUpravljanjaSkladitem.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSistemUpravljanjaSkladitem.getContentPane().setLayout(null);
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if (tabbedPane.getSelectedIndex()==3)	{
+					TrenutnoStanjeSkladistaUI tst = new TrenutnoStanjeSkladistaUI();
+					tst.trenutnoStanjeSkladista(_user.get_skladiste().getNaziv(), table, lblStatusmsg);
+				}
+			}
+		});
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
 		tabbedPane.setBounds(0, 28, 767, 508);
 		frmSistemUpravljanjaSkladitem.getContentPane().add(tabbedPane);
@@ -519,6 +528,7 @@ public class FormaZaUposlenika {
 		panel_3.add(scrollPane_3);
 		
 		table = new JTable();
+		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null},
