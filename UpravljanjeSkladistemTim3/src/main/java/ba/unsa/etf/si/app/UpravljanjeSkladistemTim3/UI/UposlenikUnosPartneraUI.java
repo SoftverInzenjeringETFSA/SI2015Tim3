@@ -12,6 +12,10 @@ public class UposlenikUnosPartneraUI {
 			return "Nije unesena adresa!";
 		else if(jib.equals(""))
 			return "Nije unesen jib!";
+		else if(!naziv.matches("[a-zA-Z0-9]"))
+			return "Naziv se mora sastojati samo od alfanumeričkih znakova!";
+		else if (!jib.matches("^[0-9]*$") || jib.length() != 13 )
+			return "JIB mora imati 13 cifara";
 		else{
 			UposlenikUnosPartneraBLL uposUnosPartneraBLL = new UposlenikUnosPartneraBLL();
 			int uspjesno = uposUnosPartneraBLL.unosPoslovnogPartnera(naziv, adresa, jib);
