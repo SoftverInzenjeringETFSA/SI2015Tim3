@@ -67,11 +67,6 @@ public class UposlenikUnosRobeUI {
 			status.setForeground(Color.RED);
 			return false;
 		}
-		else {
-			status.setText("Uspjesno unesen artikal: " + ean);
-			status.setForeground(Color.GREEN);
-		}
-		
 		
 		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
 		model.addRow(new Object[] {ean, kolicina, nabavnaCijena});
@@ -156,10 +151,6 @@ public class UposlenikUnosRobeUI {
 			status.setForeground(Color.RED);
 			return false;
 		}
-		else {
-			status.setText("Uspjesno unesen artikal: " + ean);
-			status.setForeground(Color.GREEN);
-		}
 		
 		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
 		model.addRow(new Object[] {ean, kolicina, nabavnaCijena});
@@ -190,8 +181,6 @@ public class UposlenikUnosRobeUI {
 			return false;
 		}
 		
-		status.setText("Uspjesno ste unijeli nabavku.");
-		status.setForeground(Color.GREEN);
 		return true;
 	}
 }

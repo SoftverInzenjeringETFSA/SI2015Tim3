@@ -77,8 +77,7 @@ public class UposlenikUnosRobeBLL {
 		
 		Artikal ar = new Artikal();
 		ar.setBarKod(ean);
-		// na pocetku je kolicina = 0, kolicinu cemo azurirati prilikom unosa stavki narudzbe
-		ar.setKolicina(0);
+		ar.setKolicina(kolicina);
 		ar.setNaziv(naziv);
 		ar.setMjernaJedinica(mjernaJedinica);
 		ar.setJedinicnaKolicina(jedinicnaKolicina);
@@ -94,9 +93,8 @@ public class UposlenikUnosRobeBLL {
 		
 		SkladisteArtikal sa = new SkladisteArtikal();
 		sa.set_artikal(ar);
-		sa.setPonderiranaCijena(0);
+		sa.setPonderiranaCijena(nabavnaCijena);
 		_skladisteArtikli.add(sa);
-		
 		return 0;
 	}
 	
@@ -161,28 +159,42 @@ public class UposlenikUnosRobeBLL {
 			sa.set_skladiste(skladiste);
 			App.session.save(sa);
 		}	
+		t.commit();
+		t = App.session.beginTransaction();
 		
-		// Update ponderirane cijene za sve artikle sa nove nabavke
+		// Update ponderirane cijene za sve postojece artikle sa nove nabavke
 		for(StavkaDokumenta st:_stavkeNabavke) {
 			String sql = "UPDATE skladiste_artikal " +
 						 "set ponderirana_cijena = (ponderirana_cijena * :stara_kolicina + :nova_nabavna * :nova_kolicina)/(:stara_kolicina + :nova_kolicina) " +
 						 "WHERE artikal_id = :ar_id";
 			SQLQuery query = App.session.createSQLQuery(sql);
-			query.setParameter("stara_kolicina", st.get_artikal().getKolicina());
-			query.setParameter("nova_nabavna", st.getCijena());
+			query.setParameter("stara_kolicina", st.get_artikal().getKolicina()); 	
+			query.setParameter("nova_nabavna", st.getCijena());	
 			query.setParameter("nova_kolicina", st.getKolicina());
-			query.setParameter("ar_id", st.get_artikal().getId());
+				
+			// Ne treba vrsiti update novih artikala, posto je njihova nabavna cijena ujedino i ponderirana
+			long ar_id;
+			if(_noviArtikli.contains(st.get_artikal())) ar_id = -1;
+			else ar_id = st.get_artikal().getId();
 			
+			query.setParameter("ar_id", ar_id);
+		
 			int result = query.executeUpdate();
 		}
 		
 		// Update kolicine artikala, za sve artikle sa nove nabavke
 		for(StavkaDokumenta st: _stavkeNabavke) {
+		// Ne treba vrsiti update kolicine za nove artikle, jer je njihova kolicina unesena pri unosu novih artikala
+		long ar_id2;
+		if(_noviArtikli.contains(st.get_artikal())) ar_id2 = -1;
+		else ar_id2 = st.get_artikal().getId();
+		
 		String sql = "UPDATE Artikal set kolicina = kolicina + :kol" +
 					  " WHERE artikal_id = :ar_id";
 		SQLQuery query = App.session.createSQLQuery(sql);
 		query.setParameter("kol", st.getKolicina());
-		query.setParameter("ar_id", st.get_artikal().getId());
+		
+		query.setParameter("ar_id", ar_id2);
 		
 		int result = query.executeUpdate();
 		}

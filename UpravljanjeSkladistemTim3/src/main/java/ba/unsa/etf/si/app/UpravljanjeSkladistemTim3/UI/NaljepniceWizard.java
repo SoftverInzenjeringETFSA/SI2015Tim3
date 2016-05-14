@@ -38,7 +38,7 @@ public class NaljepniceWizard {
 		forma.setTitle("Wizard za kreiranje naljepnica");
 		forma.setResizable(false);
 		forma.setBounds(100, 100, 353, 529);
-		forma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		forma.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		forma.getContentPane().setLayout(null);
 		forma.setLocationRelativeTo(null);
 		
