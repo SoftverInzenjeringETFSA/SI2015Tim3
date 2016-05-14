@@ -41,6 +41,7 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import java.awt.Font;
 import javax.swing.AbstractListModel;
+import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.io.Console;
@@ -61,6 +62,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class FormaZaMenadzera {
 
@@ -89,6 +97,13 @@ public class FormaZaMenadzera {
 	private JTextField textUser;
 	private JTextField textPass;
 	private Uposlenik _user;
+	
+	private JComboBox comboBox_2;
+	private JComboBox comboBox_3;
+	private JLabel label_4;
+	private JLabel label_5;
+	
+	private TrenutnoStanjeSkladistaUI tst = new TrenutnoStanjeSkladistaUI();
 	
 	public Uposlenik get_user() {
 		return _user;
@@ -133,10 +148,12 @@ public class FormaZaMenadzera {
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
 		scrollPane.setBounds(0, 56, 689, 339);
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
@@ -159,7 +176,13 @@ public class FormaZaMenadzera {
 		label.setBounds(27, 29, 54, 14);
 		panel.add(label);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
+		tst.napuniComboBoxSkladistima(comboBox);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tst.trenutnoStanjeSkladistaMenadzer(comboBox.getSelectedItem().toString(), table, labelStatus);
+			}
+		});
 		comboBox.setBounds(91, 26, 204, 20);
 		panel.add(comboBox);
 		
@@ -173,65 +196,64 @@ public class FormaZaMenadzera {
 		panel_1.add(panel_14);
 		panel_14.setLayout(null);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBounds(126, 64, 234, 60);
-		panel_14.add(panel_5);
-		panel_5.setLayout(new GridLayout(0, 1, 0, 0));
+		final JPanel panel_6 = new JPanel();
+		panel_6.setVisible(false);
 		
-		JRadioButton radioButton = new JRadioButton("Izvje\u0161taj trendova proizvoda");
-		radioButton.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		panel_5.add(radioButton);
-		
-		JRadioButton radioButton_1 = new JRadioButton("Sumarni izvje\u0161taj");
-		radioButton_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		panel_5.add(radioButton_1);
-		
-		JLabel label_1 = new JLabel("Tip izvje\u0161taja:");
-		label_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_1.setBounds(29, 64, 72, 14);
-		panel_14.add(label_1);
+		ButtonGroup bg1 = new ButtonGroup();
 		
 		JLabel label_2 = new JLabel("Skladi\u0161te:");
 		label_2.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		label_2.setBounds(49, 36, 52, 14);
 		panel_14.add(label_2);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(126, 33, 234, 20);
 		panel_14.add(comboBox_1);
+		tst.napuniComboBoxSkladistima(comboBox_1);
 		
-		JCheckBox checkBox = new JCheckBox("Trenutno stanje skladi\u0161ta(zaklju\u010Dno sa dana\u0161njim danom)");
+		final JPanel panel_16 = new JPanel();
+		comboBox_2 = new JComboBox();
+		comboBox_3 = new JComboBox();
+		
+		final JCheckBox checkBox = new JCheckBox("Trenutno stanje skladi\u0161ta(zaklju\u010Dno sa dana\u0161njim danom)");
+		checkBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (checkBox.isSelected()){
+					panel_16.disable();	
+					comboBox_2.disable();
+					comboBox_3.disable();
+					label_4.disable();
+					label_5.disable();
+					
+					panel_16.setForeground(Color.gray);
+				}
+				else {
+					panel_16.enable();
+					comboBox_2.enable();
+					comboBox_3.enable();
+					
+					panel_16.setForeground(Color.white);
+					label_4.enable();
+					label_5.enable();
+				}
+			}
+		});
 		checkBox.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		checkBox.setBounds(18, 131, 342, 23);
+		checkBox.setBounds(18, 151, 342, 23);
 		panel_14.add(checkBox);
 		checkBox.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		JLabel label_3 = new JLabel("Vremenski period:");
-		label_3.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_3.setBounds(11, 172, 90, 14);
-		panel_14.add(label_3);
-		
-		JLabel label_4 = new JLabel("od");
-		label_4.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_4.setBounds(126, 172, 19, 14);
-		panel_14.add(label_4);
-		
-		JLabel label_5 = new JLabel("do");
-		label_5.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_5.setBounds(126, 210, 19, 14);
-		panel_14.add(label_5);
-		
-		JComboBox comboBox_2 = new JComboBox();
+		/*JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(155, 169, 205, 20);
 		panel_14.add(comboBox_2);
 		
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setBounds(155, 207, 205, 20);
-		panel_14.add(comboBox_3);
+		panel_14.add(comboBox_3);*/
 		
-		JPanel panel_6 = new JPanel();
+		//JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Dodatne opcije", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(10, 235, 352, 72);
+		panel_6.setBounds(18, 268, 342, 72);
 		panel_14.add(panel_6);
 		panel_6.setLayout(null);
 		
@@ -245,9 +267,82 @@ public class FormaZaMenadzera {
 		panel_6.add(textField_11);
 		textField_11.setColumns(10);
 		
+		
+		final JRadioButton radioButton = new JRadioButton("Izvje\u0161taj trendova proizvoda");
+		final JRadioButton radioButton_1 = new JRadioButton("Sumarni izvje\u0161taj");
+		
 		JButton button = new JButton("Generi\u0161i izvje\u0161taj");
-		button.setBounds(192, 318, 170, 23);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FormaZaMenadzeraGenerisanjeIzvjestajaUI ui = new FormaZaMenadzeraGenerisanjeIzvjestajaUI();
+				ui.generisiIzvjestaj(comboBox_1, radioButton, radioButton_1, checkBox, comboBox_2, comboBox_3, textField_11, labelStatus);
+			}
+		});
+		button.setBounds(190, 341, 170, 23);
 		panel_14.add(button);
+		
+		JPanel panel_15 = new JPanel();
+		panel_15.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tip izvje\u0161taja:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_15.setBounds(18, 56, 344, 94);
+		panel_14.add(panel_15);
+		panel_15.setLayout(null);
+		
+		
+		radioButton_1.setBounds(104, 51, 234, 30);
+		panel_15.add(radioButton_1);
+		radioButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel_6.setVisible(false);
+			}
+		});
+		radioButton_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		bg1.add(radioButton_1);
+		
+		JRadioButton radioButton_2 = new JRadioButton("Sumarni izvještaj");
+		radioButton_2.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		radioButton_2.setBounds(104, 56, 234, 30);
+		panel_15.add(radioButton_2);
+		
+		
+		radioButton.setBounds(104, 11, 234, 42);
+		panel_15.add(radioButton);
+		radioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_6.setVisible(true);
+			}
+		});
+		radioButton.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		bg1.add(radioButton);
+		
+		
+		panel_16.setBorder(new TitledBorder(null, "Vremenski period:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_16.setBounds(21, 181, 339, 88);
+		panel_14.add(panel_16);
+		panel_16.setLayout(null);
+		
+		
+		comboBox_3.setBounds(124, 57, 205, 20);
+		panel_16.add(comboBox_3);
+		
+		
+		comboBox_2.setBounds(124, 26, 205, 20);
+		panel_16.add(comboBox_2);
+		label_4 = new JLabel("od");
+		label_4.setBounds(79, 32, 19, 14);
+		panel_16.add(label_4);
+		
+		//JLabel label_4 = new JLabel("od");
+		label_4.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		//panel_16.add(label_4);
+		label_4.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		label_5 = new JLabel("do");
+		label_5.setBounds(79, 63, 19, 14);
+		panel_16.add(label_5);
+		
+		//JLabel label_5 = new JLabel("do");
+		label_5.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		//panel_16.add(label_5);
+		label_5.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Uposlenici", new ImageIcon(FormaZaMenadzera.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")), panel_2, null);
@@ -571,9 +666,9 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_10.setLayout(null);
 			
 
-		final JLabel lStatusDokument = new JLabel("StatusMSG");
+		final JLabel lStatusDokument = new JLabel("");
 		lStatusDokument.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lStatusDokument.setBounds(10, 472, 63, 25);
+		lStatusDokument.setBounds(10, 472, 685, 25);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(lStatusDokument);
 
 		final JLabel label_8 = new JLabel("");
