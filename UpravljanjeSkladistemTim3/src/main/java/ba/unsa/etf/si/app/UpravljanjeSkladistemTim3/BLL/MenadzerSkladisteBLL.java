@@ -9,12 +9,11 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 
 public class MenadzerSkladisteBLL {
 
-	public static void DodajSkladiste(String naziv, String adresa, Integer radnoVrijemeOd, Integer radnoVrijemeDo, String telefon) {
+	public void DodajSkladiste(String naziv, String adresa, Integer radnoVrijemeOd, Integer radnoVrijemeDo, String telefon) {
 		
 		Transaction t = App.session.beginTransaction();
 
@@ -32,7 +31,7 @@ public class MenadzerSkladisteBLL {
 	}
 	
 	
-	public static List<Skladiste> PopuniSkladista() {
+	public List<Skladiste> PopuniSkladista() {
 		
 		Transaction t = App.session.beginTransaction();
 
@@ -45,42 +44,50 @@ public class MenadzerSkladisteBLL {
 		return lista;
 		}
 		
-	public static int obrisiSkladiste(int id) {
+	public int ObrisiSkladiste(String naziv) {		
+		int result;
+		Transaction t;
 		
-		Transaction t = App.session.beginTransaction();
+		t = App.session.beginTransaction();
+		String hql = "from Skladiste WHERE naziv = :naziv";
+		Query query = App.session.createQuery(hql);
+		query.setParameter("naziv", naziv);
+		Skladiste s = (Skladiste)query.uniqueResult();
+		t.commit();
 		
-		Skladiste s = (Skladiste) App.session.get(Skladiste.class, id);
-		
+		t = App.session.beginTransaction();
 		for(Dokument d:s.get_dokumenti()) {
-			String hql = "DELETE from Dokument WHERE dokument_id = :id";
-			Query query = App.session.createQuery(hql);
+			hql = "DELETE from Dokument WHERE dokument_id = :id";
+			query = App.session.createQuery(hql);
 			query.setParameter("id", d.getId());
 			
-			int result = query.executeUpdate();
+			result = query.executeUpdate();
 		}
+		t.commit();
 		
+		t = App.session.beginTransaction();
 		for(Uposlenik u:s.get_uposlenici()) {
-			String hql = "DELETE from Uposlenik WHERE uposlenik_id = :id";
-			Query query = App.session.createQuery(hql);
+			hql = "DELETE from Uposlenik WHERE uposlenik_id = :id";
+			query = App.session.createQuery(hql);
 			query.setParameter("id", u.getId());
 			
-			int result = query.executeUpdate();
+			result = query.executeUpdate();
 		}
+		t.commit();
 		
+		t = App.session.beginTransaction();
 		for(SkladisteArtikal sa:s.get_skladisteArtikli()) {
-			String hql = "DELETE from Uposlenik WHERE skladiste_artikal_id = :id";
-			Query query = App.session.createQuery(hql);
+			hql = "DELETE from Uposlenik WHERE skladiste_artikal_id = :id";
+			query = App.session.createQuery(hql);
 			query.setParameter("id", sa.getId());
 			
-			int result = query.executeUpdate();
+			result = query.executeUpdate();
 		}
+		t.commit();
 		
-		String hql = "DELETE from Skladiste WHERE naziv = :id";
-		Query query = App.session.createQuery(hql);
-		query.setParameter("id", id);
-		
-		int result = query.executeUpdate();
-				
+		t = App.session.beginTransaction();
+		App.session.delete(s);
+		JOptionPane.showMessageDialog(null, "Obrisano skladište " + s.getNaziv() + "!","Info", JOptionPane.INFORMATION_MESSAGE);
 		t.commit();
 
 		return 0;

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +24,12 @@ import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StrucnaSprema;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.TipUposlenika;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpisnica;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpremnica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.MenadzerDokumentBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.MenadzerSkladisteBLL;
 
 import java.awt.GridLayout;
@@ -52,6 +58,9 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+
+import com.toedter.calendar.JDateChooser;
 
 public class FormaZaMenadzera {
 
@@ -113,6 +122,11 @@ public class FormaZaMenadzera {
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
 		tabbedPane.setBounds(0, 44, 695, 431);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(tabbedPane);
+		
+		final MenadzerDokumentBLL mdbll = new MenadzerDokumentBLL(); 
+		final MenadzerSkladisteBLL msbll = new MenadzerSkladisteBLL();
+		final MenadzerDokumentUI mdui = new MenadzerDokumentUI();
+		final MenadzerSkladisteUI msui = new MenadzerSkladisteUI();
 		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Pregled trenutnog stanja robe", new ImageIcon(FormaZaMenadzera.class.getResource("/com/sun/java/swing/plaf/windows/icons/DetailsView.gif")), panel, null);
@@ -515,15 +529,45 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		label_24.setBounds(58, 53, 17, 14);
 		panel_11.add(label_24);
 		
-		final JComboBox cbDo = new JComboBox();
-		cbDo.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
-		cbDo.setBounds(98, 51, 200, 20);
-		panel_11.add(cbDo);
+		final JComboBox cbDoH = new JComboBox();
+		cbDoH.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
+		cbDoH.setBounds(98, 51, 47, 20);
+		panel_11.add(cbDoH);
 		
-		final JComboBox cbOd = new JComboBox();
-		cbOd.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
-		cbOd.setBounds(98, 26, 200, 20);
-		panel_11.add(cbOd);
+		final JComboBox cbOdH = new JComboBox();
+		cbOdH.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
+		cbOdH.setBounds(98, 26, 47, 20);
+		panel_11.add(cbOdH);
+		
+		final JComboBox cbOdMin = new JComboBox();
+		cbOdMin.setModel(new DefaultComboBoxModel(new String[] {"10", "20", "30", "40", "50", "60"}));
+		cbOdMin.setBounds(185, 26, 47, 20);
+		panel_11.add(cbOdMin);
+		
+		final JComboBox cbDoMin = new JComboBox();
+		cbDoMin.setModel(new DefaultComboBoxModel(new String[] {"10", "20", "30", "40", "50", "60"}));
+		cbDoMin.setBounds(185, 51, 47, 20);
+		panel_11.add(cbDoMin);
+		
+		JLabel lblH = new JLabel("h");
+		lblH.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblH.setBounds(155, 29, 16, 14);
+		panel_11.add(lblH);
+		
+		JLabel lblH_1 = new JLabel("h");
+		lblH_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblH_1.setBounds(155, 54, 16, 14);
+		panel_11.add(lblH_1);
+		
+		JLabel lblMin = new JLabel("min");
+		lblMin.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblMin.setBounds(242, 29, 16, 14);
+		panel_11.add(lblMin);
+		
+		JLabel lblMin_1 = new JLabel("min");
+		lblMin_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblMin_1.setBounds(242, 54, 16, 14);
+		panel_11.add(lblMin_1);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBorder(new TitledBorder(null, "Lista skladi\u0161ta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -531,16 +575,16 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_3.add(panel_10);
 		panel_10.setLayout(null);
 			
-		final JLabel label_8 = new JLabel("StatusMSG");
-		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_8.setBounds(10, 472, 63, 25);
-		frmSistemUpravljanjaSkladistem.getContentPane().add(label_8);
+		final JLabel lStatusDokument = new JLabel("StatusMSG");
+		lStatusDokument.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lStatusDokument.setBounds(10, 472, 63, 25);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(lStatusDokument);
 		
 		
 		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(10, 31, 312, 302);
-		panel_10.add(scrollPane_2);
+		final JScrollPane spLista = new JScrollPane();
+		spLista.setBounds(10, 31, 312, 302);
+		panel_10.add(spLista);
 		
 		table_2 = new JTable();
 		
@@ -548,17 +592,19 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		model.addColumn("Naziv skladi\u0161ta");
 		model.addColumn("Adresa skladi\u0161ta");
 		table_2.setModel(model);
-		scrollPane_2.setViewportView(table_2);
+		spLista.setViewportView(table_2);
 		
-		List<Skladiste> lista = MenadzerSkladisteBLL.PopuniSkladista();
+		List<Skladiste> lista = msbll.PopuniSkladista();
 		for(Skladiste s:lista)
 			model.addRow(new Object[] { s.getNaziv(), s.getAdresa() });
 		
 		JButton btnDodajSkladite = new JButton("Dodaj skladište");
 		btnDodajSkladite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(MenadzerSkladisteUI.DodajSkladiste(label_8, tbNaziv.getText(), tbAdresa.getText(), Integer.parseInt(cbOd.getSelectedItem().toString()), Integer.parseInt(cbDo.getSelectedItem().toString()), tbKontakt.getText())) {
-					MenadzerSkladisteBLL.DodajSkladiste(tbNaziv.getText(), tbAdresa.getText(), Integer.parseInt(cbOd.getSelectedItem().toString()), Integer.parseInt(cbDo.getSelectedItem().toString()), tbKontakt.getText());
+				int rvOD = Integer.parseInt(cbOdH.getSelectedItem().toString()) * 100 + Integer.parseInt(cbOdMin.getSelectedItem().toString());
+				int rvDO = Integer.parseInt(cbDoH.getSelectedItem().toString()) * 100 + Integer.parseInt(cbDoMin.getSelectedItem().toString());
+				if(msui.DodajSkladiste(lStatusDokument, tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText())) {
+					msbll.DodajSkladiste(tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText());
 					model.addRow(new Object[] { tbNaziv.getText(), tbAdresa.getText()});
 				}
 			}
@@ -570,9 +616,19 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		label_19.setBounds(-165, 6, 82, 14);
 		panel_10.add(label_19);
 		
-		JButton button_3 = new JButton("Obri\u0161i skladi\u0161te");
-		button_3.setBounds(187, 339, 135, 23);
-		panel_10.add(button_3);
+		JButton bObrisiSkladiste = new JButton("Obri\u0161i skladi\u0161te");
+		bObrisiSkladiste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(table_2.getSelectedRow() != -1) {
+					msbll.ObrisiSkladiste(table_2.getValueAt(table_2.getSelectedRow(), 0).toString());
+					model.removeRow(table_2.getSelectedRow());
+				}
+				else
+					JOptionPane.showMessageDialog(null, "Izaberite dokument!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		bObrisiSkladiste.setBounds(187, 339, 135, 23);
+		panel_10.add(bObrisiSkladiste);
 		
 		JPanel panel_4 = new JPanel();
 		tabbedPane.addTab("Dokumenti", new ImageIcon(FormaZaMenadzera.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")), panel_4, null);
@@ -607,32 +663,26 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		
 		JLabel label_26 = new JLabel("od:");
 		label_26.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_26.setBounds(26, 51, 16, 14);
+		label_26.setBounds(35, 41, 16, 14);
 		panel_13.add(label_26);
 		
 		JLabel label_27 = new JLabel("do:");
 		label_27.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_27.setBounds(26, 76, 17, 14);
+		label_27.setBounds(34, 78, 17, 14);
 		panel_13.add(label_27);
 		
-		JComboBox comboBox_9 = new JComboBox();
-		comboBox_9.setBounds(64, 73, 212, 20);
-		panel_13.add(comboBox_9);
+		final JDateChooser dcOd = new JDateChooser();
+		dcOd.setBounds(81, 39, 168, 20);
+		panel_13.add(dcOd);
 		
-		JComboBox comboBox_10 = new JComboBox();
-		comboBox_10.setBounds(64, 48, 212, 20);
-		panel_13.add(comboBox_10);
+		final JDateChooser dcDo = new JDateChooser();
+		dcDo.setBounds(81, 76, 168, 20);
+		panel_13.add(dcDo);
+
+		final DefaultListModel listModel = new DefaultListModel();
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Primjer1", "oko linije 517"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		final JList list = new JList();
+		list.setModel(listModel);
 		list.setBounds(10, 170, 670, 188);
 		panel_4.add(list);
 		
@@ -642,10 +692,37 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_4.add(lblListaOdabranihDokumenata);
 		
 		JButton btnPrikaiDokument = new JButton("Prikaži dokument");
+		btnPrikaiDokument.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(list.getSelectedValue() != null)			
+					mdbll.PrikaziPDF((Dokument)list.getSelectedValue());
+				else
+					JOptionPane.showMessageDialog(null, "Izaberite dokument!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		btnPrikaiDokument.setBounds(525, 361, 155, 23);
 		panel_4.add(btnPrikaiDokument);
 		
+		final List<Dokument> listaDokumenata = mdbll.PopuniListuDokumenata();
+		for(Dokument d:listaDokumenata) 
+				listModel.addElement(d);
+
 		JButton btnPretrai = new JButton("Pretraži");
+		btnPretrai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listModel.removeAllElements();
+				java.sql.Date sqlDateOd = new java.sql.Date(dcOd.getDate().getTime());
+				java.sql.Date sqlDateDo = new java.sql.Date(dcDo.getDate().getTime());
+				if(mdui.PopuniListuDokumenata(lStatusDokument, sqlDateOd, sqlDateDo)) {
+					List<Dokument> listaDokumenata2 =  mdbll.PopuniListuDokumenata(sqlDateOd, sqlDateDo);
+					for(Dokument d:listaDokumenata2) 
+						listModel.addElement(d);
+					if(listaDokumenata2.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Ne postoji dokument generisan u traženom periodu!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		});
 		btnPretrai.setBounds(561, 62, 119, 23);
 		panel_4.add(btnPretrai);
 		

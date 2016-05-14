@@ -67,4 +67,9 @@ public abstract class Dokument implements Serializable {
 	Set<StavkaDokumenta> _stavke;
 	
 	public Dokument() {}
+    
+	public String toString()
+	{
+		return this.getId() + "-[Dokument]-" + this.getDatum().toString().substring(0, 10);
+	}
 }

@@ -40,4 +40,9 @@ public class Nabavka extends Dokument implements Serializable {
 	PoslovniPartner _dobavaljc;
 	
 	public Nabavka() {}
+	
+	public String toString()
+	{
+		return this.getId() + "-[Nabavka]-" + this.getDatum().toString().substring(0, 10);
+	}
 }
