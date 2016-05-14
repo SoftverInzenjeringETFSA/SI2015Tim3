@@ -22,25 +22,6 @@ public class DodavanjePoslovnogPartnera {
 	private JTextField textJib;
 	private JLabel lblStatus;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DodavanjePoslovnogPartnera window = new DodavanjePoslovnogPartnera();
-					window.frmDodavanjePoslovnogPartnera.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public DodavanjePoslovnogPartnera() {
 		initialize();
 	}
