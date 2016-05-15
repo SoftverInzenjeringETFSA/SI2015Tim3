@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -9,6 +10,9 @@ import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpremnica;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.SkladisteArtikal;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
@@ -16,10 +20,12 @@ import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 public class UposlenikOtpremanjeBLL {
 	private List<Artikal> _artikliZaOtprem;
 	private List<Integer> _listaKolicina;
+	private List<StavkaDokumenta> _stavkeOtprema;
 	
 	public UposlenikOtpremanjeBLL() {
 		_artikliZaOtprem = new ArrayList<Artikal>();
 		_listaKolicina = new ArrayList<Integer>();
+		_stavkeOtprema = new ArrayList<StavkaDokumenta>();
 	}
 	
 	public Artikal dobaviArtikalZaOtprem(String barKod, int kolicina, double prodajnaCijena){
@@ -40,6 +46,19 @@ public class UposlenikOtpremanjeBLL {
 			a.setProdajnaCijena(prodajnaCijena);
 		_artikliZaOtprem.add(a);
 		_listaKolicina.add(kolicina);//Kolicine za otpremanje
+		
+		for(StavkaDokumenta sd : _stavkeOtprema) {
+			if(sd.get_artikal().getId() == a.getId())
+				return null;
+		}
+		
+		StavkaDokumenta sd = new StavkaDokumenta();
+		sd.set_artikal(a);
+		sd.setCijena(a.getProdajnaCijena());
+		sd.setKolicina(kolicina);
+		_stavkeOtprema.add(sd);
+	
+		
 		return a;
 	}
 	
@@ -79,7 +98,7 @@ public class UposlenikOtpremanjeBLL {
 		}	
 	}
 	
-	public int zavrsiOtpremanje(Uposlenik user){
+	public int zavrsiOtpremanje(Uposlenik user, int kupac){
 		if(_artikliZaOtprem.isEmpty())
 			return 0;
 		try{
@@ -112,6 +131,24 @@ public class UposlenikOtpremanjeBLL {
 			t.commit();
 			
 			
+			Otpremnica otp = new Otpremnica();
+			otp.set_kreirao(user);
+			otp.set_skladiste(user.get_skladiste());
+			otp.setDatum(new Date());
+			PoslovniPartner pp = App.session.load(PoslovniPartner.class, (long)(kupac+1));
+			
+			
+			
+			Transaction t2 = App.session.beginTransaction();
+			Long id = (Long) App.session.save(otp);
+			
+			for(StavkaDokumenta sd : _stavkeOtprema) {
+				sd.set_dokument(otp);
+				App.session.save(sd);
+			}
+			t.commit();
+			
+
 			_artikliZaOtprem.clear();
 			_listaKolicina.clear();
 			return 1;
