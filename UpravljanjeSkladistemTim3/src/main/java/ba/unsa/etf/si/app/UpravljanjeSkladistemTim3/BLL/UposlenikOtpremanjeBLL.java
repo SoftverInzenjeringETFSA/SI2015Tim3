@@ -40,9 +40,8 @@ public class UposlenikOtpremanjeBLL {
 		} catch (NullPointerException e) {
 			App.logger.error("Greška - artikal već postoji u bazi.", e);
 		}
-
 		
-		if(prodajnaCijena != a.getProdajnaCijena())
+		if(!(Math.abs(prodajnaCijena - a.getProdajnaCijena()) < 0.000001))
 			a.setProdajnaCijena(prodajnaCijena);
 		_artikliZaOtprem.add(a);
 		_listaKolicina.add(kolicina);//Kolicine za otpremanje
@@ -77,7 +76,7 @@ public class UposlenikOtpremanjeBLL {
 
 			return staraKolicina;
 		}catch(NullPointerException e){
-			System.out.println("Greska - stara kolicina");
+			App.logger.error("Omaska.", e);
 			return 0;
 		}
 	}
@@ -94,6 +93,7 @@ public class UposlenikOtpremanjeBLL {
 			
 			return cijena;
 		}catch(NullPointerException e){
+			App.logger.error("Omaska.", e);
 			return 0;
 		}	
 	}
@@ -154,6 +154,7 @@ public class UposlenikOtpremanjeBLL {
 			return 1;
 		}
 		catch(NullPointerException e){
+			App.logger.error("Omaska.", e);
 			return 2;
 		}
 	}

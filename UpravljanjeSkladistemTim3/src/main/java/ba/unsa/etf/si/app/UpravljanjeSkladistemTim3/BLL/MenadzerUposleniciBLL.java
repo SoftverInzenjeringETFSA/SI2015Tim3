@@ -51,6 +51,7 @@ public class MenadzerUposleniciBLL {
 			return 1;
 		}
 		catch(HibernateException e){
+			App.logger.error("Omaska", e);
 			return 0;
 		}
 
@@ -95,6 +96,7 @@ public class MenadzerUposleniciBLL {
 			return true;
 		}
 		catch(HibernateException e){
+			App.logger.error("Omaska", e);
 			return false;
 		}
 	}

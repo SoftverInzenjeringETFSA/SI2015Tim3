@@ -56,6 +56,7 @@ public class UposlenikUnosRobeBLL {
 			dummy = (Integer)query3.uniqueResult();
 		} catch (Exception e) 
 		{
+			App.logger.error("Omaska.", e);
 			SkladisteArtikal sa = new SkladisteArtikal();
 			sa.set_artikal(a);
 			sa.set_skladiste(user2.get_skladiste());

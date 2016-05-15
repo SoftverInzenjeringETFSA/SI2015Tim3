@@ -25,6 +25,7 @@ public class TrenutnoStanjeSkladistaBLL {
 			}
 		}
 		catch(NullPointerException e){
+			App.logger.error("Omaska", e);
 		}
 		return artikliNaStanju;
 	}
@@ -37,7 +38,7 @@ public class TrenutnoStanjeSkladistaBLL {
 			skladista = (List<Skladiste>) query.list();
 		}
 		catch(NullPointerException e){
-			
+			App.logger.error("Omaska", e);
 		}
 		return skladista;
 	}

@@ -73,7 +73,7 @@ public class RunForms {
 					DodavanjePoslovnogPartnera window = new DodavanjePoslovnogPartnera();
 					window.frmDodavanjePoslovnogPartnera.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					App.logger.error("Omaska.", e);
 				}
 			}
 		});

@@ -44,6 +44,7 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 			s = (Skladiste) query.uniqueResult();
 		}
 		catch(NullPointerException e){
+			App.logger.error("Omaska - skladiste ne postoji u bazi.", e);
 		}
 		
 		return s;
@@ -59,6 +60,7 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 			a = (Artikal) query.uniqueResult();
 		}
 		catch(NullPointerException e){
+			App.logger.error("Omaska - artikal ne postoji u bazi.", e);
 		}
 		
 		return a;
@@ -77,12 +79,6 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 		Query query = App.session.createQuery(hq1);
 		query.setParameter("barkKod", a.getBarKod());
 		
-		try {
-			
-		}
-		catch(Exception e){
-			
-		}
 	}
 	
 	public Nabavka dajUlazniDokument(Artikal a, Date _od, Date _do){

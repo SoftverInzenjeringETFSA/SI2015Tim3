@@ -153,6 +153,7 @@ public class MenadzerDokumentBLL {
 			document.close();
 			writer.close();
 		} catch(Exception e) {
+			App.logger.error("Omaska", e);
 			JOptionPane.showMessageDialog(null, e.getMessage(),"Info", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
@@ -165,9 +166,10 @@ public class MenadzerDokumentBLL {
 				throw new DocumentException();
 				//throw new FileNotFoundException();
 			} catch (IOException ex) {
+				App.logger.error("Omaska", ex);
 				JOptionPane.showMessageDialog(null, "Ne postoji aplikacija koja podrzava čitanje PDF fajlova","Info", JOptionPane.INFORMATION_MESSAGE);
 			} catch (DocumentException e) {
-				e.printStackTrace();
+				App.logger.error("Omaska", e);
 			} 
 		}
 	}

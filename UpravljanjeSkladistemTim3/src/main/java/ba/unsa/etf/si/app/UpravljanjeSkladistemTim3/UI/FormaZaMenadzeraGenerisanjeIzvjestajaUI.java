@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.FormaZaMenadzeraGenerisanjeIzvjestajaBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
@@ -75,6 +76,7 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 					ponistiKontrole(comboBox, trend, sumarni, checkBox, comboBox_2, comboBox_3, barKod);
 				}
 				catch (Exception e){
+					App.logger.error("Omaska.", e);
 				}	
 			}
 			if (sumarni.isSelected()){
@@ -84,7 +86,8 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 					bll.generisiIzvjestajSumarni(s,  artikli, status);
 					ponistiKontrole(comboBox, trend, sumarni, checkBox, comboBox_2, comboBox_3, barKod);
 				}
-				catch(Exception e){				
+				catch(Exception e){	
+					App.logger.error("Omaska.", e);
 				}
 			}
 		}
