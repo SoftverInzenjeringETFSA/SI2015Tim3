@@ -22,7 +22,10 @@ public class UposlenikUnosRobeBLL {
 		_stavkeNabavke = new ArrayList<StavkaDokumenta>();
 		_skladisteArtikli = new ArrayList<SkladisteArtikal>();
 	}
-	
+	private Uposlenik user2;
+	public void SetUser(Uposlenik _user) {
+		user2 = _user;
+	}
 	private List<Artikal> _noviArtikli;
 	private List<StavkaDokumenta> _stavkeNabavke;
 	private List<SkladisteArtikal> _skladisteArtikli;
@@ -40,6 +43,26 @@ public class UposlenikUnosRobeBLL {
 			return 1;
 		}
 		t.commit();
+		
+		t = App.session.getTransaction();
+		String sql = "SELECT kolicina FROM skladiste_artikal WHERE artikal_id = :ar_id && skladiste_id = :sk_id";
+		SQLQuery query3 = App.session.createSQLQuery(sql);
+		query3.setParameter("ar_id", a.getId());
+		query3.setParameter("sk_id", user2.get_skladiste().getId());
+		
+		int dummy;
+		try
+		{
+			dummy = (Integer)query3.uniqueResult();
+		} catch (Exception e) 
+		{
+			SkladisteArtikal sa = new SkladisteArtikal();
+			sa.set_artikal(a);
+			sa.set_skladiste(user2.get_skladiste());
+			sa.setKolicina(0);
+			sa.setPonderiranaCijena(0);
+			_skladisteArtikli.add(sa);
+		}
 		
 		if(a == null) return 1;
 		
@@ -172,13 +195,13 @@ public class UposlenikUnosRobeBLL {
 		
 			String sql = "UPDATE skladiste_artikal " +
 						 "set ponderirana_cijena = (ponderirana_cijena * :stara_kolicina + :nova_nabavna * :nova_kolicina)/(:stara_kolicina + :nova_kolicina) " +
-						 "WHERE artikal_id = :ar_id";
+						 "WHERE artikal_id = :ar_id && skladiste_id = :sk_id";
 			SQLQuery query = App.session.createSQLQuery(sql);
 			
 			query.setParameter("stara_kolicina", stara_kolicina); 	
 			query.setParameter("nova_nabavna", st.getCijena());	
 			query.setParameter("nova_kolicina", st.getKolicina());
-				
+			query.setParameter("sk_id", user.get_skladiste().getId());
 			// Ne treba vrsiti update novih artikala, posto je njihova nabavna cijena ujedino i ponderirana
 			long ar_id;
 			if(_noviArtikli.contains(st.get_artikal())) ar_id = -1;

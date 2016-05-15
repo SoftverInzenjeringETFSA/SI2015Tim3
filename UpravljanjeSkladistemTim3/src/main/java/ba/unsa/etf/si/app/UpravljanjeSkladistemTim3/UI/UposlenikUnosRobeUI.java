@@ -16,6 +16,9 @@ public class UposlenikUnosRobeUI {
 	public UposlenikUnosRobeUI() {
 		bll = new UposlenikUnosRobeBLL();
 	}
+	public void SetUser(Uposlenik user) {
+		bll.SetUser(user);
+	}
 	private UposlenikUnosRobeBLL bll;
 	
 	// Za sada se provjerava samo duzina i da su svi elementi cifre

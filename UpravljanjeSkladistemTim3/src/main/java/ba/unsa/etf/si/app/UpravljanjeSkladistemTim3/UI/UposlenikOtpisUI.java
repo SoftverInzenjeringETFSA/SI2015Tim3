@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.UI;
 import java.awt.Color;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -73,6 +74,7 @@ public class UposlenikOtpisUI {
 	}
 
 	public void ZavrsiOtpis(String komentar, Uposlenik user) {
-		bll.ZavrsiOtpis(komentar, user);		
+		bll.ZavrsiOtpis(komentar, user);
+		JOptionPane.showMessageDialog(null, "Uspjesno ste napravili otpis robe.", "Uspjeh", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

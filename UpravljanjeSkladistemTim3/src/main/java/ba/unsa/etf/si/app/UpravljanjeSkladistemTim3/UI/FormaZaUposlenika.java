@@ -65,7 +65,6 @@ public class FormaZaUposlenika {
 	private JTable tableArtikliOtprem;
 	private JTable tabelaOtpis;
 	private JTable table;
-	private JTextField textField;
 	private JTextField tbOtpremBarKod;
 	private JTextField tbOtpremProdajnaCijena;
 	private JTextField tbBarKodOtpis;
@@ -218,6 +217,7 @@ public class FormaZaUposlenika {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ui == null) ui = new UposlenikUnosRobeUI();
+				ui.SetUser(_user);
 				if(ui.UnosNabavke(lblStatusmsg, _user, (String)cbDobavljac.getSelectedItem(), tbNabavkaBarKod.getText()))
 					cleanNabavka();
 			}
@@ -278,6 +278,7 @@ public class FormaZaUposlenika {
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ui == null) ui = new UposlenikUnosRobeUI();
+				ui.SetUser(_user);
 				if(ui.DodajArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText()))
 					clearUnos();
 			}
@@ -349,6 +350,7 @@ public class FormaZaUposlenika {
 		btnDodajNovi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(ui == null) ui = new UposlenikUnosRobeUI();
+				ui.SetUser(_user);
 				if(ui.DodajNoviArtikal(lblStatusmsg, tabelaArtikli, tbBarKod.getText(), (Integer)spinnerKolicina.getValue(), tbNabavnaCijena.getText(), tbNaziv.getText(), tbJedinicnaKolicina.getText(),(MjernaJedinica) cbMjernaJedinica.getSelectedItem(), tbProdajnaCijena.getText()) )
 					clearUnos();
 			} 
@@ -545,11 +547,6 @@ public class FormaZaUposlenika {
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblNewLabel_2.setBounds(25, 90, 66, 23);
 		panel_2.add(lblNewLabel_2);
-		
-		textField = new JTextField();
-		textField.setBounds(10, 334, 742, 99);
-		panel_2.add(textField);
-		textField.setColumns(10);
 
 		JLabel label = new JLabel("Bar kod: ");
 		label.setFont(new Font("SansSerif", Font.PLAIN, 11));
