@@ -20,6 +20,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ import org.hibernate.Query;
 public class MenadzerDokumentBLL {	
 	
 	public List<Dokument> PopuniListuDokumenata() {
-
 		Transaction t = App.session.beginTransaction();
 
 		String hql = "from Dokument";
@@ -45,16 +45,16 @@ public class MenadzerDokumentBLL {
 		return lista;
 	}
 	
-	public List<Dokument> PopuniListuDokumenata(Date OD, Date DO) {
-
+	public List<Dokument> PopuniListuDokumenata(List<String> vrste, Date OD, Date DO) {
 		List<Dokument> lista = PopuniListuDokumenata();
 		List<Dokument> listaZaBrisanje = new ArrayList<Dokument>();
 		for(Dokument d:lista) {
 			int uslov1 = d.getDatum().compareTo(OD);
 			int uslov2 = d.getDatum().compareTo(DO);
-			
-			if(!((uslov1 == 0 || uslov1 == 1) && (uslov2 == 0 || uslov2 == -1))) {
+			if((uslov1 == 0 || uslov1 == 1) && (uslov2 == 0 || uslov2 == -1)) {
+				if(!vrste.contains(d.dajTip())) {
 				listaZaBrisanje.add(d);
+				}
 			}
 		}
 		lista.removeAll(listaZaBrisanje);
@@ -163,13 +163,12 @@ public class MenadzerDokumentBLL {
 				String workingDir = System.getProperty("user.dir");
 				File myFile = new File(workingDir + "\\" + d + ".pdf");
 				Desktop.getDesktop().open(myFile);
-				throw new DocumentException();
-				//throw new FileNotFoundException();
+			} catch (FileNotFoundException e) {
+				App.logger.error("Omaska", e);
+				JOptionPane.showMessageDialog(null, "Ne postoji trazeni fajl!","Info", JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException ex) {
 				App.logger.error("Omaska", ex);
-				JOptionPane.showMessageDialog(null, "Ne postoji aplikacija koja podrzava čitanje PDF fajlova","Info", JOptionPane.INFORMATION_MESSAGE);
-			} catch (DocumentException e) {
-				App.logger.error("Omaska", e);
+				JOptionPane.showMessageDialog(null, "Ne postoji aplikacija koja podrzava čitanje PDF fajlova!","Info", JOptionPane.INFORMATION_MESSAGE);
 			} 
 		}
 	}

@@ -17,6 +17,7 @@ public class MenadzerSkladisteUI {
 	private static final String Telefon_PATTERN1 = "([0][6][1-6][0-9]{6})";
 	private static final String Telefon_PATTERN2 = "([0][6][0][0-9]{7})";
 	private static final String Telefon_PATTERN3 = "([0][3][3][0-9]{6})";
+	private static final String Telefon_PATTERN4 = "([0][3][7][0-9]{6})";
 	
 	public MenadzerSkladisteUI() { }
 	
@@ -50,10 +51,11 @@ public class MenadzerSkladisteUI {
 		Pattern patern1 = Pattern.compile(Telefon_PATTERN1);
 		Pattern patern2 = Pattern.compile(Telefon_PATTERN2);
 		Pattern patern3 = Pattern.compile(Telefon_PATTERN3);
+		Pattern patern4 = Pattern.compile(Telefon_PATTERN4);
 
-		if(!(patern1.matcher(telefon).matches() || patern2.matcher(telefon).matches() || patern3.matcher(telefon).matches())) {
+		if(!(patern1.matcher(telefon).matches() || patern2.matcher(telefon).matches() || patern3.matcher(telefon).matches() || patern4.matcher(telefon).matches())) {
 			JOptionPane.showMessageDialog(null, "Telefon mora biti u ispravnom formatu!\n" +
-												"033XXXXXX\n" +
+												"03(3,7)XXXXXX\n" +
 												"060XXXXXXX\n" +
 					                            "06(1-6)XXXXXX", "Greška", JOptionPane.ERROR_MESSAGE);
 			status.setForeground(Color.RED);
@@ -88,6 +90,18 @@ public class MenadzerSkladisteUI {
 	}		
 	
 	public boolean IzbrisiSkladiste(JLabel status, String naziv) {
+		String query = "from Skladiste where naziv= :naziv";
+		Query q = App.session.createQuery(query);
+		q.setParameter("naziv", naziv);
+		List<?> result = q.list();
+		if(result.isEmpty()) {
+			status.setText("Skladište sa unesenim nazivom ne postoji!");
+			status.setForeground(Color.RED);
+			return false;
+		}
+		
+		status.setText("");
+		status.setForeground(Color.GREEN);
 		return true;
 	}
 }

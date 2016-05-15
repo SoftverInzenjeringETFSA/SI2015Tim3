@@ -29,10 +29,8 @@ public class MenadzerSkladisteBLL {
 		
 		t.commit();
 	}
-	
-	
-	public List<Skladiste> PopuniSkladista() {
 		
+	public List<Skladiste> PopuniSkladista() {
 		Transaction t = App.session.beginTransaction();
 
 		String hql = "from Skladiste";
@@ -56,33 +54,36 @@ public class MenadzerSkladisteBLL {
 		t.commit();
 		
 		t = App.session.beginTransaction();
-		for(Dokument d:s.get_dokumenti()) {
-			hql = "DELETE from Dokument WHERE dokument_id = :id";
-			query = App.session.createQuery(hql);
-			query.setParameter("id", d.getId());
-			
-			result = query.executeUpdate();
-		}
+		if(s.get_dokumenti() != null)
+			for(Dokument d:s.get_dokumenti()) {
+				hql = "DELETE from Dokument WHERE dokument_id = :id";
+				query = App.session.createQuery(hql);
+				query.setParameter("id", d.getId());
+				
+				result = query.executeUpdate();
+			}
 		t.commit();
 		
 		t = App.session.beginTransaction();
-		for(Uposlenik u:s.get_uposlenici()) {
-			hql = "DELETE from Uposlenik WHERE uposlenik_id = :id";
-			query = App.session.createQuery(hql);
-			query.setParameter("id", u.getId());
-			
-			result = query.executeUpdate();
-		}
+		if(s.get_uposlenici() != null)
+			for(Uposlenik u:s.get_uposlenici()) {
+				hql = "DELETE from Uposlenik WHERE uposlenik_id = :id";
+				query = App.session.createQuery(hql);
+				query.setParameter("id", u.getId());
+				
+				result = query.executeUpdate();
+			}
 		t.commit();
 		
 		t = App.session.beginTransaction();
-		for(SkladisteArtikal sa:s.get_skladisteArtikli()) {
-			hql = "DELETE from Uposlenik WHERE skladiste_artikal_id = :id";
-			query = App.session.createQuery(hql);
-			query.setParameter("id", sa.getId());
-			
-			result = query.executeUpdate();
-		}
+		if(s.get_skladisteArtikli() != null)
+			for(SkladisteArtikal sa:s.get_skladisteArtikli()) {
+				hql = "DELETE from Uposlenik WHERE skladiste_artikal_id = :id";
+				query = App.session.createQuery(hql);
+				query.setParameter("id", sa.getId());
+				
+				result = query.executeUpdate();
+			}
 		t.commit();
 		
 		t = App.session.beginTransaction();
@@ -91,8 +92,6 @@ public class MenadzerSkladisteBLL {
 		t.commit();
 
 		return 0;
-	}
-	
-	
+	}	
 }
 

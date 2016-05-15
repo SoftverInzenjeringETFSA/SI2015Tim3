@@ -46,6 +46,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.io.Console;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -112,7 +113,7 @@ public class FormaZaMenadzera {
 	public void set_user(Uposlenik _user) {
 		this._user = _user;
 		JLabel userName = new JLabel(_user.getUser());
-		userName.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		userName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		userName.setBounds(90, 14, 46, 14);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(userName);
 		}
@@ -464,7 +465,7 @@ public class FormaZaMenadzera {
 				
 				if(menUposleniciUI == null)
 					menUposleniciUI = new MenadzerUposleniciUI();
-				String poruka = menUposleniciUI.dodajUposlenika(
+				String poruka = menUposleniciUI.dodajUposlenika(frmSistemUpravljanjaSkladistem,
 textIme.getText(),textPrezime.getText(),textJmbg.getText(), dateRodjenja.getDate(),
 textMjestoRodjenja.getText(),textAdresa.getText(),textBrojTel.getText(),textEmail.getText(),
 comboBoxStrucnaSprema.getSelectedIndex(),comboBoxTipUposlenika.getSelectedIndex(),
@@ -620,22 +621,22 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_11.add(label_24);
 		
 		final JComboBox cbDoH = new JComboBox();
-		cbDoH.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
+		cbDoH.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"}));
 		cbDoH.setBounds(98, 51, 47, 20);
 		panel_11.add(cbDoH);
 		
 		final JComboBox cbOdH = new JComboBox();
-		cbOdH.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}));
+		cbOdH.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"}));
 		cbOdH.setBounds(98, 26, 47, 20);
 		panel_11.add(cbOdH);
 		
 		final JComboBox cbOdMin = new JComboBox();
-		cbOdMin.setModel(new DefaultComboBoxModel(new String[] {"10", "20", "30", "40", "50", "60"}));
+		cbOdMin.setModel(new DefaultComboBoxModel(new String[] {"0", "10", "20", "30", "40", "50"}));
 		cbOdMin.setBounds(185, 26, 47, 20);
 		panel_11.add(cbOdMin);
 		
 		final JComboBox cbDoMin = new JComboBox();
-		cbDoMin.setModel(new DefaultComboBoxModel(new String[] {"10", "20", "30", "40", "50", "60"}));
+		cbDoMin.setModel(new DefaultComboBoxModel(new String[] {"0", "10", "20", "30", "40", "50"}));
 		cbDoMin.setBounds(185, 51, 47, 20);
 		panel_11.add(cbDoMin);
 		
@@ -703,6 +704,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 				if(msui.DodajSkladiste(lStatusDokument, tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText())) {
 					msbll.DodajSkladiste(tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText());
 					model.addRow(new Object[] { tbNaziv.getText(), tbAdresa.getText()});
+				    ocistiFormuSkladiste();
 				}
 			}
 		});
@@ -737,17 +739,17 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_4.add(panel_12);
 		panel_12.setLayout(null);
 		
-		JCheckBox chckbxNabavka = new JCheckBox("Nabavka");
+		final JCheckBox chckbxNabavka = new JCheckBox("Nabavka");
 		chckbxNabavka.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		chckbxNabavka.setBounds(64, 18, 97, 23);
 		panel_12.add(chckbxNabavka);
 		
-		JCheckBox chckbxOtpremnica = new JCheckBox("Otpremnica");
+		final JCheckBox chckbxOtpremnica = new JCheckBox("Otpremnica");
 		chckbxOtpremnica.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		chckbxOtpremnica.setBounds(64, 44, 97, 23);
 		panel_12.add(chckbxOtpremnica);
 		
-		JCheckBox chckbxOtpisnica = new JCheckBox("Otpisnica");
+		final JCheckBox chckbxOtpisnica = new JCheckBox("Otpisnica");
 		chckbxOtpisnica.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		chckbxOtpisnica.setBounds(64, 70, 97, 23);
 		panel_12.add(chckbxOtpisnica);
@@ -808,14 +810,25 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		btnPretrai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				listModel.removeAllElements();
-				java.sql.Date sqlDateOd = new java.sql.Date(dcOd.getDate().getTime());
-				java.sql.Date sqlDateDo = new java.sql.Date(dcDo.getDate().getTime());
-				if(mdui.PopuniListuDokumenata(lStatusDokument, sqlDateOd, sqlDateDo)) {
-					List<Dokument> listaDokumenata2 =  mdbll.PopuniListuDokumenata(sqlDateOd, sqlDateDo);
-					for(Dokument d:listaDokumenata2) 
-						listModel.addElement(d);
-					if(listaDokumenata2.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Ne postoji dokument generisan u traženom periodu!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+				String dateOD = ((JTextField)dcOd.getDateEditor().getUiComponent()).getText();
+				String dateDO = ((JTextField)dcDo.getDateEditor().getUiComponent()).getText();
+				if(mdui.ProvjeriDatumNull(lStatusDokument, dateOD, dateDO)) {
+					java.sql.Date sqlDateOd = new java.sql.Date(dcOd.getDate().getTime());
+					java.sql.Date sqlDateDo = new java.sql.Date(dcDo.getDate().getTime());
+					List<String> trazi = new ArrayList<String>();
+					if(chckbxNabavka.isSelected()) trazi.add("NAB");
+					if(chckbxOtpremnica.isSelected()) trazi.add("OTP");
+					if(chckbxOtpisnica.isSelected()) trazi.add("OTS");
+					
+					if(mdui.PopuniListuDokumenata(lStatusDokument, sqlDateOd, sqlDateDo, trazi)) {
+						List<Dokument> listaDokumenata2 =  mdbll.PopuniListuDokumenata(trazi, sqlDateOd, sqlDateDo);
+						if(listaDokumenata2.isEmpty())
+							JOptionPane.showMessageDialog(null, "Ne postoji dokument generisan u traženom periodu!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+						else {
+							for(Dokument d:listaDokumenata2) 
+							listModel.addElement(d);
+							JOptionPane.showMessageDialog(null, "Pretraga zavrsena!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 			}
@@ -892,6 +905,13 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 			textUser.setText("");
 			textPass.setText("");
 			comboBoxSkladiste.setSelectedIndex(0);
+		}
+		
+		private void ocistiFormuSkladiste() {
+			System.out.println("Poziv ciscenja");
+			tbNaziv.setText("");
+			tbAdresa.setText("");
+			tbKontakt.setText("");
 		}
 		
 	//Metoda za azuriranje tabele nakon unosa uposlenika

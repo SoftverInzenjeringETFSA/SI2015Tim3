@@ -36,4 +36,8 @@ public class Otpremnica extends Dokument implements Serializable {
 	{
 		return this.getId() + "-[Otpremnica]-" + this.getDatum().toString().substring(0, 10);
 	}
+	public String dajTip()
+	{
+		return "OTP";
+	}
 }

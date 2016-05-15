@@ -72,4 +72,8 @@ public abstract class Dokument implements Serializable {
 	{
 		return this.getId() + "-[Dokument]-" + this.getDatum().toString().substring(0, 10);
 	}
+	public String dajTip()
+	{
+		return "DOK";
+	}
 }

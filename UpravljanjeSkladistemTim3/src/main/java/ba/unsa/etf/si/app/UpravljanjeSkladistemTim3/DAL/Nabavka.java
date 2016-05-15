@@ -45,4 +45,8 @@ public class Nabavka extends Dokument implements Serializable {
 	{
 		return this.getId() + "-[Nabavka]-" + this.getDatum().toString().substring(0, 10);
 	}
+	public String dajTip()
+	{
+		return "NAB";
+	}
 }
