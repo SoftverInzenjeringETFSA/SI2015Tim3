@@ -48,6 +48,15 @@ public class SkladisteArtikal implements Serializable {
 	public void set_skladiste(Skladiste _skladiste) {
 		this._skladiste = _skladiste;
 	}
+	
+	public int getKolicina() {
+		return kolicina;
+	}
+
+	public void setKolicina(int kolicina) {
+		this.kolicina = kolicina;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="artikal_id")
 	Artikal _artikal;
@@ -56,6 +65,8 @@ public class SkladisteArtikal implements Serializable {
 	Skladiste _skladiste;
 	@Column(name="ponderirana_cijena")
 	double ponderiranaCijena;
+	@Column(name="kolicina")
+	int kolicina;
 	
 	public SkladisteArtikal() {}
 }

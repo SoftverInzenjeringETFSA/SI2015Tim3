@@ -23,9 +23,6 @@
                 <param name="enumClass">ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica</param>
             </type>
         </property>
-        <property name="kolicina" type="int">
-            <column name="KOLICINA" />
-        </property>
         <property name="prodajnaCijena" type="double">
             <column name="PRODAJNA_CIJENA" />
         </property>

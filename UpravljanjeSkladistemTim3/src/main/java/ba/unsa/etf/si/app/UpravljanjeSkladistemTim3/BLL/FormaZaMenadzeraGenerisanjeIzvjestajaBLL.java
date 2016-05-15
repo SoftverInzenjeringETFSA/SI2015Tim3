@@ -114,10 +114,11 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 	    tabela.addCell(""); // datum ulaza?
 	    String ulaznaCijena = String.valueOf(a.getProdajnaCijena());
 	    tabela.addCell(ulaznaCijena); // ulazna cijena
-	    String kolicina = String.valueOf(a.getKolicina());
-	    tabela.addCell(kolicina);
-	    String izlaznaCijena = String.valueOf(a.getProdajnaCijena()*a.getKolicina());
-	    tabela.addCell(izlaznaCijena); 
+	    // promjena kolicina
+	    //String kolicina = String.valueOf(a.getKolicina());
+	    //tabela.addCell(kolicina);
+	    //String izlaznaCijena = String.valueOf(a.getProdajnaCijena()*a.getKolicina());
+	    //tabela.addCell(izlaznaCijena); 
 		    
 		    
 	    document.open();
@@ -162,8 +163,9 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 	    // punimo tabelu
 		for (Artikal a: artikli){
 			tabela.addCell(a.getNaziv());
-			String kolicinaNaStanju = String.valueOf(a.getKolicina());
-			tabela.addCell(kolicinaNaStanju);
+			// promjena kolicina
+			//	String kolicinaNaStanju = String.valueOf(a.getKolicina());
+			//tabela.addCell(kolicinaNaStanju);
 			String trenutnaCijena = String.valueOf(a.getProdajnaCijena());
 			tabela.addCell(trenutnaCijena);
 		}

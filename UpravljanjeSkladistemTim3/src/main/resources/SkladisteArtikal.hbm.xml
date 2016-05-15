@@ -16,5 +16,8 @@
         <property name="ponderiranaCijena" type="double">
             <column name="PONDERIRANA_CIJENA" />
         </property>
+         <property name="kolicina" type="int">
+            <column name="KOLICINA" />
+        </property>
     </class>
 </hibernate-mapping>

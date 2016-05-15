@@ -53,7 +53,8 @@ public class TrenutnoStanjeSkladistaUI {
 		// obrisemo sto je prije bilo
 		model.setRowCount(0);
 		for (Artikal a: artikli){
-			model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), a.getJedinicnaKolicina(), a.getKolicina(), a.getProdajnaCijena()});
+			// promjena kolicina
+			//	model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), a.getJedinicnaKolicina(), a.getKolicina(), a.getProdajnaCijena()});
 		}
 	}
 
@@ -79,9 +80,10 @@ public class TrenutnoStanjeSkladistaUI {
 		// obrisemo sto je prije bilo
 		model.setRowCount(0);
 		for (Artikal a: artikli){
-			double cijena = a.getProdajnaCijena()*a.getKolicina();
+			// promjena kolicina
+			//double cijena = a.getProdajnaCijena()*a.getKolicina();
 			DecimalFormat c = new DecimalFormat("#.##");
-			model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), a.getJedinicnaKolicina(), a.getKolicina(), a.getProdajnaCijena(), c.format(cijena)});
+			//model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), a.getJedinicnaKolicina(), a.getKolicina(), a.getProdajnaCijena(), c.format(cijena)});
 		}
 	}
 	

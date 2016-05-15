@@ -31,30 +31,8 @@ public class UposlenikUnosRobeUI {
 	}
 	
 	public boolean DodajArtikal(JLabel status, JTable tabela, String ean, int kolicina, String nabavnaCijena) {
-		if(!ValidateEan(ean)) {
-			status.setText("Neispravan EAN bar kod!");
-			status.setForeground(Color.RED);
+		if(!ValidateCommon(status, ean, nabavnaCijena, kolicina))
 			return false;
-		}
-		if(nabavnaCijena.length() == 0) {
-			status.setText("Niste unijeli nabavnu cijenu!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		try {
-			Double.parseDouble(nabavnaCijena);
-		}
-		catch (NumberFormatException e) {
-			status.setText("Nabavna cijena nije broj!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		if(Double.parseDouble(nabavnaCijena) <= 0) {
-			status.setText("Nabavna cijena ne moze biti negativna!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		
 		int res = bll.DodajArtikal(ean, kolicina, Double.parseDouble(nabavnaCijena));
 		
 		if(res == 1) {
@@ -74,32 +52,10 @@ public class UposlenikUnosRobeUI {
 	}
 	
 	public boolean DodajNoviArtikal(JLabel status, JTable tabela, String ean, int kolicina, String nabavnaCijena, String naziv, String jedinicnaKolicina, MjernaJedinica mjernaJedinica, String prodajnaCijena) {
-		// Copy-paste refactor!
-		if(naziv.length() == 0) {
+		if(!ValidateCommon(status, ean, nabavnaCijena, kolicina))
+			return false;
+		if(naziv == null || naziv.length() == 0) {
 			status.setText("Niste unijeli naziv!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		if(!ValidateEan(ean)) {
-			status.setText("Neispravan EAN bar kod!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		if(nabavnaCijena.length() == 0) {
-			status.setText("Niste unijeli nabavnu cijenu!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		try {
-			Double.parseDouble(nabavnaCijena);
-		}
-		catch (NumberFormatException e) {
-			status.setText("Nabavna cijena nije broj!");
-			status.setForeground(Color.RED);
-			return false;
-		}
-		if(Double.parseDouble(nabavnaCijena) <= 0) {
-			status.setText("Nabavna cijena ne moze biti negativna!");
 			status.setForeground(Color.RED);
 			return false;
 		}
@@ -181,6 +137,38 @@ public class UposlenikUnosRobeUI {
 			return false;
 		}
 		
+		return true;
+	}
+	
+	public boolean ValidateCommon(JLabel status, String ean, String nabavnaCijena, int kolicina){
+		if(!ValidateEan(ean)) {
+			status.setText("Neispravan EAN bar kod!");
+			status.setForeground(Color.RED);
+			return false;
+		}
+		if(nabavnaCijena == null || nabavnaCijena.length() == 0) {
+			status.setText("Niste unijeli nabavnu cijenu!");
+			status.setForeground(Color.RED);
+			return false;
+		}
+		if(kolicina < 1) {
+			status.setText("Kolicina mora biti prirodan broj!");
+			status.setForeground(Color.RED);
+			return false;
+		}
+		try {
+			Double.parseDouble(nabavnaCijena);
+		}
+		catch (NumberFormatException e) {
+			status.setText("Nabavna cijena nije broj!");
+			status.setForeground(Color.RED);
+			return false;
+		}
+		if(Double.parseDouble(nabavnaCijena) <= 0) {
+			status.setText("Nabavna cijena ne moze biti negativna!");
+			status.setForeground(Color.RED);
+			return false;
+		}
 		return true;
 	}
 }

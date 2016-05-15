@@ -58,14 +58,13 @@ public class FormaZaUposlenika {
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private JTable tabelaArtikli;
 	private JTable table_1;
-	private JTable table_3;
+	private JTable tabelaOtpis;
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField tbBarKodOtpis;
 	public JTextField tbBarKod;
 	private JTextField tbNabavnaCijena;
 	private JTextField tbNaziv;
@@ -84,6 +83,7 @@ public class FormaZaUposlenika {
 	private JComboBox cbDobavljac;
 	private JLabel lblStatusmsg;
 	private JSpinner spinnerKolicina;
+	private JSpinner sOtpisKolicina;
 	private UposlenikUnosRobeUI ui = new UposlenikUnosRobeUI();
 	
 	private void groupButton() {
@@ -452,21 +452,12 @@ public class FormaZaUposlenika {
 		tabbedPane.addTab("Otpis robe", null, panel_2, null);
 		panel_2.setLayout(null);
 		
-		JLabel lblSkladite_1 = new JLabel("Skladište: ");
-		lblSkladite_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblSkladite_1.setBounds(12, 67, 60, 32);
-		panel_2.add(lblSkladite_1);
-		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setBounds(82, 73, 200, 20);
-		panel_2.add(comboBox_4);
-		
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(10, 170, 742, 132);
+		scrollPane_2.setBounds(10, 117, 742, 185);
 		panel_2.add(scrollPane_2);
 		
-		table_3 = new JTable();
-		table_3.setModel(new DefaultTableModel(
+		tabelaOtpis = new JTable();
+		tabelaOtpis.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null},
 			},
@@ -474,7 +465,7 @@ public class FormaZaUposlenika {
 				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Cijena"
 			}
 		));
-		scrollPane_2.setViewportView(table_3);
+		scrollPane_2.setViewportView(tabelaOtpis);
 		
 		JButton btnZavriOtpis = new JButton("Završi otpis");
 		btnZavriOtpis.setBounds(290, 444, 162, 23);
@@ -487,7 +478,7 @@ public class FormaZaUposlenika {
 		
 		JLabel lblNewLabel_2 = new JLabel("Lista artikala: ");
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNewLabel_2.setBounds(10, 144, 81, 23);
+		lblNewLabel_2.setBounds(25, 90, 66, 23);
 		panel_2.add(lblNewLabel_2);
 		
 		textField = new JTextField();
@@ -497,27 +488,35 @@ public class FormaZaUposlenika {
 		
 		JLabel label = new JLabel("Bar kod: ");
 		label.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label.setBounds(439, 14, 46, 14);
+		label.setBounds(45, 13, 46, 14);
 		panel_2.add(label);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(495, 11, 112, 20);
-		panel_2.add(textField_4);
-		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(495, 42, 112, 20);
-		panel_2.add(textField_5);
+		tbBarKodOtpis = new JTextField();
+		tbBarKodOtpis.setHorizontalAlignment(SwingConstants.RIGHT);
+		tbBarKodOtpis.setColumns(10);
+		tbBarKodOtpis.setBounds(97, 11, 112, 20);
+		panel_2.add(tbBarKodOtpis);
 		
 		JLabel label_1 = new JLabel("Količina: ");
 		label_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		label_1.setBounds(439, 45, 46, 14);
+		label_1.setBounds(45, 40, 46, 14);
 		panel_2.add(label_1);
 		
-		JButton btnDodajZaOtpis = new JButton("Dodaj za otpis");
-		btnDodajZaOtpis.setBounds(460, 86, 148, 23);
+		JButton btnDodajZaOtpis = new JButton("Dodaj");
+		btnDodajZaOtpis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UposlenikOtpisUI otp = new UposlenikOtpisUI();
+			    if(otp.DodajArtikalZaOtpis(lblStatusmsg, tabelaOtpis, tbBarKodOtpis.getText(), (Integer)sOtpisKolicina.getValue()))
+			    		cleanOtpisArtikal();
+			}
+		});
+		btnDodajZaOtpis.setBounds(97, 69, 112, 23);
 		panel_2.add(btnDodajZaOtpis);
+		
+		sOtpisKolicina = new JSpinner();
+		sOtpisKolicina.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		sOtpisKolicina.setBounds(97, 38, 112, 20);
+		panel_2.add(sOtpisKolicina);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Pregled trenutnog stanja robe", null, panel_3, null);
@@ -563,6 +562,10 @@ public class FormaZaUposlenika {
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblDobrodosli);
 		
 		frmSistemUpravljanjaSkladitem.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
+	}
+	protected void cleanOtpisArtikal() {
+		// TODO Auto-generated method stub
+		
 	}
 	protected void cleanNabavka() {
 		tbNabavkaBarKod.setText("");

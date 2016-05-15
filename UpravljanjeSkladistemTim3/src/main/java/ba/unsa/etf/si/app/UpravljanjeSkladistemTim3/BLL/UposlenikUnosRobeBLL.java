@@ -77,7 +77,8 @@ public class UposlenikUnosRobeBLL {
 		
 		Artikal ar = new Artikal();
 		ar.setBarKod(ean);
-		ar.setKolicina(kolicina);
+		// promjena kolicina
+		//ar.setKolicina(kolicina);
 		ar.setNaziv(naziv);
 		ar.setMjernaJedinica(mjernaJedinica);
 		ar.setJedinicnaKolicina(jedinicnaKolicina);
@@ -168,7 +169,8 @@ public class UposlenikUnosRobeBLL {
 						 "set ponderirana_cijena = (ponderirana_cijena * :stara_kolicina + :nova_nabavna * :nova_kolicina)/(:stara_kolicina + :nova_kolicina) " +
 						 "WHERE artikal_id = :ar_id";
 			SQLQuery query = App.session.createSQLQuery(sql);
-			query.setParameter("stara_kolicina", st.get_artikal().getKolicina()); 	
+			//promjena kolicina
+			//query.setParameter("stara_kolicina", st.get_artikal().getKolicina()); 	
 			query.setParameter("nova_nabavna", st.getCijena());	
 			query.setParameter("nova_kolicina", st.getKolicina());
 				

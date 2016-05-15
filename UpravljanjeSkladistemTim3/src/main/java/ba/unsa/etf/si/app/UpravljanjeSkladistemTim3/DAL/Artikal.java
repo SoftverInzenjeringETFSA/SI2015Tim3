@@ -54,14 +54,6 @@ public class Artikal implements Serializable {
 		this.mjernaJedinica = mjernaJedinica;
 	}
 
-	public int getKolicina() {
-		return kolicina;
-	}
-
-	public void setKolicina(int kolicina) {
-		this.kolicina = kolicina;
-	}
-
 	public double getProdajnaCijena() {
 		return prodajnaCijena;
 	}
@@ -78,8 +70,6 @@ public class Artikal implements Serializable {
 	double jedinicnaKolicina;
 	@Column(name="mjerna_jedinica")
 	MjernaJedinica mjernaJedinica;
-	@Column(name="kolicina")
-	int kolicina;
 	@Column(name="prodajna_cijena")
 	double prodajnaCijena;
 	
