@@ -143,12 +143,13 @@ public class MenadzerUposleniciUI {
 		Date pravi = (Date) cal.getTime();
 		int uslov = datumRodjenja.compareTo(pravi);
 		return uslov;*/
+		java.sql.Date sqlDate = new java.sql.Date(datumRodjenja.getTime());
 		
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.YEAR, -18);
 
 		JDateChooser chooser = new JDateChooser(c.getTime());
-		int uslov = datumRodjenja.compareTo(chooser.getDate());
+		int uslov = sqlDate.compareTo(chooser.getDate());
 		return uslov;
 	}
 
