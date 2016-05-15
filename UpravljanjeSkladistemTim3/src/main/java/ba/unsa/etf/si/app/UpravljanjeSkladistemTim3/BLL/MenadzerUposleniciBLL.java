@@ -23,7 +23,8 @@ public class MenadzerUposleniciBLL {
 			if(postojiUposlenikUBaziUser(user))
 				return 3;
 			Transaction t = App.session.beginTransaction();		
-			Uposlenik noviUposlenik = new Uposlenik();		
+			Uposlenik noviUposlenik = new Uposlenik();	
+			PrijavaBLL pbll = new PrijavaBLL();
 			System.out.println(skladiste);
 			noviUposlenik.setIme(ime);
 			noviUposlenik.setPrezime(prezime);
@@ -36,10 +37,10 @@ public class MenadzerUposleniciBLL {
 			noviUposlenik.setStrucnaSprema(StrucnaSprema.values()[strucnaSprema]);
 			noviUposlenik.setDatumZaposlenja(new Date());
 			noviUposlenik.setUser(user);
-			noviUposlenik.setPassword(pass);
+			noviUposlenik.setPassword(pbll.HashStringa(pass));
 			noviUposlenik.setTipUposlenika(TipUposlenika.values()[tipUposlenika]);
 		
-			Skladiste s = App.session.load(Skladiste.class, (long)(skladiste+1));
+			Skladiste s = App.session.load(Skladiste.class, (long)skladiste);
 			System.out.println(s.getNaziv());
 			noviUposlenik.set_skladiste(s);
 
@@ -51,7 +52,6 @@ public class MenadzerUposleniciBLL {
 			return 1;
 		}
 		catch(HibernateException e){
-			App.logger.error("Omaska", e);
 			return 0;
 		}
 
@@ -96,7 +96,6 @@ public class MenadzerUposleniciBLL {
 			return true;
 		}
 		catch(HibernateException e){
-			App.logger.error("Omaska", e);
 			return false;
 		}
 	}
