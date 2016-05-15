@@ -52,11 +52,11 @@ public class MenadzerUposleniciUI {
 			return "Datum rođenja nije ispravan!";
 		else if(mjestoRodjenja.equals(""))
 			return "Nije uneseno mjesto rođenja!";
-		else if(!mjestoRodjenja.matches("^[A-Z][a-z]*$"))
+		else if(!mjestoRodjenja.matches("^[A-Z][a-zA-Z ]*$")) 
 			return "Nije ispravno mjesto rođenja!";
 		else if(adresa.equals(""))
 			return "Nije unesena adresa!";
-		else if(!adresa.matches("^[A-Z][a-z]*$"))
+		else if(!adresa.matches("^[A-Z][0-9a-zA-Z ]*$"))
 			return "Nije ispravna adresa";
 		else if(telefon.equals(""))
 			return "Nije unesen telefon!";

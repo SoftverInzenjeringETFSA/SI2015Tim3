@@ -35,6 +35,7 @@ public class DodavanjePoslovnogPartnera {
 		frmDodavanjePoslovnogPartnera.setIconImage(Toolkit.getDefaultToolkit().getImage(DodavanjePoslovnogPartnera.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		frmDodavanjePoslovnogPartnera.setBounds(100, 100, 347, 254);
 		frmDodavanjePoslovnogPartnera.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmDodavanjePoslovnogPartnera.setLocationRelativeTo(null);
 		frmDodavanjePoslovnogPartnera.getContentPane().setLayout(null);
 		
 		JLabel lblNaziv = new JLabel("Naziv:");
