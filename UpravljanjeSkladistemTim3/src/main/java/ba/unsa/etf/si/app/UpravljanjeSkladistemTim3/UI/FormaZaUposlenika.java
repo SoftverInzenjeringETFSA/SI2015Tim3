@@ -60,7 +60,6 @@ public class FormaZaUposlenika {
 	private JTable table_1;
 	private JTable tabelaOtpis;
 	private JTable table;
-	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -69,7 +68,8 @@ public class FormaZaUposlenika {
 	private JTextField tbNabavnaCijena;
 	private JTextField tbNaziv;
 	private JTextField tbJedinicnaKolicina;
-
+	private JTextArea taKomentar;
+	
 	private Uposlenik _user;
 	private JTextField tbNabavkaBarKod;
 	private JTextField tbProdajnaCijena;
@@ -85,6 +85,7 @@ public class FormaZaUposlenika {
 	private JSpinner spinnerKolicina;
 	private JSpinner sOtpisKolicina;
 	private UposlenikUnosRobeUI ui = new UposlenikUnosRobeUI();
+	private UposlenikOtpisUI otp = null;
 	
 	private void groupButton() {
 		bg = new ButtonGroup();
@@ -459,16 +460,42 @@ public class FormaZaUposlenika {
 		tabelaOtpis = new JTable();
 		tabelaOtpis.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Cijena"
+				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Ponderirana cijena"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		scrollPane_2.setViewportView(tabelaOtpis);
 		
 		JButton btnZavriOtpis = new JButton("Završi otpis");
-		btnZavriOtpis.setBounds(290, 444, 162, 23);
+		btnZavriOtpis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(otp == null) {
+					lblStatusmsg.setText("Niste unijeli niti jedan artikal za otpis!");
+					lblStatusmsg.setForeground(Color.RED);
+				}
+				else 
+				{
+					if(taKomentar.getText() == null || taKomentar.getText().length() == 0) {
+						lblStatusmsg.setText("Niste unijeli komentar!");
+						lblStatusmsg.setForeground(Color.RED);
+					}
+					else 
+					{
+						otp.ZavrsiOtpis(taKomentar.getText(), _user);
+						CleanOtpis();
+					}
+				}
+			}
+		});
+		btnZavriOtpis.setBounds(491, 444, 162, 23);
 		panel_2.add(btnZavriOtpis);
 		
 		JLabel lblKomentar = new JLabel("Komentar: ");
@@ -480,11 +507,6 @@ public class FormaZaUposlenika {
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblNewLabel_2.setBounds(25, 90, 66, 23);
 		panel_2.add(lblNewLabel_2);
-		
-		textField = new JTextField();
-		textField.setBounds(10, 334, 742, 99);
-		panel_2.add(textField);
-		textField.setColumns(10);
 		
 		JLabel label = new JLabel("Bar kod: ");
 		label.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -505,8 +527,8 @@ public class FormaZaUposlenika {
 		JButton btnDodajZaOtpis = new JButton("Dodaj");
 		btnDodajZaOtpis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UposlenikOtpisUI otp = new UposlenikOtpisUI();
-			    if(otp.DodajArtikalZaOtpis(lblStatusmsg, tabelaOtpis, tbBarKodOtpis.getText(), (Integer)sOtpisKolicina.getValue()))
+				if(otp == null) otp = new UposlenikOtpisUI();
+			    if(otp.DodajArtikalZaOtpis(lblStatusmsg, tabelaOtpis, tbBarKodOtpis.getText(), (Integer)sOtpisKolicina.getValue(), _user.get_skladiste()))
 			    		cleanOtpisArtikal();
 			}
 		});
@@ -517,6 +539,19 @@ public class FormaZaUposlenika {
 		sOtpisKolicina.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		sOtpisKolicina.setBounds(97, 38, 112, 20);
 		panel_2.add(sOtpisKolicina);
+		
+		taKomentar = new JTextArea();
+		taKomentar.setBounds(20, 344, 732, 89);
+		panel_2.add(taKomentar);
+		
+		JButton btnOdustaniOtis = new JButton("Odustani");
+		btnOdustaniOtis.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CleanOtpis();
+			}
+		});
+		btnOdustaniOtis.setBounds(663, 444, 89, 23);
+		panel_2.add(btnOdustaniOtis);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Pregled trenutnog stanja robe", null, panel_3, null);
@@ -563,16 +598,24 @@ public class FormaZaUposlenika {
 		
 		frmSistemUpravljanjaSkladitem.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
 	}
+	protected void CleanOtpis() {
+		taKomentar.setText("");
+		DefaultTableModel dm = (DefaultTableModel)tabelaOtpis.getModel();
+		dm.setRowCount(0);
+		otp = null;
+		lblStatusmsg.setText("");
+	}
 	protected void cleanOtpisArtikal() {
-		// TODO Auto-generated method stub
-		
+		tbBarKodOtpis.setText("");
+		sOtpisKolicina.setValue(1);
+		lblStatusmsg.setText("");
 	}
 	protected void cleanNabavka() {
 		tbNabavkaBarKod.setText("");
 		DefaultTableModel dm = (DefaultTableModel)tabelaArtikli.getModel();
 		dm.setRowCount(0);
 		ui = null;
-		
+		lblStatusmsg.setText("");
 	}
 	protected void clearUnos() {
 		tbBarKod.setText("");
@@ -581,5 +624,6 @@ public class FormaZaUposlenika {
 		tbNaziv.setText("");
 		tbJedinicnaKolicina.setText("");
 		tbProdajnaCijena.setText("");
+		lblStatusmsg.setText("");
 	}
 }

@@ -77,8 +77,6 @@ public class UposlenikUnosRobeBLL {
 		
 		Artikal ar = new Artikal();
 		ar.setBarKod(ean);
-		// promjena kolicina
-		//ar.setKolicina(kolicina);
 		ar.setNaziv(naziv);
 		ar.setMjernaJedinica(mjernaJedinica);
 		ar.setJedinicnaKolicina(jedinicnaKolicina);
@@ -95,6 +93,7 @@ public class UposlenikUnosRobeBLL {
 		SkladisteArtikal sa = new SkladisteArtikal();
 		sa.set_artikal(ar);
 		sa.setPonderiranaCijena(nabavnaCijena);
+		sa.setKolicina(kolicina);
 		_skladisteArtikli.add(sa);
 		return 0;
 	}
@@ -165,12 +164,18 @@ public class UposlenikUnosRobeBLL {
 		
 		// Update ponderirane cijene za sve postojece artikle sa nove nabavke
 		for(StavkaDokumenta st:_stavkeNabavke) {
+			String sql1 = "SELECT kolicina FROM skladiste_artikal WHERE skladiste_id =:s_id && artikal_id = :a_id";
+			SQLQuery query1 = App.session.createSQLQuery(sql1);
+			query1.setParameter("s_id", skladiste.getId());
+			query1.setParameter("a_id", st.get_artikal().getId());
+			int stara_kolicina = (Integer) query1.uniqueResult();
+		
 			String sql = "UPDATE skladiste_artikal " +
 						 "set ponderirana_cijena = (ponderirana_cijena * :stara_kolicina + :nova_nabavna * :nova_kolicina)/(:stara_kolicina + :nova_kolicina) " +
 						 "WHERE artikal_id = :ar_id";
 			SQLQuery query = App.session.createSQLQuery(sql);
-			//promjena kolicina
-			//query.setParameter("stara_kolicina", st.get_artikal().getKolicina()); 	
+			
+			query.setParameter("stara_kolicina", stara_kolicina); 	
 			query.setParameter("nova_nabavna", st.getCijena());	
 			query.setParameter("nova_kolicina", st.getKolicina());
 				
@@ -191,12 +196,12 @@ public class UposlenikUnosRobeBLL {
 		if(_noviArtikli.contains(st.get_artikal())) ar_id2 = -1;
 		else ar_id2 = st.get_artikal().getId();
 		
-		String sql = "UPDATE Artikal set kolicina = kolicina + :kol" +
-					  " WHERE artikal_id = :ar_id";
+		String sql = "UPDATE skladiste_artikal set kolicina = kolicina + :kol" +
+					  " WHERE artikal_id = :ar_id && skladiste_id = :s_id";
 		SQLQuery query = App.session.createSQLQuery(sql);
 		query.setParameter("kol", st.getKolicina());
-		
 		query.setParameter("ar_id", ar_id2);
+		query.setParameter("s_id", skladiste.getId());
 		
 		int result = query.executeUpdate();
 		}
