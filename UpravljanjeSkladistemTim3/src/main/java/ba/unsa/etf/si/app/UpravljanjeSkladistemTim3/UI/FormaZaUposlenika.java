@@ -408,7 +408,6 @@ public class FormaZaUposlenika {
 		tableArtikliOtprem = new JTable();
 		tableArtikliOtprem.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
 			},
 			new String[] {
 				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Prodajna cijena"

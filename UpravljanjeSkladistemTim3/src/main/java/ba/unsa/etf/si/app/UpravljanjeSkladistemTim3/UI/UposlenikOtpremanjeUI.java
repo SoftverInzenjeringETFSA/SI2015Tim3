@@ -71,8 +71,8 @@ public class UposlenikOtpremanjeUI {
 			return "  ";
 		}
 		
-		public String zavrsiOtpremanje(Uposlenik user){
-			int res = uposOtpremBLL.zavrsiOtpremanje(user);
+		public String zavrsiOtpremanje(Uposlenik user, int kupac){
+			int res = uposOtpremBLL.zavrsiOtpremanje(user, kupac);
 			if(res == 0)
 				return "Niste odabrali nijedan artikal za otpremu!";
 			else if(res == 2)
