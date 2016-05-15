@@ -7,6 +7,8 @@ import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -29,6 +31,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import org.hibernate.Query;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
@@ -36,6 +39,8 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import java.util.List;
+
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.UposlenikUnosRobeBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
@@ -57,12 +62,12 @@ public class FormaZaUposlenika {
 	public JFrame frmSistemUpravljanjaSkladitem;
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private JTable tabelaArtikli;
-	private JTable table_1;
+	private JTable tableArtikliOtprem;
 	private JTable tabelaOtpis;
 	private JTable table;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textField;
+	private JTextField tbOtpremBarKod;
+	private JTextField tbOtpremProdajnaCijena;
 	private JTextField tbBarKodOtpis;
 	public JTextField tbBarKod;
 	private JTextField tbNabavnaCijena;
@@ -70,6 +75,7 @@ public class FormaZaUposlenika {
 	private JTextField tbJedinicnaKolicina;
 	private JTextArea taKomentar;
 	
+
 	private Uposlenik _user;
 	private JTextField tbNabavkaBarKod;
 	private JTextField tbProdajnaCijena;
@@ -86,6 +92,12 @@ public class FormaZaUposlenika {
 	private JSpinner sOtpisKolicina;
 	private UposlenikUnosRobeUI ui = new UposlenikUnosRobeUI();
 	private UposlenikOtpisUI otp = null;
+
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JComboBox comboBoxKupci;
+	private JSpinner spinnerKolOtprem;
+	private UposlenikOtpremanjeUI uposOtpremUI = new UposlenikOtpremanjeUI();
 	
 	private void groupButton() {
 		bg = new ButtonGroup();
@@ -173,6 +185,7 @@ public class FormaZaUposlenika {
 		frmSistemUpravljanjaSkladitem.getContentPane().add(tabbedPane);
 		frmSistemUpravljanjaSkladitem.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
+		panel.setForeground(Color.RED);
 		tabbedPane.addTab("Unos Robe", null, panel, null);
 		panel.setLayout(null);
 		
@@ -369,34 +382,31 @@ public class FormaZaUposlenika {
 		tabbedPane.addTab("Otpremanje robe", null, panel_1, null);
 		panel_1.setLayout(null);
 		
-		JLabel lblSkladite = new JLabel("Skladište: ");
-		lblSkladite.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblSkladite.setBounds(10, 46, 49, 25);
-		panel_1.add(lblSkladite);
-		
 		JLabel lblNewLabel_1 = new JLabel("Kupac: ");
 		lblNewLabel_1.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNewLabel_1.setBounds(10, 105, 49, 25);
+		lblNewLabel_1.setBounds(60, 21, 37, 25);
 		panel_1.add(lblNewLabel_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(66, 46, 200, 25);
-		panel_1.add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(66, 105, 200, 25);
-		panel_1.add(comboBox_3);
+		comboBoxKupci = new JComboBox();
+		comboBoxKupci.setBounds(116, 21, 200, 25);
+		panel_1.add(comboBoxKupci);
 		
 		JButton btnDodajNovogKupca = new JButton("Dodaj novog kupca");
-		btnDodajNovogKupca.setBounds(79, 158, 168, 23);
+		btnDodajNovogKupca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UposlenikUnosPartneraUI uposUnosPartneraUI = new UposlenikUnosPartneraUI();
+				RunForms.RunUnosPartneraForm();
+			}
+		});
+		btnDodajNovogKupca.setBounds(327, 23, 168, 23);
 		panel_1.add(btnDodajNovogKupca);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 227, 742, 199);
+		scrollPane_1.setBounds(10, 204, 742, 222);
 		panel_1.add(scrollPane_1);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		tableArtikliOtprem = new JTable();
+		tableArtikliOtprem.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null},
 			},
@@ -404,52 +414,79 @@ public class FormaZaUposlenika {
 				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Prodajna cijena"
 			}
 		));
-		scrollPane_1.setViewportView(table_1);
+		scrollPane_1.setViewportView(tableArtikliOtprem);
 		
 		JButton btnZavriOtpremanje = new JButton("Završi otpremanje");
+		btnZavriOtpremanje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String poruka = uposOtpremUI.zavrsiOtpremanje(_user);
+				if(poruka.equals("  ")){
+					DefaultTableModel dtm = (DefaultTableModel)tableArtikliOtprem.getModel();
+					dtm.setRowCount(0);
+				}
+				lblStatusmsg.setText(poruka);
+			}
+		});
 		btnZavriOtpremanje.setBounds(306, 443, 175, 25);
 		panel_1.add(btnZavriOtpremanje);
 		
 		JLabel lblNewLabel_3 = new JLabel("Lista artikala: ");
 		lblNewLabel_3.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNewLabel_3.setBounds(10, 202, 72, 25);
+		lblNewLabel_3.setBounds(10, 180, 72, 25);
 		panel_1.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Bar kod: ");
 		lblNewLabel_4.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblNewLabel_4.setBounds(386, 21, 46, 14);
+		lblNewLabel_4.setBounds(54, 57, 43, 14);
 		panel_1.add(lblNewLabel_4);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(442, 18, 112, 20);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		tbOtpremBarKod = new JTextField();
+		tbOtpremBarKod.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				UposlenikOtpremanjeUI uposOtpremUI = new UposlenikOtpremanjeUI();
+				String poruka = uposOtpremUI.dobaviProdajnuCijenu(tbOtpremProdajnaCijena, tbOtpremBarKod.getText());
+				lblStatusmsg.setText(poruka);
+			}
+		});
+		tbOtpremBarKod.setBounds(116, 55, 200, 20);
+		panel_1.add(tbOtpremBarKod);
+		tbOtpremBarKod.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(442, 64, 112, 20);
-		panel_1.add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(442, 110, 112, 20);
-		panel_1.add(textField_3);
-		textField_3.setColumns(10);
+		tbOtpremProdajnaCijena = new JTextField();
+		tbOtpremProdajnaCijena.setBounds(116, 105, 200, 20);
+		panel_1.add(tbOtpremProdajnaCijena);
+		tbOtpremProdajnaCijena.setColumns(10);
 		
 		JLabel lblKoliina = new JLabel("Količina: ");
 		lblKoliina.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblKoliina.setBounds(386, 67, 46, 14);
+		lblKoliina.setBounds(54, 82, 43, 14);
 		panel_1.add(lblKoliina);
 		
 		JLabel lblProdajnaCijena = new JLabel("Prodajna cijena: ");
 		lblProdajnaCijena.setFont(new Font("SansSerif", Font.PLAIN, 11));
-		lblProdajnaCijena.setBounds(346, 113, 86, 14);
+		lblProdajnaCijena.setBounds(18, 107, 79, 14);
 		panel_1.add(lblProdajnaCijena);
 		
 		JButton btnDodajZaOtpremu = new JButton("Dodaj za otpremu");
-		btnDodajZaOtpremu.setBounds(386, 158, 168, 23);
+		btnDodajZaOtpremu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String poruka = uposOtpremUI.dodajArtikalZaOtpremu(tableArtikliOtprem, tbOtpremProdajnaCijena, tbOtpremBarKod.getText(), (Integer)spinnerKolOtprem.getValue());
+				lblStatusmsg.setText(poruka);
+				ocistiPoljaUnosArtikla();
+			}
+		});
+		btnDodajZaOtpremu.setBounds(148, 147, 168, 23);
 		panel_1.add(btnDodajZaOtpremu);
 		
-		JPanel panel_2 = new JPanel();
+		spinnerKolOtprem = new JSpinner();
+		spinnerKolOtprem.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spinnerKolOtprem.setBounds(116, 80, 200, 20);
+		panel_1.add(spinnerKolOtprem);
+		
+		frmSistemUpravljanjaSkladitem.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
+		
+		panel_2 = new JPanel();
 		tabbedPane.addTab("Otpis robe", null, panel_2, null);
 		panel_2.setLayout(null);
 		
@@ -460,6 +497,7 @@ public class FormaZaUposlenika {
 		tabelaOtpis = new JTable();
 		tabelaOtpis.setModel(new DefaultTableModel(
 			new Object[][] {
+
 			},
 			new String[] {
 				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Mjerna jedinica", "Koli\u010Dina", "Ponderirana cijena"
@@ -472,6 +510,7 @@ public class FormaZaUposlenika {
 				return columnEditables[column];
 			}
 		});
+
 		scrollPane_2.setViewportView(tabelaOtpis);
 		
 		JButton btnZavriOtpis = new JButton("Završi otpis");
@@ -508,6 +547,11 @@ public class FormaZaUposlenika {
 		lblNewLabel_2.setBounds(25, 90, 66, 23);
 		panel_2.add(lblNewLabel_2);
 		
+		textField = new JTextField();
+		textField.setBounds(10, 334, 742, 99);
+		panel_2.add(textField);
+		textField.setColumns(10);
+
 		JLabel label = new JLabel("Bar kod: ");
 		label.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		label.setBounds(45, 13, 46, 14);
@@ -587,6 +631,7 @@ public class FormaZaUposlenika {
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblOdjava);
 		
 		lblStatusmsg = new JLabel("");
+		lblStatusmsg.setForeground(Color.RED);
 		lblStatusmsg.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblStatusmsg.setBounds(10, 539, 757, 14);
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblStatusmsg);
@@ -597,6 +642,7 @@ public class FormaZaUposlenika {
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblDobrodosli);
 		
 		frmSistemUpravljanjaSkladitem.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane, panel, panel_1, panel_2, panel_3}));
+		dodavanjePartneraUComboBox();
 	}
 	protected void CleanOtpis() {
 		taKomentar.setText("");
@@ -604,11 +650,14 @@ public class FormaZaUposlenika {
 		dm.setRowCount(0);
 		otp = null;
 		lblStatusmsg.setText("");
+
 	}
 	protected void cleanOtpisArtikal() {
 		tbBarKodOtpis.setText("");
 		sOtpisKolicina.setValue(1);
 		lblStatusmsg.setText("");
+
+
 	}
 	protected void cleanNabavka() {
 		tbNabavkaBarKod.setText("");
@@ -616,6 +665,7 @@ public class FormaZaUposlenika {
 		dm.setRowCount(0);
 		ui = null;
 		lblStatusmsg.setText("");
+
 	}
 	protected void clearUnos() {
 		tbBarKod.setText("");
@@ -626,4 +676,35 @@ public class FormaZaUposlenika {
 		tbProdajnaCijena.setText("");
 		lblStatusmsg.setText("");
 	}
+	//Metoda za dodavanje partnera u listu partnera(combobox)
+		private void dodavanjePartneraUComboBox() {
+			// TODO Auto-generated method stub
+			String query = "select naziv from PoslovniPartner";
+			Query q = App.session.createQuery(query);
+			List<String> naziviPartnera = q.list();
+			for(String ime : naziviPartnera)
+				comboBoxKupci.addItem(ime);
+		}
+		
+		private void ocistiPoljaUnosArtikla(){
+			tbOtpremBarKod.setText("");
+			spinnerKolOtprem.setValue(1);
+			tbOtpremProdajnaCijena.setText("");
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

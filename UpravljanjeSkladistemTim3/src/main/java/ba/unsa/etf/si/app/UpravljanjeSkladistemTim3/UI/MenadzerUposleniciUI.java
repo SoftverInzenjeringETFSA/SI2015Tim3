@@ -23,7 +23,7 @@ public class MenadzerUposleniciUI {
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
 		    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 			
-	public String dodajUposlenika(JFrame formaMenadzer, String ime, String prezime, String jmbg,
+	public String dodajUposlenika(String ime, String prezime, String jmbg,
 			java.util.Date datumRodjenja, String mjestoRodjenja, String adresa, String telefon, String email,
 			int strucnaSprema, int tipUposlenika, String user, String pass, int skladiste) {
 		// TODO Auto-generated method stub
@@ -83,7 +83,10 @@ public class MenadzerUposleniciUI {
 				return "Uposlenik sa tim matičnim brojem već postoji!";
 			else if(uspjesno ==3) //Oznaka da postoji uposlenik sa tim username-om u bazi
 				return "Uposlenik sa tim korisničkim imenom već postoji!";
-			
+			else if(uspjesno == 0)
+				System.out.println("Neka greska");
+
+
 			JOptionPane.showMessageDialog(null, "Uposlenik nije uspješno unesen!", "Greška", JOptionPane.ERROR_MESSAGE);
 			return "";
 		}	
@@ -117,11 +120,10 @@ public class MenadzerUposleniciUI {
 	private boolean validacijaTelefon(String telefon){
 		Pattern patern1 = Pattern.compile(Telefon_PATTERN1);
 		Pattern patern2 = Pattern.compile(Telefon_PATTERN2);
-		Pattern patern3 = Pattern.compile(Telefon_PATTERN3);
+		//Pattern patern3 = Pattern.compile(Telefon_PATTERN3);
 
-		if(!(patern1.matcher(telefon).matches() || patern2.matcher(telefon).matches() || patern3.matcher(telefon).matches())) {
+		if(!(patern1.matcher(telefon).matches() || patern2.matcher(telefon).matches())) {
 			JOptionPane.showMessageDialog(null, "Telefon mora biti u ispravnom formatu!\n" +
-												"033XXXXXX\n" +
 												"060XXXXXXX\n" +
 					                            "06(1-6)XXXXXX", "Greška", JOptionPane.ERROR_MESSAGE);
 			return false;

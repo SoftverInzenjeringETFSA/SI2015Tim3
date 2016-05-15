@@ -112,7 +112,7 @@ public class FormaZaMenadzera {
 	public void set_user(Uposlenik _user) {
 		this._user = _user;
 		JLabel userName = new JLabel(_user.getUser());
-		userName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		userName.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		userName.setBounds(90, 14, 46, 14);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(userName);
 		}
@@ -464,7 +464,7 @@ public class FormaZaMenadzera {
 				
 				if(menUposleniciUI == null)
 					menUposleniciUI = new MenadzerUposleniciUI();
-				String poruka = menUposleniciUI.dodajUposlenika(frmSistemUpravljanjaSkladistem,
+				String poruka = menUposleniciUI.dodajUposlenika(
 textIme.getText(),textPrezime.getText(),textJmbg.getText(), dateRodjenja.getDate(),
 textMjestoRodjenja.getText(),textAdresa.getText(),textBrojTel.getText(),textEmail.getText(),
 comboBoxStrucnaSprema.getSelectedIndex(),comboBoxTipUposlenika.getSelectedIndex(),
