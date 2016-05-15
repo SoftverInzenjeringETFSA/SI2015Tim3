@@ -419,7 +419,7 @@ public class FormaZaUposlenika {
 		JButton btnZavriOtpremanje = new JButton("Završi otpremanje");
 		btnZavriOtpremanje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String poruka = uposOtpremUI.zavrsiOtpremanje(_user);
+				String poruka = uposOtpremUI.zavrsiOtpremanje(_user, comboBoxKupci.getSelectedIndex());
 				if(poruka.equals("  ")){
 					DefaultTableModel dtm = (DefaultTableModel)tableArtikliOtprem.getModel();
 					dtm.setRowCount(0);
