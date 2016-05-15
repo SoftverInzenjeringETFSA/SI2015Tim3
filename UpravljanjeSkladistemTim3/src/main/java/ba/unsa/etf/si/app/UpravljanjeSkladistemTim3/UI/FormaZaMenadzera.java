@@ -825,8 +825,9 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 						if(listaDokumenata2.isEmpty())
 							JOptionPane.showMessageDialog(null, "Ne postoji dokument generisan u traženom periodu!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
 						else {
-							for(Dokument d:listaDokumenata2) 
+							for(Dokument d:listaDokumenata2) {
 							listModel.addElement(d);
+							}
 							JOptionPane.showMessageDialog(null, "Pretraga zavrsena!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
 						}
 					}

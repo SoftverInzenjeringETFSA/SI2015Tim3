@@ -39,7 +39,7 @@ public class PrijavaBLL {
         } 
         catch (NoSuchAlgorithmException e) 
         {
-            e.printStackTrace();
+            App.logger.error("Omaska", e);
         }
         
         return hashPass;
