@@ -45,6 +45,11 @@ public class UposlenikOtpremanjeUI {
 				return "Prodajna cijena ne može biti negativna!";
 
 			Artikal a = uposOtpremBLL.dobaviArtikalZaOtprem(barKod, kolicinaZaOtprem, Double.parseDouble(prodCijena));
+			
+			if(a == null){
+				return "Uneseni artikal je već odabran za otpremanje!";
+			}
+			
 			double staraKol = uposOtpremBLL.dobaviStaruKolicinuArtikla(a.getId());
 			//System.out.println("Greska  "+staraKol + "  " + kolicinaZaOtprem);
 			if(kolicinaZaOtprem > staraKol){

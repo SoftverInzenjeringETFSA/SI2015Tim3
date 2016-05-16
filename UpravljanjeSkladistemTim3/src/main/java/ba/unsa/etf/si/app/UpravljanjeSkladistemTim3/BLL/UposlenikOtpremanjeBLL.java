@@ -37,6 +37,11 @@ public class UposlenikOtpremanjeBLL {
 		
 		try {
 		a = (Artikal)query.uniqueResult();
+		//Provjera da li je artikal vec odabran za otpremanje
+		for(Artikal ar : _artikliZaOtprem){
+			if(a.getId() == ar.getId())
+				return null;
+		}
 		} catch (NullPointerException e) {
 			App.logger.error("Greška - artikal već postoji u bazi.", e);
 		}
