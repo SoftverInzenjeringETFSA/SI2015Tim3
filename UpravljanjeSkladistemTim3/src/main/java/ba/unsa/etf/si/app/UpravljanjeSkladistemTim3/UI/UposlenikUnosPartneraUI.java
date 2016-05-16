@@ -10,15 +10,14 @@ public class UposlenikUnosPartneraUI {
 			return "Nije unesen naziv!";
 		else if(adresa.equals(""))
 			return "Nije unesena adresa!";
-		
 		else if(jib.equals(""))
 			return "Nije unesen jib!";
-		else if(!naziv.matches("^[A-Z][0-9a-zA-Z ]+$"))
-			return "Naziv nije ispravan!";
+		else if(!naziv.matches("^[A-Z][0-9a-zA-Z.\\- ]*$"))
+			return "Naziv nije ispravan! Mora počinjati velikim slovom.";
+		else if(!adresa.matches("^[A-Z][0-9a-zA-Z ]*$"))
+			return "Adresa nije ispravna! Mora počinjati velikim slovom.";
 		else if (!jib.matches("^[1-9][0-9]{12}") )
 			return "JIB mora imati 13 cifara";
-		else if(adresa.matches("^[A-Z][0-9a-zA-Z ]*$"))
-			return "Adresa nije ispravna!";
 		else{
 			UposlenikUnosPartneraBLL uposUnosPartneraBLL = new UposlenikUnosPartneraBLL();
 			int uspjesno = uposUnosPartneraBLL.unosPoslovnogPartnera(naziv, adresa, jib);
