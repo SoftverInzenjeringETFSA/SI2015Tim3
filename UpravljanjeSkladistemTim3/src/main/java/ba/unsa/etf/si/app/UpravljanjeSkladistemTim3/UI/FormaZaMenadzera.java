@@ -71,6 +71,8 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.ListSelectionModel;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class FormaZaMenadzera {
 
@@ -557,9 +559,10 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		
 		tableUposlenici = new JTable();
 		tableUposlenici.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//tableUposlenici.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		//tableUposlenici.setEnabled(false);
 		//tableUposlenici.setRowSelectionAllowed(true);
-		tableUposlenici.enableInputMethods(false);
+		//tableUposlenici.enableInputMethods(false);
 		tableUposlenici.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -573,6 +576,9 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+		        return false;
+		      }
 		});
 		scrollPane_1.setViewportView(tableUposlenici);
 		
