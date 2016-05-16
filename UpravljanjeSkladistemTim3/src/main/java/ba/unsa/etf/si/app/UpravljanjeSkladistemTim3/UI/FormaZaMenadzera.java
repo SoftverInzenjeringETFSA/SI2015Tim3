@@ -74,6 +74,7 @@ import javax.swing.event.ChangeEvent;
 public class FormaZaMenadzera {
 
 	public JFrame frmSistemUpravljanjaSkladistem;
+	private JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private JTable table;
 	private JTable tableUposlenici;
 	private JTextField textIme;
@@ -113,8 +114,8 @@ public class FormaZaMenadzera {
 	public void set_user(Uposlenik _user) {
 		this._user = _user;
 		JLabel userName = new JLabel(_user.getUser());
-		userName.setFont(new Font("Tahoma", Font.BOLD, 12));
-		userName.setBounds(90, 14, 46, 14);
+		userName.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		userName.setBounds(90, 14, 86, 14);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(userName);
 		}
 
@@ -123,6 +124,7 @@ public class FormaZaMenadzera {
 	}
 
 	private void initialize() {
+		labelStatus = new JLabel("");
 		frmSistemUpravljanjaSkladistem = new JFrame();
 		frmSistemUpravljanjaSkladistem.setResizable(false);
 		frmSistemUpravljanjaSkladistem.setIconImage(Toolkit.getDefaultToolkit().getImage(FormaZaMenadzera.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
@@ -134,7 +136,12 @@ public class FormaZaMenadzera {
 		
 		menUposleniciUI = new MenadzerUposleniciUI();
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				labelStatus.setText("");
+			}
+		});
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
 		tabbedPane.setBounds(0, 44, 695, 431);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(tabbedPane);
@@ -854,7 +861,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		label_28.setBounds(10, 9, 73, 24);
 		frmSistemUpravljanjaSkladistem.getContentPane().add(label_28);
 		
-		labelStatus = new JLabel("");
+		
 		labelStatus.setForeground(Color.RED);
 		labelStatus.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		labelStatus.setBounds(10, 472, 503, 25);

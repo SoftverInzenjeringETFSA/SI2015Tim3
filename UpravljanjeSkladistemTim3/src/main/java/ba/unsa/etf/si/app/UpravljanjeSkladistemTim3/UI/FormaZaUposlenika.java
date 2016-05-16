@@ -165,6 +165,7 @@ public class FormaZaUposlenika {
 	}
 
 	private void initialize() {
+		lblStatusmsg = new JLabel("");
 		frmSistemUpravljanjaSkladitem = new JFrame();
 		frmSistemUpravljanjaSkladitem.setTitle("Sistem upravljanja skladištem - Radnik u skladištu");
 		frmSistemUpravljanjaSkladitem.setResizable(false);
@@ -177,6 +178,7 @@ public class FormaZaUposlenika {
 					TrenutnoStanjeSkladistaUI tst = new TrenutnoStanjeSkladistaUI();
 					tst.trenutnoStanjeSkladista(_user.get_skladiste().getNaziv(), table, lblStatusmsg);
 				}
+				lblStatusmsg.setText("");
 			}
 		});
 		tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -626,7 +628,7 @@ public class FormaZaUposlenika {
 		lblOdjava.setBounds(721, 7, 46, 23);
 		frmSistemUpravljanjaSkladitem.getContentPane().add(lblOdjava);
 		
-		lblStatusmsg = new JLabel("");
+		
 		lblStatusmsg.setForeground(Color.RED);
 		lblStatusmsg.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblStatusmsg.setBounds(10, 539, 757, 14);
