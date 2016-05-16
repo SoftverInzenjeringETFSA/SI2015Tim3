@@ -40,7 +40,7 @@ public class MenadzerUposleniciBLL {
 			noviUposlenik.setPassword(pbll.HashStringa(pass));
 			noviUposlenik.setTipUposlenika(TipUposlenika.values()[tipUposlenika]);
 		
-			Skladiste s = App.session.load(Skladiste.class, (long)skladiste);
+			Skladiste s = App.session.load(Skladiste.class, (long)(skladiste+1));
 			System.out.println(s.getNaziv());
 			noviUposlenik.set_skladiste(s);
 
