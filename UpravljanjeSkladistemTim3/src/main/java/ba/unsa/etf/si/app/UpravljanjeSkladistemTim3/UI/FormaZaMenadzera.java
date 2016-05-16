@@ -70,6 +70,7 @@ import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.ListSelectionModel;
 
 public class FormaZaMenadzera {
 
@@ -555,6 +556,10 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_8.add(scrollPane_1);
 		
 		tableUposlenici = new JTable();
+		tableUposlenici.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//tableUposlenici.setEnabled(false);
+		//tableUposlenici.setRowSelectionAllowed(true);
+		tableUposlenici.enableInputMethods(false);
 		tableUposlenici.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -692,7 +697,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_10.add(spLista);
 		
 		table_2 = new JTable();
-		
+		table_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		final DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Naziv skladi\u0161ta");
 		model.addColumn("Adresa skladi\u0161ta");
