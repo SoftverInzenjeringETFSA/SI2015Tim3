@@ -49,8 +49,8 @@ public class MenadzerSkladisteUI {
 				}
 		
 		// Provjera da li je radno vrijeme uneseno
-		if(radnoVrijemeDo == 0 || radnoVrijemeOd == 0) {
-			status.setText("Niste unijeli radno vrijeme!");
+		if(radnoVrijemeOd < 700 || radnoVrijemeDo > 1800) {
+			status.setText("Unesite radno vrijeme u periodu od 07h do 18h.");
 			status.setForeground(Color.RED);
 			return false;
 		}
