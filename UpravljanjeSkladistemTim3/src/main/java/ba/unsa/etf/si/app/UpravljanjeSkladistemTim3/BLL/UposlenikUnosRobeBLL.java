@@ -43,6 +43,7 @@ public class UposlenikUnosRobeBLL {
 			return 1;
 		}
 		t.commit();
+		if (a == null) return 1;
 		
 		t = App.session.getTransaction();
 		String sql = "SELECT kolicina FROM skladiste_artikal WHERE artikal_id = :ar_id && skladiste_id = :sk_id";
