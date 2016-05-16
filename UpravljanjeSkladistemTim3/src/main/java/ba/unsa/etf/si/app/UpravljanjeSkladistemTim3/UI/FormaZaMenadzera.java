@@ -179,6 +179,9 @@ public class FormaZaMenadzera {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			public boolean isCellEditable(int rowIndex, int mColIndex) {
+		        return false;
+		      }
 		});
 		scrollPane.setViewportView(table);
 		
