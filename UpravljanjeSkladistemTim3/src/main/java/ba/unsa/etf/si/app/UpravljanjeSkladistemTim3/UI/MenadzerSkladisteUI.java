@@ -40,9 +40,17 @@ public class MenadzerSkladisteUI {
 			return false;
 		}
 		
+		
 		// Provjera da li je radno vrijeme zatvaranja vece od radnog vremena otvaranja
-		if(radnoVrijemeDo < radnoVrijemeOd) {
-			status.setText("Radno vrijeme ne smije zavrsiti prije nego pocne!");
+				if(radnoVrijemeDo < radnoVrijemeOd) {
+					status.setText("Radno vrijeme ne smije zavrsiti prije nego pocne!");
+					status.setForeground(Color.RED);
+					return false;
+				}
+		
+		// Provjera da li je radno vrijeme uneseno
+		if(radnoVrijemeDo == 0 || radnoVrijemeOd == 0) {
+			status.setText("Niste unijeli radno vrijeme!");
 			status.setForeground(Color.RED);
 			return false;
 		}
