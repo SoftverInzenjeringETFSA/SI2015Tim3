@@ -12,7 +12,7 @@ public class UposlenikUnosPartneraUI {
 			return "Nije unesena adresa!";
 		else if(jib.equals(""))
 			return "Nije unesen jib!";
-		else if(!naziv.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][a-zA-Z\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$"))
+		else if(!naziv.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][a-zA-Z-.\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$"))
 			return "Naziv nije ispravan! Mora počinjati velikim slovom.";
 		else if(!adresa.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][0-9a-zA-Z\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$"))
 			return "Adresa nije ispravna! Mora počinjati velikim slovom.";
