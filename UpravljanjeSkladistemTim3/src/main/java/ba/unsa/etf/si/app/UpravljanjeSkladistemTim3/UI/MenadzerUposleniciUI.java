@@ -38,11 +38,11 @@ public class MenadzerUposleniciUI {
 		
 		if(ime.equals(""))
 			return "Nije uneseno ime!";
-		else if(!ime.matches("^[A-Z][a-z]*$"))
+		else if(!ime.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][a-zA-Z\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$"))
 			return "Nije ispravno ime!";
 		else if(prezime.equals(""))
 			return "Nije uneseno prezime!";
-		else if(!prezime.matches("^[A-Z][a-z]*$"))
+		else if(!prezime.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][a-zA-Z\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$"))
 			return "Nije ispravno prezime!";
 		else if(jmbg.equals(""))
 			return "Nije unesen JMBG!";
@@ -52,11 +52,11 @@ public class MenadzerUposleniciUI {
 			return "Datum rođenja nije ispravan!";
 		else if(mjestoRodjenja.equals(""))
 			return "Nije uneseno mjesto rođenja!";
-		else if(!mjestoRodjenja.matches("^[A-Z][a-zA-Z ]*$")) 
+		else if(!mjestoRodjenja.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][a-zA-Z\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$")) 
 			return "Nije ispravno mjesto rođenja!";
 		else if(adresa.equals(""))
 			return "Nije unesena adresa!";
-		else if(!adresa.matches("^[A-Z][0-9a-zA-Z ]*$"))
+		else if(!adresa.matches("^[A-Z\u0160\u0110\u010C\u0106\u017D][0-9a-zA-Z\u0160-\u0161\u0110-\u0111\u010C-\u010D\u0106-\u0107\u017D-\u017E ]+$"))
 			return "Nije ispravna adresa";
 		else if(telefon.equals(""))
 			return "Nije unesen telefon!";
