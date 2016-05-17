@@ -56,6 +56,12 @@ public class MenadzerSkladisteBLL {
 		t = App.session.beginTransaction();
 		if(s.get_dokumenti() != null)
 			for(Dokument d:s.get_dokumenti()) {
+				hql = "DELETE from StavkaDokumenta WHERE dokument_id = :id";
+				query = App.session.createQuery(hql);
+				query.setParameter("id", d.getId());
+				
+				result = query.executeUpdate();
+				
 				hql = "DELETE from Dokument WHERE dokument_id = :id";
 				query = App.session.createQuery(hql);
 				query.setParameter("id", d.getId());
@@ -78,7 +84,7 @@ public class MenadzerSkladisteBLL {
 		t = App.session.beginTransaction();
 		if(s.get_skladisteArtikli() != null)
 			for(SkladisteArtikal sa:s.get_skladisteArtikli()) {
-				hql = "DELETE from Uposlenik WHERE skladiste_artikal_id = :id";
+				hql = "DELETE from SkladisteArtikal WHERE artikal_id = :id";
 				query = App.session.createQuery(hql);
 				query.setParameter("id", sa.getId());
 				
