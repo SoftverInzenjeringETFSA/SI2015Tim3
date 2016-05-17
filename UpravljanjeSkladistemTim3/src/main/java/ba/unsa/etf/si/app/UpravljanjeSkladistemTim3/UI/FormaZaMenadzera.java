@@ -283,7 +283,7 @@ public class FormaZaMenadzera {
 		
 		
 		final JRadioButton radioButton = new JRadioButton("Izvje\u0161taj trendova proizvoda");
-		radioButton.setSelected(true);
+		//radioButton.setSelected(true);
 		final JRadioButton radioButton_1 = new JRadioButton("Sumarni izvje\u0161taj");
 		
 		JButton button = new JButton("Generi\u0161i izvje\u0161taj");
