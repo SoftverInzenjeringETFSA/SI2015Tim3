@@ -283,6 +283,7 @@ public class FormaZaMenadzera {
 		
 		
 		final JRadioButton radioButton = new JRadioButton("Izvje\u0161taj trendova proizvoda");
+		radioButton.setSelected(true);
 		final JRadioButton radioButton_1 = new JRadioButton("Sumarni izvje\u0161taj");
 		
 		JButton button = new JButton("Generi\u0161i izvje\u0161taj");
@@ -302,7 +303,7 @@ public class FormaZaMenadzera {
 		panel_15.setLayout(null);
 		
 		
-		radioButton_1.setBounds(104, 51, 234, 30);
+		radioButton_1.setBounds(104, 56, 234, 30);
 		panel_15.add(radioButton_1);
 		radioButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
