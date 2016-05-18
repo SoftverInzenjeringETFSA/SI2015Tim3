@@ -51,4 +51,14 @@ public class UposlenikUnosPartneraBLL {
 			return true;
 		return false;
 	}
+	
+	//Metoda za dodavanje partnera u listu partnera(combobox)
+	public List<String> dodavanjePartneraUComboBox() {
+		// TODO Auto-generated method stub
+		String query = "select naziv from PoslovniPartner";
+		Query q = App.session.createQuery(query);
+		List<String> naziviPartnera = q.list();
+		return naziviPartnera;
+	}
+	
 }

@@ -41,6 +41,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.util.List;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.UposlenikUnosPartneraBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.UposlenikUnosRobeBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.MjernaJedinica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
@@ -677,9 +678,8 @@ public class FormaZaUposlenika {
 	//Metoda za dodavanje partnera u listu partnera(combobox)
 		private void dodavanjePartneraUComboBox() {
 			// TODO Auto-generated method stub
-			String query = "select naziv from PoslovniPartner";
-			Query q = App.session.createQuery(query);
-			List<String> naziviPartnera = q.list();
+			UposlenikUnosPartneraBLL unosPartneraBLL = new UposlenikUnosPartneraBLL();
+			List<String> naziviPartnera = unosPartneraBLL.dodavanjePartneraUComboBox()  ;
 			for(String ime : naziviPartnera)
 				comboBoxKupci.addItem(ime);
 		}

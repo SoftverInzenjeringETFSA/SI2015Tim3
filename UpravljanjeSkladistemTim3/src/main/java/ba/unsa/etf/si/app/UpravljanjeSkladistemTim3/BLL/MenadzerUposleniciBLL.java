@@ -101,5 +101,23 @@ public class MenadzerUposleniciBLL {
 			return false;
 		}
 	}
+	
+	//Metoda za dodavanje uposlenika u tabelu
+	public List<Object[]> dodavanjeUposlenikaUTabelu(){
+		String query = "select ime, prezime, JMBG from Uposlenik";
+		Query q = App.session.createQuery(query);
+		List<Object[]> listaUposlenika = q.list();
+		System.out.println(listaUposlenika.isEmpty());
+		return listaUposlenika;
+	}
+	
+	//Metoda za dodavanje skladista u listu skladista(combobox)
+	public List<String> dodavanjeSkladistaUComboBox() {
+		// TODO Auto-generated method stub
+		String query = "select naziv from Skladiste";
+		Query q = App.session.createQuery(query);
+		List<String> naziviSkladista = q.list();
+		return naziviSkladista;
+	}
 }
 

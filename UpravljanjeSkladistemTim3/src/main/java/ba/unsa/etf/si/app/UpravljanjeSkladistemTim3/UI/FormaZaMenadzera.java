@@ -31,6 +31,7 @@ import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Otpremnica;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.MenadzerDokumentBLL;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.MenadzerSkladisteBLL;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.MenadzerUposleniciBLL;
 
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
@@ -50,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import com.toedter.*;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Point;
 import java.awt.Color;
@@ -891,9 +891,9 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 	//Metoda za dodavanje skladista u listu skladista(combobox)
 		private void dodavanjeSkladistaUComboBox() {
 			// TODO Auto-generated method stub
-			String query = "select naziv from Skladiste";
-			Query q = App.session.createQuery(query);
-			List<String> naziviSkladista = q.list();
+			MenadzerUposleniciBLL menUposBLL = new MenadzerUposleniciBLL();
+			List<String> naziviSkladista = menUposBLL.dodavanjeSkladistaUComboBox();
+			
 			//System.out.println(naziviSkladista.isEmpty());
 			for(String ime : naziviSkladista)
 				comboBoxSkladiste.addItem(ime);
@@ -901,10 +901,8 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 	
 	//Metoda za dodavanje uposlenika u tabelu
 		private void dodavanjeUposlenikaUTabelu(){
-			String query = "select ime, prezime, JMBG from Uposlenik";
-			Query q = App.session.createQuery(query);
-			List<Object[]> listaUposlenika = q.list();
-			System.out.println(listaUposlenika.isEmpty());
+			MenadzerUposleniciBLL menUposBLL = new MenadzerUposleniciBLL();
+			List<Object []> listaUposlenika = menUposBLL.dodavanjeUposlenikaUTabelu();
 			
 			DefaultTableModel tableModel = (DefaultTableModel)tableUposlenici.getModel();
 			for(Object [] u : listaUposlenika){
