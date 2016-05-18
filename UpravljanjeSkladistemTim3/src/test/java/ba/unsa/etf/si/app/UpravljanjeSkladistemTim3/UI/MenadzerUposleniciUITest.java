@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 
 public class MenadzerUposleniciUITest extends TestCase{
 	private MenadzerUposleniciUI menUposUI = new MenadzerUposleniciUI();
-	/*
+	
 	//@Test
 	public void dodajUposlenikaImeNijeUneseno(){
 		Date datumRodjenja = new Date();
@@ -330,7 +330,7 @@ public class MenadzerUposleniciUITest extends TestCase{
 		
 		assertEquals("  ", poruka3);		
 	}
-	*/
+	
 	
 	
 

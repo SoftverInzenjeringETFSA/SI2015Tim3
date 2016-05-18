@@ -2,7 +2,7 @@ package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.UI;
 
 import java.awt.EventQueue;
 
-//import javax.swing.JComboBox;
+import javax.swing.JComboBox;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Uposlenik;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;

@@ -480,8 +480,7 @@ public class FormaZaMenadzera {
 				
 				if(menUposleniciUI == null)
 					menUposleniciUI = new MenadzerUposleniciUI();
-				String poruka = menUposleniciUI.dodajUposlenika(frmSistemUpravljanjaSkladistem,
-textIme.getText(),textPrezime.getText(),textJmbg.getText(), dateRodjenja.getDate(),
+				String poruka = menUposleniciUI.dodajUposlenika(textIme.getText(),textPrezime.getText(),textJmbg.getText(), dateRodjenja.getDate(),
 textMjestoRodjenja.getText(),textAdresa.getText(),textBrojTel.getText(),textEmail.getText(),
 comboBoxStrucnaSprema.getSelectedIndex(),comboBoxTipUposlenika.getSelectedIndex(),
 textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
