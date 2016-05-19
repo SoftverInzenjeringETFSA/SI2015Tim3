@@ -9,6 +9,7 @@ import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Dokument;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Nabavka;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Skladiste;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.SkladisteArtikal;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.StavkaDokumenta;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -75,20 +76,51 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 		return artikli;
 	}
 	
-	public void podaciUlaza(Artikal a){
-		String hq1 = "from Nabavka where barKod = :barKod";
-		Query query = App.session.createQuery(hq1);
-		query.setParameter("barkKod", a.getBarKod());
+	public List<StavkaDokumenta> DajStavkeDokumenata(){
+		List<StavkaDokumenta> listaStavkiDok = new ArrayList<StavkaDokumenta>();
 		
+		String hq1 = "from StavkaDokumenta";
+		Query query = App.session.createQuery(hq1);
+		List<Skladiste> skladista = new ArrayList<Skladiste>();
+		try {
+			listaStavkiDok = (List<StavkaDokumenta>) query.list();
+		}
+		catch(NullPointerException e){
+			App.logger.error("Omaska", e);
+		}
+		
+		return listaStavkiDok;
 	}
 	
-	public Nabavka dajUlazniDokument(Artikal a, Date _od, Date _do){
-		Nabavka ulaz = new Nabavka();
+	public List<StavkaDokumenta> DajStavkeDokArtikla(Artikal a){
+		List<StavkaDokumenta> stavkeDokArtikla = new ArrayList<StavkaDokumenta>();
+		List<StavkaDokumenta> listaStavkiDok = new ArrayList<StavkaDokumenta>();
+		listaStavkiDok = DajStavkeDokumenata();
 		
+		for (StavkaDokumenta sd: listaStavkiDok){
+			if (sd.get_artikal().getId()==a.getId()){
+				stavkeDokArtikla.add(sd);
+			}
+		}
 		
-		
-		return ulaz;
+		return stavkeDokArtikla;
 	}
+	
+	public List<StavkaDokumenta> DajStavkeDokArtiklaIzSkladista (Artikal a, Skladiste s){
+		List<StavkaDokumenta> stavkeDokArtiklaSkladiste = new ArrayList<StavkaDokumenta>();
+		List<StavkaDokumenta> listaStavkiDok = new ArrayList<StavkaDokumenta>();
+		listaStavkiDok = DajStavkeDokArtikla(a);
+		
+		for (StavkaDokumenta sd: listaStavkiDok){
+			for (Dokument d: s.get_dokumenti()){
+				if (d.getId()==sd.getId()){
+					stavkeDokArtiklaSkladiste.add(sd);
+				}
+			}
+		}
+		return stavkeDokArtiklaSkladiste;
+	}
+	
 	
 	public double DajPonderiranu(long artikal_id, long skladiste_id) {
 		String sql = "SELECT ponderirana_cijena FROM skladiste_artikal WHERE artikal_id =:ar_id && skladiste_id = :sk_id";
@@ -115,29 +147,42 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 	    PdfWriter.getInstance(document, new FileOutputStream("IzvjestajTrendova.pdf"));
 	    
 	    //tabela
-	    PdfPTable tabela = new PdfPTable(new float[] {3});
-	    tabela.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-	    tabela.addCell("Nabavka");
-	    tabela.setHeaderRows(1);
+	    PdfPTable naslov1 = new PdfPTable(new float[] {3, 3});
+	    naslov1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+	    naslov1.addCell("Cijena");
+	    naslov1.addCell("Kolicina");
+	    naslov1.setHeaderRows(1);
 	    // oboji prvi red
-	    PdfPCell[] cells = tabela.getRow(0).getCells(); 
+	    PdfPCell[] cells = naslov1.getRow(0).getCells(); 
 		  for (int j=0;j<cells.length;j++){
 		     cells[j].setBackgroundColor(BaseColor.GRAY);
 		  }
 		
 	    // punimo tabelu
+		List<StavkaDokumenta> stavke = new ArrayList<StavkaDokumenta>();
+		stavke = DajStavkeDokArtiklaIzSkladista(a, s);
+		for (StavkaDokumenta sd: stavke){
+			try{
+				if (stavke.size()==0){
+					naslov1.addCell("Za odabrani artikal nema podataka za generisanje izvjestaja");
+				}
+				else {
+					naslov1.addCell(String.valueOf(sd.getCijena()));
+					naslov1.addCell(String.valueOf(sd.getKolicina()));
+				}
+			}
+			catch(Exception ex){
+				App.logger.error("Greska kod dobijanja stavki dok", ex);
+			}
+		}
 		
 	    
 	    document.open();
 	    document.add(new Paragraph("Skladiste: " + s.getNaziv()));
 	    document.add(new Paragraph("Naziv artikla: " + a.getNaziv()));
-	    // trenutno vrijeme
-	    Date date = new Date();
 		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-	    
-	    document.add(new Paragraph("Datum generisanja: " + df.format(date)));
-	    document.add(new Paragraph(""));
-	    document.add(tabela);
+	    document.add(new Paragraph("Datum generisanja: " + df.format(new Date())));
+	    document.add(naslov1);
 	    File myFile = new File("IzvjestajTrendova.pdf");
 	    Desktop.getDesktop().open(myFile);
 	    document.close();
@@ -181,12 +226,8 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 	    
 	    document.open();
 	    document.add(new Paragraph("Skladiste: " + s.getNaziv()));
-	    // trenutno vrijeme
-	    Date date = new Date();
 		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-	    
-	    document.add(new Paragraph("Datum generisanja: " + df.format(date)));
-	    document.add(new Paragraph(""));
+	    document.add(new Paragraph("Datum generisanja: " + df.format(new Date())));
 	    document.add(tabela);
 	    File myFile = new File("SumarniIzvjestaj.pdf");
 	    Desktop.getDesktop().open(myFile);
@@ -194,6 +235,5 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 	  
 	    status.setText("Izvjestaj je kreiran.");
 	    status.setForeground(Color.green);
-	    //JOptionPane.showMessageDialog(null, "Izvjestaj je kreiran!", "", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
