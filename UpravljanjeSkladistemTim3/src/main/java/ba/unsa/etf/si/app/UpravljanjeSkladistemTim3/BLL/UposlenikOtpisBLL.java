@@ -40,8 +40,12 @@ public class UposlenikOtpisBLL {
 		SQLQuery query = App.session.createSQLQuery(sql);
 		query.setParameter("ar_id",	artikal_id);
 		query.setParameter("sk_id", skladiste_id);
-		
-		double cijena = (Double) query.uniqueResult();
+		double cijena = 0;
+		try {
+		cijena = (Double) query.uniqueResult();
+		} catch(Exception e) {
+			App.logger.error("Omaska", e);
+		}
 		return cijena;
 	}
 
@@ -64,7 +68,13 @@ public class UposlenikOtpisBLL {
 		SQLQuery query = App.session.createSQLQuery(sql);
 		query.setParameter("ar_id", artikal_id);
 		query.setParameter("sk_id", skladiste_id);
-		int kolicina = (Integer) query.uniqueResult();
+		
+		int kolicina = 0;
+		try {
+		kolicina = (Integer) query.uniqueResult();
+		} catch (Exception e) {
+			App.logger.error("Omaska", e);
+		}
 		
 		return kolicina;
 	}
