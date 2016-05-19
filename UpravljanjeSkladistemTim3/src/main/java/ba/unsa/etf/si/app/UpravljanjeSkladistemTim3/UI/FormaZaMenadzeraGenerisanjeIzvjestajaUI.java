@@ -8,8 +8,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.FormaZaMenadzeraGenerisanjeIzvjestajaBLL;
@@ -25,21 +28,36 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 	}
 	
 	public void ponistiKontrole(JComboBox comboBox_1, JRadioButton radioButton, JRadioButton radioButton_1,
-			JCheckBox checkBox, JComboBox comboBox_2, JComboBox comboBox_3, JTextField textField_11) {
+			JCheckBox checkBox, JDateChooser dateChooser_od, JDateChooser dateChooser_do, JTextField textField_11, 
+			JPanel panel_16, JLabel label_4, JLabel label_5) {
 		comboBox_1.setSelectedIndex(-1);
 		radioButton.setSelected(false);
 		radioButton_1.setSelected(false);
 		checkBox.setSelected(false);
-		comboBox_2.setSelectedIndex(-1);
-		comboBox_3.setSelectedIndex(-1);
+		dateChooser_od.setVisible(true);
+		dateChooser_do.setVisible(true);
+		dateChooser_od.setDate(null);
+		dateChooser_do.setDate(null);
 		textField_11.setText("");
+		panel_16.enable();
+		panel_16.setForeground(Color.white);
+		label_4.enable();
+		label_5.enable();
 	}
 	
 	public void ponistiBarKod (JTextField barKod){
 		barKod.setText("");
 	}
 	
-	public void generisiIzvjestaj(JComboBox comboBox, JRadioButton trend, JRadioButton sumarni, JCheckBox checkBox, JComboBox comboBox_2, JComboBox comboBox_3, JTextField barKod, JLabel status) {
+	public void PonistiVrijeme(JDateChooser _od, JDateChooser _do){
+		_od.setDate(null);
+		_do.setDate(null);
+	}
+	
+	public void generisiIzvjestaj(JComboBox comboBox, JRadioButton trend, JRadioButton sumarni, JCheckBox checkBox, 
+			JDateChooser dateChooser_od, JDateChooser dateChooser_do, 
+			JTextField barKod, JLabel status, 
+			JPanel panel_16, JLabel label_4, JLabel label_5) {
 		// validacija
 		if (comboBox.getSelectedItem()==null){
 			status.setText("Niste odabrali skladiste!");
@@ -51,10 +69,18 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 			status.setForeground(Color.red);
 			return;
 		}
-		if ((checkBox.isSelected()==false) && (comboBox_2.getSelectedItem()==null || comboBox_3.getSelectedItem()==null)){
+		if ((checkBox.isSelected()==false) && (dateChooser_od.getDate()==null || dateChooser_do.getDate()==null)){
 			status.setText("Niste odabrali vremenski period!");
 			status.setForeground(Color.red);
 			return;
+		}
+		if (dateChooser_od.getDate()!=null && dateChooser_do.getDate()!=null){
+			if (dateChooser_od.getDate().compareTo(dateChooser_do.getDate())>0){
+				status.setText("Niste odabrali valjan vremenski period!");
+				status.setForeground(Color.red);
+				PonistiVrijeme(dateChooser_od, dateChooser_do);
+				return;
+			}
 		}
 		Skladiste s = bll.dajSkladiste(comboBox.getSelectedItem().toString());
 		if (s == null){
@@ -73,7 +99,8 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 				}
 				try {
 					bll.generisiIzvjestajTrend(s, a, status);
-					ponistiKontrole(comboBox, trend, sumarni, checkBox, comboBox_2, comboBox_3, barKod);
+					ponistiKontrole(comboBox, trend, sumarni, checkBox, dateChooser_od, 
+							dateChooser_do, barKod, panel_16, label_4, label_5);
 				}
 				catch (Exception e){
 					App.logger.error("Omaska.", e);
@@ -84,7 +111,8 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 				artikli = bll.dajArtikle(s.getNaziv());
 				try {
 					bll.generisiIzvjestajSumarni(s,  artikli, status);
-					ponistiKontrole(comboBox, trend, sumarni, checkBox, comboBox_2, comboBox_3, barKod);
+					ponistiKontrole(comboBox, trend, sumarni, checkBox, dateChooser_od, 
+							dateChooser_do, barKod, panel_16, label_4, label_5);
 				}
 				catch(Exception e){	
 					App.logger.error("Omaska.", e);

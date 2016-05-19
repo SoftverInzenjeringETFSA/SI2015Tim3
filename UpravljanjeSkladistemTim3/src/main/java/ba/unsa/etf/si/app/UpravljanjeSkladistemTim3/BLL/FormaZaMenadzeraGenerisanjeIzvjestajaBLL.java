@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.Artikal;
@@ -89,54 +90,60 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 		return ulaz;
 	}
 	
-	public void generisiIzvjestajTrend (Skladiste s, Artikal a, JLabel status) throws Exception {
+	public double DajPonderiranu(long artikal_id, long skladiste_id) {
+		String sql = "SELECT ponderirana_cijena FROM skladiste_artikal WHERE artikal_id =:ar_id && skladiste_id = :sk_id";
+		SQLQuery query = App.session.createSQLQuery(sql);
+		query.setParameter("ar_id",	artikal_id);
+		query.setParameter("sk_id", skladiste_id);
 		
+		double cijena = (Double) query.uniqueResult();
+		return cijena;
+	}
+	
+	public int DajKolicinu(long artikal_id, long skladiste_id) {
+		String sql = "SELECT kolicina FROM skladiste_artikal WHERE artikal_id =:ar_id && skladiste_id = :sk_id";
+		SQLQuery query = App.session.createSQLQuery(sql);
+		query.setParameter("ar_id", artikal_id);
+		query.setParameter("sk_id", skladiste_id);
+		int kolicina = (Integer) query.uniqueResult();
+		
+		return kolicina;
+	}
+	
+	public void generisiIzvjestajTrend (Skladiste s, Artikal a, JLabel status) throws Exception {
 		Document document = new Document();
-	    PdfWriter.getInstance(document, new FileOutputStream("IzvjestajTrendovaProizvoda.pdf"));
+	    PdfWriter.getInstance(document, new FileOutputStream("IzvjestajTrendova.pdf"));
 	    
-		//tabela
-		PdfPTable tabela = new PdfPTable(new float[] {3, 3, 3, 3});
-		tabela.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-		tabela.addCell("Datum ulaza");
-		tabela.addCell("Ulazna cijena");
-	    tabela.addCell("Kolicina");
-	    tabela.addCell("Izlazna cijena");
-		tabela.setHeaderRows(1);
-		// oboji prvi red
+	    //tabela
+	    PdfPTable tabela = new PdfPTable(new float[] {3});
+	    tabela.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+	    tabela.addCell("Nabavka");
+	    tabela.setHeaderRows(1);
+	    // oboji prvi red
 	    PdfPCell[] cells = tabela.getRow(0).getCells(); 
-	    for (int j=0;j<cells.length;j++){
-	    	cells[j].setBackgroundColor(BaseColor.GRAY);
-	    }
-	    tabela.addCell(""); // datum ulaza?
-	    String ulaznaCijena = String.valueOf(a.getProdajnaCijena());
-	    tabela.addCell(ulaznaCijena); // ulazna cijena
-	    // promjena kolicina
-	    //String kolicina = String.valueOf(a.getKolicina());
-	    //tabela.addCell(kolicina);
-	    //String izlaznaCijena = String.valueOf(a.getProdajnaCijena()*a.getKolicina());
-	    //tabela.addCell(izlaznaCijena); 
-		    
-		    
+		  for (int j=0;j<cells.length;j++){
+		     cells[j].setBackgroundColor(BaseColor.GRAY);
+		  }
+		
+	    // punimo tabelu
+		
+	    
 	    document.open();
 	    document.add(new Paragraph("Skladiste: " + s.getNaziv()));
 	    document.add(new Paragraph("Naziv artikla: " + a.getNaziv()));
 	    // trenutno vrijeme
 	    Date date = new Date();
-	    DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-		    
-		document.add(new Paragraph("Datum generisanja: " + df.format(date)));
-		document.add(new Paragraph(""));
-		document.add(tabela);
-		File myFile = new File("IzvjestajTrendovaProizvoda.pdf");
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+	    
+	    document.add(new Paragraph("Datum generisanja: " + df.format(date)));
+	    document.add(new Paragraph(""));
+	    document.add(tabela);
+	    File myFile = new File("IzvjestajTrendova.pdf");
 	    Desktop.getDesktop().open(myFile);
-		document.close();
-		  
-		status.setText("Izvjestaj je kreiran.");
-		status.setForeground(Color.green);
-		
-		//JOptionPane.showMessageDialog(null, "Izvjestaj je kreiran!", "", JOptinPane.INFORMATION_MESSAGE);
-		status.setText("Izvjestaj je kreiran!");
-		status.setForeground(Color.green);
+	    document.close();
+	  
+	    status.setText("Izvjestaj je kreiran.");
+	    status.setForeground(Color.green);
 	}
 
 	public void generisiIzvjestajSumarni (Skladiste s, List<Artikal> artikli, JLabel status) throws Exception {
@@ -144,10 +151,11 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 	    PdfWriter.getInstance(document, new FileOutputStream("SumarniIzvjestaj.pdf"));
 	    
 	    //tabela
-	    PdfPTable tabela = new PdfPTable(new float[] {3, 3, 3});
+	    PdfPTable tabela = new PdfPTable(new float[] {3, 3, 3, 3});
 	    tabela.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 	    tabela.addCell("Naziv");
 	    tabela.addCell("Kolicina na stanju");
+	    tabela.addCell("Jedinica mjere");
 	    tabela.addCell("Trenutna (ponderirana) cijena");
 	    tabela.setHeaderRows(1);
 	    // oboji prvi red
@@ -158,12 +166,17 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaBLL {
 		
 	    // punimo tabelu
 		for (Artikal a: artikli){
-			tabela.addCell(a.getNaziv());
-			// promjena kolicina
-			//	String kolicinaNaStanju = String.valueOf(a.getKolicina());
-			//tabela.addCell(kolicinaNaStanju);
-			String trenutnaCijena = String.valueOf(a.getProdajnaCijena());
-			tabela.addCell(trenutnaCijena);
+			try {
+				String kolicina = String.valueOf(DajKolicinu(a.getId(), s.getId()));
+				String ponder = String.valueOf(DajPonderiranu(a.getId(), s.getId()));
+				tabela.addCell(a.getNaziv());
+				tabela.addCell(kolicina);
+				tabela.addCell(a.getMjernaJedinica().toString());
+				tabela.addCell(ponder);
+			}
+			catch(Exception e){
+				App.logger.error("Omaska.", e);
+			}
 		}
 	    
 	    document.open();

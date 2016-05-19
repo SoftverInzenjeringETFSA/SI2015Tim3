@@ -102,11 +102,11 @@ public class FormaZaMenadzera {
 	private JTextField textUser;
 	private JTextField textPass;
 	private Uposlenik _user;
-	
-	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
 	private JLabel label_4;
 	private JLabel label_5;
+	
+	private JDateChooser dateChooser_od;
+	private JDateChooser dateChooser_do;
 	
 	private TrenutnoStanjeSkladistaUI tst = new TrenutnoStanjeSkladistaUI();
 	
@@ -226,16 +226,14 @@ public class FormaZaMenadzera {
 		tst.napuniComboBoxSkladistima(comboBox_1);
 		
 		final JPanel panel_16 = new JPanel();
-		comboBox_2 = new JComboBox();
-		comboBox_3 = new JComboBox();
 		
 		final JCheckBox checkBox = new JCheckBox("Trenutno stanje skladi\u0161ta(zaklju\u010Dno sa dana\u0161njim danom)");
 		checkBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkBox.isSelected()){
 					panel_16.disable();	
-					comboBox_2.disable();
-					comboBox_3.disable();
+					dateChooser_od.setVisible(false);
+					dateChooser_do.setVisible(false);
 					label_4.disable();
 					label_5.disable();
 					
@@ -243,9 +241,8 @@ public class FormaZaMenadzera {
 				}
 				else {
 					panel_16.enable();
-					comboBox_2.enable();
-					comboBox_3.enable();
-					
+					dateChooser_od.setVisible(true);
+					dateChooser_do.setVisible(true);
 					panel_16.setForeground(Color.white);
 					label_4.enable();
 					label_5.enable();
@@ -291,7 +288,9 @@ public class FormaZaMenadzera {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FormaZaMenadzeraGenerisanjeIzvjestajaUI ui = new FormaZaMenadzeraGenerisanjeIzvjestajaUI();
-				ui.generisiIzvjestaj(comboBox_1, radioButton, radioButton_1, checkBox, comboBox_2, comboBox_3, textField_11, labelStatus);
+				ui.generisiIzvjestaj(comboBox_1, radioButton, radioButton_1, checkBox, 
+						dateChooser_od, dateChooser_do, textField_11, labelStatus, 
+						panel_16, label_4, label_5);
 			}
 		});
 		button.setBounds(190, 341, 170, 23);
@@ -335,14 +334,6 @@ public class FormaZaMenadzera {
 		panel_16.setBounds(21, 181, 339, 88);
 		panel_14.add(panel_16);
 		panel_16.setLayout(null);
-		
-		
-		comboBox_3.setBounds(124, 57, 205, 20);
-		panel_16.add(comboBox_3);
-		
-		
-		comboBox_2.setBounds(124, 26, 205, 20);
-		panel_16.add(comboBox_2);
 		label_4 = new JLabel("od");
 		label_4.setBounds(79, 32, 19, 14);
 		panel_16.add(label_4);
@@ -359,6 +350,16 @@ public class FormaZaMenadzera {
 		label_5.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		//panel_16.add(label_5);
 		label_5.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		
+		dateChooser_od = new JDateChooser();
+		dateChooser_od.setBounds(124, 26, 205, 20);
+		panel_16.add(dateChooser_od);
+		dateChooser_od.setMaxSelectableDate(new Date());
+		
+		dateChooser_do = new JDateChooser();
+		dateChooser_do.setBounds(124, 57, 205, 20);
+		panel_16.add(dateChooser_do);
+		dateChooser_do.setMaxSelectableDate(new Date());
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Uposlenici", new ImageIcon(FormaZaMenadzera.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")), panel_2, null);
