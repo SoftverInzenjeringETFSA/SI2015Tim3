@@ -167,18 +167,18 @@ public class FormaZaMenadzera {
 		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
+				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Ukupna koli\u010Dina", "Cijena"
+				"Bar-kod", "Naziv", "Koli\u010Dina", "Mjerna jedinica", "Prodajna cijena", "Ponderirana cijena"
 			}
 		) {
-			Class[] columnTypes = new Class[] {
+			/*Class[] columnTypes = new Class[] {
 				String.class, String.class, Float.class, Float.class, Float.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
-			}
+			}*/
 			public boolean isCellEditable(int rowIndex, int mColIndex) {
 		        return false;
 		      }
@@ -194,7 +194,7 @@ public class FormaZaMenadzera {
 		tst.napuniComboBoxSkladistima(comboBox);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tst.trenutnoStanjeSkladistaMenadzer(comboBox.getSelectedItem().toString(), table, labelStatus);
+				tst.trenutnoStanjeSkladistaMenadzer(comboBox, table, labelStatus);
 			}
 		});
 		comboBox.setBounds(91, 26, 204, 20);

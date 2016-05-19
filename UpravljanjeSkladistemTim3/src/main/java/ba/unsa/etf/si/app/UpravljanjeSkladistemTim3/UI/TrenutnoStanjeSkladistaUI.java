@@ -19,44 +19,6 @@ public class TrenutnoStanjeSkladistaUI {
 		bll = new TrenutnoStanjeSkladistaBLL();
 	}
 	
-	public String dajJedinicnuKolicinu (int jedinica){
-		String jedKolicina = null;
-		if (jedinica == 0){
-			jedKolicina = "kg";
-		}
-		if (jedinica == 1){
-			jedKolicina = "l";
-		}
-		if (jedinica == 2){
-			jedKolicina = "g";
-		}
-		if (jedinica == 3){
-			jedKolicina = "ml";
-		}
-		if (jedinica == 4){
-			jedKolicina = "kom";
-		}
-		
-		return jedKolicina;
-	}
-	
-	public void trenutnoStanjeSkladistaMenadzer(String skladiste, JTable tabela, JLabel status){
-		// Provjera da li je odabrano skladiste - suvisno???
-		if (skladiste == "") {
-			status.setText("Niste odabrali skladište");
-			return;
-		}
-	
-		List<Artikal> artikli = bll.dajTrenutnoStanje(skladiste);
-	
-		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-		// obrisemo sto je prije bilo
-		model.setRowCount(0);
-		for (Artikal a: artikli){
-			// promjena kolicina
-			//	model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), a.getJedinicnaKolicina(), a.getKolicina(), a.getProdajnaCijena()});
-		}
-	}
 
 	public void napuniComboBoxSkladistima(JComboBox comboBox) {
 		List<Skladiste> skladista = new ArrayList<Skladiste>();
@@ -66,25 +28,32 @@ public class TrenutnoStanjeSkladistaUI {
 		}
 		comboBox.setSelectedIndex(-1);
 	}
+	
+	
+
 
 	public void trenutnoStanjeSkladista(String skladiste, JTable tabela, JLabel status) {
-		// Provjera da li je odabrano skladiste - suvisno???
-		if (skladiste == "") {
-			status.setText("Niste odabrali skladište");
-			return;
-		}
-		
 		List<Artikal> artikli = bll.dajTrenutnoStanje(skladiste);
+		Skladiste s = new Skladiste();
+		s = bll.dajSkladiste(skladiste);
 			
 		DefaultTableModel model = (DefaultTableModel) tabela.getModel();
 		// obrisemo sto je prije bilo
 		model.setRowCount(0);
 		for (Artikal a: artikli){
-			// promjena kolicina
-			//double cijena = a.getProdajnaCijena()*a.getKolicina();
-			DecimalFormat c = new DecimalFormat("#.##");
-			//model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), a.getJedinicnaKolicina(), a.getKolicina(), a.getProdajnaCijena(), c.format(cijena)});
+			DecimalFormat f = new DecimalFormat("#0.00");
+			// "Bar-kod", "Naziv", "Koli\u010Dina", "Mjerna jedinica", "Prodajna cijena", "Ponderirana cijena"
+			try {
+				model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), bll.DajKolicinu(a.getId(), s.getId()), a.getMjernaJedinica().toString(), f.format(a.getProdajnaCijena()), f.format(bll.DajPonderiranu(a.getId(),  s.getId())) });
+			}
+			catch(Exception ex){
+				
+			}
 		}
+	}
+	
+	public void trenutnoStanjeSkladistaMenadzer(JComboBox comboBox, JTable tabela, JLabel status){
+		trenutnoStanjeSkladista(comboBox.getSelectedItem().toString(), tabela, status);
 	}
 	
 }

@@ -611,7 +611,7 @@ public class FormaZaUposlenika {
 				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"Bar kod", "Naziv", "Jedini\u010Dna koli\u010Dina", "Ukupna koli\u010Dina", "Nabavna cijena", "Cijena"
+				"Bar-kod", "Naziv", "Koli\u010Dina", "Mjerna jedinica", "Prodajna cijena", "Ponderirana cijena"
 			}
 		));
 		scrollPane_3.setViewportView(table);
