@@ -690,10 +690,10 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 		panel_10.setLayout(null);
 			
 
-		final JLabel lStatusDokument = new JLabel("");
+		/*final JLabel lStatusDokument = new JLabel("");
 		lStatusDokument.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lStatusDokument.setBounds(10, 472, 685, 25);
-		frmSistemUpravljanjaSkladistem.getContentPane().add(lStatusDokument);
+		frmSistemUpravljanjaSkladistem.getContentPane().add(lStatusDokument);*/
 
 		final JLabel label_8 = new JLabel("");
 		label_8.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -724,7 +724,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 			public void actionPerformed(ActionEvent arg0) {
 				int rvOD = Integer.parseInt(cbOdH.getSelectedItem().toString()) * 100 + Integer.parseInt(cbOdMin.getSelectedItem().toString());
 				int rvDO = Integer.parseInt(cbDoH.getSelectedItem().toString()) * 100 + Integer.parseInt(cbDoMin.getSelectedItem().toString());
-				if(msui.DodajSkladiste(lStatusDokument, tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText())) {
+				if(msui.DodajSkladiste(labelStatus, tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText())) {
 					msbll.DodajSkladiste(tbNaziv.getText(), tbAdresa.getText(), rvOD, rvDO, tbKontakt.getText());
 					model.addRow(new Object[] { tbNaziv.getText(), tbAdresa.getText()});
 				    ocistiFormuSkladiste();
@@ -835,7 +835,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 				listModel.removeAllElements();
 				String dateOD = ((JTextField)dcOd.getDateEditor().getUiComponent()).getText();
 				String dateDO = ((JTextField)dcDo.getDateEditor().getUiComponent()).getText();
-				if(mdui.ProvjeriDatumNull(lStatusDokument, dateOD, dateDO)) {
+				if(mdui.ProvjeriDatumNull(labelStatus, dateOD, dateDO)) {
 					java.sql.Date sqlDateOd = new java.sql.Date(dcOd.getDate().getTime());
 					java.sql.Date sqlDateDo = new java.sql.Date(dcDo.getDate().getTime());
 					List<String> trazi = new ArrayList<String>();
@@ -843,7 +843,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 					if(chckbxOtpremnica.isSelected()) trazi.add("OTP");
 					if(chckbxOtpisnica.isSelected()) trazi.add("OTS");
 					
-					if(mdui.PopuniListuDokumenata(lStatusDokument, sqlDateOd, sqlDateDo, trazi)) {
+					if(mdui.PopuniListuDokumenata(labelStatus, sqlDateOd, sqlDateDo, trazi)) {
 						List<Dokument> listaDokumenata2 =  mdbll.PopuniListuDokumenata(trazi, sqlDateOd, sqlDateDo);
 						if(listaDokumenata2.isEmpty())
 							JOptionPane.showMessageDialog(null, "Ne postoji dokument generisan u traženom periodu!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
