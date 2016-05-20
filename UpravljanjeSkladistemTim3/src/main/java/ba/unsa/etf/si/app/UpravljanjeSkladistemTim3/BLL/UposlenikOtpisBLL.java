@@ -79,7 +79,9 @@ public class UposlenikOtpisBLL {
 		return kolicina;
 	}
 
-	public void ZavrsiOtpis(String komentar, Uposlenik user) {
+	public int ZavrsiOtpis(String komentar, Uposlenik user) {
+		if(_stavkeOtpisa.isEmpty()) return 1;
+		
 		Otpisnica otp = new Otpisnica();
 		otp.set_kreirao(user);
 		otp.set_skladiste(user.get_skladiste());
@@ -107,5 +109,6 @@ public class UposlenikOtpisBLL {
 		query.executeUpdate();
 		}
 		t.commit();
+		return 0;
 	}
 }

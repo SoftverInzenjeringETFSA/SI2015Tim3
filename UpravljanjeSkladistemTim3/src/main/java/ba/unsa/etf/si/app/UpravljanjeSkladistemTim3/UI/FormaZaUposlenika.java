@@ -532,7 +532,7 @@ public class FormaZaUposlenika {
 					}
 					else 
 					{
-						otp.ZavrsiOtpis(taKomentar.getText(), _user);
+						if(otp.ZavrsiOtpis(lblStatusmsg,taKomentar.getText(), _user))
 						CleanOtpis();
 					}
 				}

@@ -73,8 +73,14 @@ public class UposlenikOtpisUI {
 		return true;
 	}
 
-	public void ZavrsiOtpis(String komentar, Uposlenik user) {
-		bll.ZavrsiOtpis(komentar, user);
+	public boolean ZavrsiOtpis(JLabel status, String komentar, Uposlenik user) {
+		int result = bll.ZavrsiOtpis(komentar, user);
+		if(result == 1) {
+			status.setText("Niste unijeli niti jedan artikal za otpis!");
+			status.setForeground(Color.RED);
+			return false;
+		}
 		JOptionPane.showMessageDialog(null, "Uspjesno ste napravili otpis robe.", "Uspjeh", JOptionPane.INFORMATION_MESSAGE);
+		return true;
 	}
 }
