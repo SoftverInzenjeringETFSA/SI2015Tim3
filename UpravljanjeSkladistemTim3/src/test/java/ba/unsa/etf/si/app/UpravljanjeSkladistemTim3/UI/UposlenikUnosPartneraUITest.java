@@ -45,7 +45,7 @@ public void testUnosPartneraNazivPrazanString() {
 		String jib = "1234567891234";
 		
 		String result = uposUnosPartneraUI.unosPartnera(naziv,adresa,jib);
-		assertEquals("Naziv nije ispravan!", result);
+		assertEquals("Naziv nije ispravan! Mora počinjati velikim slovom.", result);
 		}
 	public void testUnosPartneraNeispravanJib() {
 		UposlenikUnosPartneraUI uposUnosPartneraUI = new UposlenikUnosPartneraUI();
@@ -66,7 +66,7 @@ public void testUnosPartneraNazivPrazanString() {
 		String jib = "1234560891234";
 		
 		String result = uposUnosPartneraUI.unosPartnera(naziv,adresa,jib);
-		assertEquals("Adresa nije ispravna!", result);
+		assertEquals("Adresa nije ispravna! Mora počinjati velikim slovom.", result);
 		}
 
 }
