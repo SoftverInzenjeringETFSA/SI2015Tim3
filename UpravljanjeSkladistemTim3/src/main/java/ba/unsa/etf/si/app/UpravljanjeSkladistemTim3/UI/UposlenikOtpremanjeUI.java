@@ -26,20 +26,22 @@ public class UposlenikOtpremanjeUI {
 		//Provjera polja
 		if(barKod.equals(""))
 			return "Nije unesen bar kod!";
-		else if(!barKod.matches("^[a-zA-Z0-9]*$"))
+		else if(!barKod.matches("^[0-9]*$"))
 			return "Nije ispravan bar kod";
 		else if(kolicinaZaOtprem <= 0)
 			return "Količina nije ispravna";
-		else if(prodajnaCijena.equals(""))
+		else if(prodCijena.equals(""))
 			return "Nije unesena prodajna cijena!";
+		else if(!prodCijena.matches("^[0-9.]*$"))
+			return "Nije ispravna prodajna cijena";
 		else{
 			
-			try {
+			/*try {
 				Double.parseDouble(prodCijena);
 			}
 			catch (NumberFormatException e) {
 				return "Prodajna cijena nije broj!";
-			}
+			}*/
 			
 			if(Double.parseDouble(prodCijena) <= 0)
 				return "Prodajna cijena ne može biti negativna!";
@@ -47,7 +49,7 @@ public class UposlenikOtpremanjeUI {
 			Artikal a = uposOtpremBLL.dobaviArtikalZaOtprem(barKod, kolicinaZaOtprem, Double.parseDouble(prodCijena));
 			
 			if(a == null){
-				return "Uneseni artikal je već odabran za otpremanje!";
+				return "Uneseni artikal je već odabran za otpremanje ili ne postoji u bazi!";
 			}
 			
 			double staraKol = uposOtpremBLL.dobaviStaruKolicinuArtikla(a.getId());

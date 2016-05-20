@@ -477,7 +477,8 @@ public class FormaZaUposlenika {
 			public void actionPerformed(ActionEvent arg0) {
 				String poruka = uposOtpremUI.dodajArtikalZaOtpremu(tableArtikliOtprem, tbOtpremProdajnaCijena, tbOtpremBarKod.getText(), (Integer)spinnerKolOtprem.getValue());
 				lblStatusmsg.setText(poruka);
-				ocistiPoljaUnosArtikla();
+				if(poruka.equals("  "))
+					ocistiPoljaUnosArtikla();
 			}
 		});
 		btnDodajZaOtpremu.setBounds(148, 147, 168, 23);
