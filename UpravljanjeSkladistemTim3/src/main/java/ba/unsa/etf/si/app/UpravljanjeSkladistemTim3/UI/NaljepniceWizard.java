@@ -89,7 +89,7 @@ public class NaljepniceWizard {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NaljepnicaWizardUI ui = new NaljepnicaWizardUI();
-				ui.KreirajNaljepnice(table, barKod);
+				if(ui.KreirajNaljepnice(table, barKod))
 				forma.dispose();
 			}
 		});

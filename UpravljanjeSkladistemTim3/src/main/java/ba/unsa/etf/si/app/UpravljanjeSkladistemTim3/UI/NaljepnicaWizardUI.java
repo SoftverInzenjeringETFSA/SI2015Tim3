@@ -138,25 +138,29 @@ public class NaljepnicaWizardUI {
 		}
 		return brojNaljepnica;
 	}
-	public void KreirajNaljepnice(JTable table, String barKod) {
-		if(barKod == null) return;
+	public boolean KreirajNaljepnice(JTable table, String barKod) {
+		if(barKod == null || barKod.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Niste odabrali nabavku!", "Omaška", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		for(int count = 0; count < model.getRowCount(); count++) {
 			try {
 				int number = Integer.parseInt(model.getValueAt(count, 1).toString());
 				if(number < 0) {
 					JOptionPane.showMessageDialog(null, "Broj naljepnica ne moze biti negativan!", "Omaška", JOptionPane.ERROR_MESSAGE);
-					return;
+					return false;
 				}
 			} 
 			catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(null, "Uneseni broj naljepnica ne predstavlja broj!", "Omaška", JOptionPane.ERROR_MESSAGE);
-				return;
+				return false;
 			}
 		}
 		
 		BufferedImage[] slike = KreirajSlikeNaljepnica(table, barKod);
 		int[] brojNaljepnica = BrojNaljepnica(table);
 		KreirajPDFDokument(slike, brojNaljepnica);
+		return true;
 	}
 }
