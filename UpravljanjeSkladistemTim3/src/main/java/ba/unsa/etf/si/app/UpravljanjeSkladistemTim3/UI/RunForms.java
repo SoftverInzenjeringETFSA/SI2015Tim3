@@ -66,11 +66,12 @@ public class RunForms {
 		});
 	}
 	
-	public static void RunUnosPartneraForm(){
+	public static void RunUnosPartneraForm(final JComboBox cbDobavljac){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					DodavanjePoslovnogPartnera window = new DodavanjePoslovnogPartnera();
+					window.SetComboBox(cbDobavljac);
 					window.frmDodavanjePoslovnogPartnera.setVisible(true);
 				} catch (Exception e) {
 					App.logger.error("Omaska.", e);

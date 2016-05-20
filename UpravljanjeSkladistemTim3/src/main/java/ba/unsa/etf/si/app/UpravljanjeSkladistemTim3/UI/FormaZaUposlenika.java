@@ -208,8 +208,7 @@ public class FormaZaUposlenika {
 		JButton btnDodajNovogDobavljaa = new JButton("Dodaj novog dobavljača");
 		btnDodajNovogDobavljaa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UposlenikUnosPartneraUI uposUnosPartneraUI = new UposlenikUnosPartneraUI();
-				RunForms.RunUnosPartneraForm();
+				RunForms.RunUnosPartneraForm(cbDobavljac);
 			}
 		});
 		btnDodajNovogDobavljaa.setBounds(318, 39, 183, 25);
@@ -400,7 +399,7 @@ public class FormaZaUposlenika {
 		btnDodajNovogKupca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				UposlenikUnosPartneraUI uposUnosPartneraUI = new UposlenikUnosPartneraUI();
-				RunForms.RunUnosPartneraForm();
+				RunForms.RunUnosPartneraForm(comboBoxKupci);
 			}
 		});
 		btnDodajNovogKupca.setBounds(327, 23, 168, 23);

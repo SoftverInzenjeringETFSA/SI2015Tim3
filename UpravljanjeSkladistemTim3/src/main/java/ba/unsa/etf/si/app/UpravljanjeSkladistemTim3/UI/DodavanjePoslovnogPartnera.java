@@ -8,9 +8,17 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.UposlenikUnosRobeBLL;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.PoslovniPartner;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -21,7 +29,21 @@ public class DodavanjePoslovnogPartnera {
 	private JTextField textAdresa;
 	private JTextField textJib;
 	private JLabel lblStatus;
-
+	private JComboBox cbDobavljac;
+	
+	private void initData() {
+		UposlenikUnosRobeBLL getPartneri = new UposlenikUnosRobeBLL();
+		List<PoslovniPartner> _partneri = getPartneri.DobaviSvePoslnovnePartnere();
+		DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+		for(PoslovniPartner p : _partneri) {
+			cbm.addElement(p.getNaziv());
+		}
+		cbDobavljac.setModel(cbm);
+	}
+	public void SetComboBox(JComboBox cb) {
+		cbDobavljac = cb;
+	}
+	
 	public DodavanjePoslovnogPartnera() {
 		initialize();
 	}
@@ -78,6 +100,7 @@ public class DodavanjePoslovnogPartnera {
 					frmDodavanjePoslovnogPartnera.dispose();
 				else
 					lblStatus.setText(poruka);
+				initData();
 			}
 		});
 		btnDodaj.setBounds(193, 154, 89, 23);
