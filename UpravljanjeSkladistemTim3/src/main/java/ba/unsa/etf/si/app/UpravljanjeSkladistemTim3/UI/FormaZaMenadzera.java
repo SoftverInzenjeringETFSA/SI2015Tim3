@@ -851,7 +851,7 @@ textUser.getText(),textPass.getText(), comboBoxSkladiste.getSelectedIndex());
 							for(Dokument d:listaDokumenata2) {
 							listModel.addElement(d);
 							}
-							JOptionPane.showMessageDialog(null, "Pretraga zavrsena!", "Greška",  JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Pretraga zavrsena!", "Obavijest",  JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 				}
