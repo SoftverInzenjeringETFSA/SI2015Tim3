@@ -26,7 +26,7 @@ public class UposlenikOtpremanjeUI {
 		//Provjera polja
 		if(barKod.equals(""))
 			return "Nije unesen bar kod!";
-		else if(!barKod.matches("^[0-9]*$"))
+		else if(!barKod.matches("^[0-9]*$") || barKod.length() != 13)
 			return "Nije ispravan bar kod";
 		else if(kolicinaZaOtprem <= 0)
 			return "Količina nije ispravna";
