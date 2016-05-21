@@ -101,6 +101,8 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 					bll.generisiIzvjestajTrend(s, a, status);
 					ponistiKontrole(comboBox, trend, sumarni, checkBox, dateChooser_od, 
 							dateChooser_do, barKod, panel_16, label_4, label_5);
+					status.setText("Zatvorite prethodni izvjestaj prije generisanja novog"); 
+					status.setForeground(Color.red);
 				}
 				catch (Exception e){
 					App.logger.error("Omaska.", e);
@@ -113,6 +115,8 @@ public class FormaZaMenadzeraGenerisanjeIzvjestajaUI {
 					bll.generisiIzvjestajSumarni(s,  artikli, status);
 					ponistiKontrole(comboBox, trend, sumarni, checkBox, dateChooser_od, 
 							dateChooser_do, barKod, panel_16, label_4, label_5);
+					status.setText("Zatvorite prethodni izvjestaj prije generisanja novog"); 
+					status.setForeground(Color.red);
 				}
 				catch(Exception e){	
 					App.logger.error("Omaska.", e);
