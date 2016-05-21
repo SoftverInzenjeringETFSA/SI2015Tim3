@@ -48,12 +48,7 @@ public class MenadzerSkladisteUI {
 					return false;
 				}
 		
-		// Provjera da li je radno vrijeme uneseno
-		if(radnoVrijemeOd < 700 || radnoVrijemeDo > 1800) {
-			status.setText("Unesite radno vrijeme u periodu od 07h do 18h.");
-			status.setForeground(Color.RED);
-			return false;
-		}
+		
 		
 		// Provjera da li je telefon u ispravnom formatu
 		Pattern patern1 = Pattern.compile(Telefon_PATTERN1);
