@@ -8,6 +8,7 @@ import java.util.List;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.DAL.*;
+import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.App;
 import ba.unsa.etf.si.app.UpravljanjeSkladistemTim3.BLL.*;
 
 
@@ -47,7 +48,7 @@ public class TrenutnoStanjeSkladistaUI {
 				model.addRow(new Object[] { a.getBarKod(), a.getNaziv(), bll.DajKolicinu(a.getId(), s.getId()), a.getMjernaJedinica().toString(), f.format(a.getProdajnaCijena()), f.format(bll.DajPonderiranu(a.getId(),  s.getId())) });
 			}
 			catch(Exception ex){
-				
+				App.logger.error("Omaska", ex);
 			}
 		}
 	}

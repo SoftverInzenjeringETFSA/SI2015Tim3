@@ -166,6 +166,7 @@ public class MenadzerDokumentBLL {
 					File myFile = new File(workingDir + "\\" + d + ".pdf");
 					Desktop.getDesktop().open(myFile);
 				} catch (IllegalArgumentException ex) {
+					App.logger.error("Omaska", ex);
 					File myFile = new File(workingDir + "//" + d + ".pdf");
 					Desktop.getDesktop().open(myFile);
 				}
